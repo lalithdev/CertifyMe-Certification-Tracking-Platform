@@ -34,7 +34,7 @@ function DashboardLayout() {
       <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
         <div className="sidebar-top">
         <div className="sidebar-brand">
-  <BadgeCheck size={20} strokeWidth={2} />
+  <BadgeCheck size={28} strokeWidth={2.5} />
 
   {!collapsed && (
      <div className="brand-text">

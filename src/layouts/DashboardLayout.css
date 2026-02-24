@@ -32,11 +32,15 @@ body {
 .sidebar-top {
   display: flex;
   align-items: center;
+
+  padding: 40px 28px 30px 28px;
   justify-content: space-between;
   padding: 24px; /* upgraded from 20px */
 }
 
 .sidebar-brand {
+  align-items: flex-start;
+  padding: 24px 22px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -132,14 +136,6 @@ body {
 
 /* Sidebar Brand Styling */
 
-.sidebar-brand {
-  padding: 24px 22px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
 .sidebar-brand svg {
   color: #3b82f6;
   margin-top: 4px;
@@ -147,7 +143,11 @@ body {
 
 
 
-
+.brand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .brand-tagline {
   font-size: 12px;
   font-family: 'Times New Roman', Times, serif;
@@ -156,16 +156,11 @@ body {
   letter-spacing: 0.3px;
 }
 
-.sidebar-brand svg {
-  color: #3b82f6;
-  margin-top: 3px;
-}
 
 .brand-text {
   display: flex;
   flex-direction: column;
   line-height: 1.1;
-  opacity: 200%;
   color: #ffffff;
 }
 .brand-name {
@@ -207,18 +202,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-.sidebar-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
 
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-  color: #ffffff;
-}
 .brand-logo {
   width: 40px;
   height: 40px;
@@ -234,20 +218,9 @@ body {
   box-shadow: 0 6px 16px rgba(37,99,235,0.4);
 }
 
-.brand-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: white;
-}
 
-.brand-tagline {
-  font-size: 11px;
-  color: #94a3b8 ;
-}
 
-.sidebar-brand svg {
-  color: #3b82f6;
-}
+
 
 /* Nav items (dark theme upgrade applied) */
 
@@ -313,7 +286,6 @@ body {
 .header-left h2 {
   font-size: 20px;      /* upgraded (was 22px/28px earlier) */
   font-weight: 600;
-  color: #0f172a;
   margin: 0;
 }
 
@@ -1126,4 +1098,17 @@ body {
   padding: 30px;
   color: #6b7280;
   font-style: italic;
+}
+
+.sidebar,
+.sidebar * {
+  opacity: 1 !important;
+  filter: none !important;
+}
+.brand-name {
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  color: #ffffff !important;
+}
+.brand-tagline {
+  color: #94a3b8 !important;
 }
