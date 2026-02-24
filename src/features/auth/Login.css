@@ -2,6 +2,25 @@
    PREMIUM LOGIN DESIGN
    =============================== */
 
+.login-brand .brand-name {
+  display: block !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  color: #111827 !important;   /* dark text */
+  margin-top: 12px !important;
+}
+
+.login-brand .brand-tagline {
+  color: #6b7280 !important;
+  font-size: 14px !important;
+}
+
+.login-brand .brand-circle {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
 .login-wrapper {
   min-height: 100vh;
   display: flex;

@@ -1,12 +1,12 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { BadgeCheck } from "lucide-react";
 import "./Signup.css";
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 function Signup() {
   const navigate = useNavigate();
-  const { signup } = useContext(AuthContext);
+  const { signup } = useAuth(); // ✅ use custom hook
 
   const [form, setForm] = useState({
     email: "",
@@ -24,6 +24,7 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
 
     if (
       !form.email ||
@@ -36,11 +37,13 @@ function Signup() {
       return;
     }
 
-    // ✅ Use AuthContext signup instead of localStorage directly
+    const fullName = `${form.firstName} ${form.lastName}`;
+
     const result = signup(
-      `${form.firstName} ${form.lastName}`,
+      fullName,
       form.email,
-      form.password
+      form.password,
+      "student" // default role
     );
 
     if (!result.success) {
@@ -68,17 +71,18 @@ function Signup() {
       {/* RIGHT SIDE */}
       <div className="signup-right">
         <div className="signup-card">
-          {/* 🔥 CENTERED LOGO BLOCK */}
-        <div className="signup-brand">
-          <div className="brand-circle">
-            <BadgeCheck size={30} />
+
+          {/* LOGO BLOCK */}
+          <div className="signup-brand">
+            <div className="brand-circle">
+              <BadgeCheck size={30} />
+            </div>
+
+            <h2 className="brand-name">CertifyMe</h2>
+            <p className="brand-tagline">Track. Manage. Renew.</p>
           </div>
 
-          <h2 className="brand-name">CertifyMe</h2>
-          <p className="brand-tagline">Track. Manage. Renew.</p>
-        </div>
-
-        <h2 className="signup-title">Create an Account</h2>
+          <h2 className="signup-title">Create an Account</h2>
 
           {error && <div className="signup-error">{error}</div>}
 
@@ -90,6 +94,7 @@ function Signup() {
               placeholder="Enter your email"
               value={form.email}
               onChange={handleChange}
+              required
             />
 
             <label>Password *</label>
@@ -99,6 +104,7 @@ function Signup() {
               placeholder="Enter your password"
               value={form.password}
               onChange={handleChange}
+              required
             />
 
             <label>First Name *</label>
@@ -108,6 +114,7 @@ function Signup() {
               placeholder="First name"
               value={form.firstName}
               onChange={handleChange}
+              required
             />
 
             <label>Last Name *</label>
@@ -117,6 +124,7 @@ function Signup() {
               placeholder="Last name"
               value={form.lastName}
               onChange={handleChange}
+              required
             />
 
             <label>Country *</label>
@@ -124,6 +132,7 @@ function Signup() {
               name="country"
               value={form.country}
               onChange={handleChange}
+              required
             >
               <option value="">Select country</option>
               <option>India</option>
@@ -138,6 +147,7 @@ function Signup() {
           <div className="signup-footer">
             Already have an account? <Link to="/login">Log in</Link>
           </div>
+
         </div>
       </div>
     </div>

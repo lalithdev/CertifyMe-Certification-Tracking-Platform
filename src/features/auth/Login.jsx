@@ -1,12 +1,12 @@
 import "./Login.css";
 import { BadgeCheck, Eye, EyeOff, User, Shield } from "lucide-react";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext"; // ✅ import context
+import { useAuth } from "../../context/AuthContext"; // ✅ use custom hook
 
 function Login() {
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext); // ✅ get login from context
+  const { login } = useAuth(); // ✅ correct way
 
   const [role, setRole] = useState("student");
   const [email, setEmail] = useState("");
@@ -14,29 +14,19 @@ function Login() {
   const [verificationCode, setVerificationCode] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
 
-    if (!email || !password) {
-      alert("Please enter email and password");
-      return;
-    }
+const handleLogin = (e) => {
+  e.preventDefault();
 
-    // 🔐 Admin verification
-    if (role === "admin") {
-      if (verificationCode !== "999999") {
-        alert("Invalid verification code");
-        return;
-      }
-      // ✅ set user in context
-      login({ email, role: "admin" });
-      navigate("/admin/dashboard");
-    } else {
-      // ✅ set user in context
-      login({ email, role: "student" });
-      navigate("/student/dashboard");
-    }
-  };
+  const result = login(email, password);
+
+  if (!result.success) {
+    alert(result.message);
+    return;
+  }
+
+  navigate("/student/dashboard");
+};
 
   return (
     <div className="login-wrapper">
@@ -91,6 +81,7 @@ function Login() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
 
             <label>Password</label>
@@ -100,6 +91,7 @@ function Login() {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <span onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -114,6 +106,7 @@ function Login() {
                   placeholder="Enter verification code"
                   value={verificationCode}
                   onChange={(e) => setVerificationCode(e.target.value)}
+                  required
                 />
               </>
             )}

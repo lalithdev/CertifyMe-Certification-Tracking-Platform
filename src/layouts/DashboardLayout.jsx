@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BadgeCheck, Menu } from "lucide-react";
 import { Outlet, useNavigate, NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import {
   Award,
   Calendar,
@@ -13,7 +14,7 @@ import "./DashboardLayout.css";
 
 function DashboardLayout() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user, logout } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
 
   const hour = new Date().getHours();
@@ -172,9 +173,7 @@ function DashboardLayout() {
   </button>
 
     <div className="header-text">
-      <h2>
-  Welcome back, {user?.name?.split(" ")[0] || "User"}
-</h2>
+      <h2>Welcome back, {user?.name}</h2>
       <span className="subtle-text">
         Here’s your certification performance overview.
       </span>
@@ -192,14 +191,12 @@ function DashboardLayout() {
   {user?.name?.charAt(0).toUpperCase()}
 </div>
     <div className="user-info">
-      <strong>Lalith</strong>
-      <small>{user?.role === "admin" ? "Admin" : "Student"}</small>
-    </div>
+  <span>{user?.name}</span>
+  <small>{user?.role}</small>
+</div>
   </div>
 
-  <button className="logout-btn" onClick={handleLogout}>
-    Logout
-  </button>
+  <button className="logout-btn" onClick={logout}>Logout</button>
 </div>
 
 </div>
