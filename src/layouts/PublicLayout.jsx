@@ -4,7 +4,7 @@ import { BadgeCheck } from "lucide-react";
 import "./PublicLayout.css";
 
 function PublicLayout() {
-    const [activeTab, setActiveTab] = useState("For test-takers");
+    const [activeTab, setActiveTab] = useState("Global Certifications");
     const [hoveredTab, setHoveredTab] = useState(null);
     
   return (
