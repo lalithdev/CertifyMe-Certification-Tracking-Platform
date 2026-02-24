@@ -1,0 +1,133 @@
+import "./Login.css";
+import { BadgeCheck, Eye, EyeOff, User, Shield } from "lucide-react";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext"; // ✅ import context
+
+function Login() {
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // ✅ get login from context
+
+  const [role, setRole] = useState("student");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      alert("Please enter email and password");
+      return;
+    }
+
+    // 🔐 Admin verification
+    if (role === "admin") {
+      if (verificationCode !== "999999") {
+        alert("Invalid verification code");
+        return;
+      }
+      // ✅ set user in context
+      login({ email, role: "admin" });
+      navigate("/admin/dashboard");
+    } else {
+      // ✅ set user in context
+      login({ email, role: "student" });
+      navigate("/student/dashboard");
+    }
+  };
+
+  return (
+    <div className="login-wrapper">
+      {/* LEFT PANEL */}
+      <div className="login-left">
+        <div className="brand-content">
+          <h1>Certification Tracker</h1>
+          <p>
+            Securely access your certification dashboard
+            and manage renewals professionally.
+          </p>
+        </div>
+      </div>
+
+      {/* RIGHT PANEL */}
+      <div className="login-right">
+        <div className="login-card">
+          <div className="login-brand">
+            <div className="brand-circle">
+              <BadgeCheck size={30} />
+            </div>
+            <h2 className="brand-name">CertifyMe</h2>
+            <p className="brand-tagline">Track. Manage. Renew.</p>
+          </div>
+
+          {/* ROLE TOGGLE */}
+          <div className="role-toggle">
+            <button
+              type="button"
+              className={role === "student" ? "active" : ""}
+              onClick={() => setRole("student")}
+            >
+              <User size={16} style={{ marginRight: "6px" }} />
+              Student
+            </button>
+
+            <button
+              type="button"
+              className={role === "admin" ? "active" : ""}
+              onClick={() => setRole("admin")}
+            >
+              <Shield size={16} style={{ marginRight: "6px" }} />
+              Admin
+            </button>
+          </div>
+
+          {/* FORM */}
+          <form onSubmit={handleLogin} className="login-form">
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <label>Password</label>
+            <div className="password-wrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </span>
+            </div>
+
+            {role === "admin" && (
+              <>
+                <label>Verification Code</label>
+                <input
+                  type="text"
+                  placeholder="Enter verification code"
+                  value={verificationCode}
+                  onChange={(e) => setVerificationCode(e.target.value)}
+                />
+              </>
+            )}
+
+            <button type="submit">Log in</button>
+          </form>
+
+          <div className="login-footer">
+            Don't have an account? <Link to="/signup">Sign up</Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Login;
