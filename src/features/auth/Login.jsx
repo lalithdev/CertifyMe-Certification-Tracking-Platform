@@ -25,7 +25,20 @@ const handleLogin = (e) => {
     return;
   }
 
-  navigate("/student/dashboard");
+  // 🔥 Check if selected role matches stored role
+  if (result.user.role !== role) {
+    alert(
+      `This account is registered as ${result.user.role}. Please select correct login type.`
+    );
+    return;
+  }
+
+  // 🔥 Role-based routing
+  if (role === "admin") {
+    navigate("/admin/dashboard");
+  } else {
+    navigate("/student/dashboard");
+  }
 };
 
   return (

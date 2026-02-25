@@ -9,51 +9,51 @@ function Signup() {
   const { signup } = useAuth(); // ✅ use custom hook
 
   const [form, setForm] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    country: "",
-  });
+  email: "",
+  password: "",
+  firstName: "",
+  lastName: "",
+  country: "",
+  role: ""   // ✅ ADD THIS
+});
 
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
+  e.preventDefault();
+  setError("");
 
-    if (
-      !form.email ||
-      !form.password ||
-      !form.firstName ||
-      !form.lastName ||
-      !form.country
-    ) {
-      setError("Please fill all required fields.");
-      return;
-    }
+  if (
+    !form.email ||
+    !form.password ||
+    !form.firstName ||
+    !form.lastName ||
+    !form.country ||
+    !form.role
+  ) {
+    setError("Please fill all required fields.");
+    return;
+  }
 
-    const fullName = `${form.firstName} ${form.lastName}`;
+  const result = signup(
+    `${form.firstName} ${form.lastName}`,
+    form.email,
+    form.password,
+    form.role
+  );
 
-    const result = signup(
-      fullName,
-      form.email,
-      form.password,
-      "student" // default role
-    );
+  if (!result.success) {
+    setError(result.message);
+    return;
+  }
 
-    if (!result.success) {
-      setError(result.message);
-      return;
-    }
-
-    alert("Account created successfully!");
-    navigate("/login");
-  };
+  alert("Account created successfully!");
+  navigate("/login");
+};
 
   return (
     <div className="signup-wrapper">
@@ -140,6 +140,18 @@ function Signup() {
               <option>United Kingdom</option>
               <option>Germany</option>
             </select>
+
+            <label>Role *</label>
+<select
+  name="role"
+  value={form.role}
+  onChange={handleChange}
+  required
+>
+  <option value="">Select role</option>
+  <option value="student">Student</option>
+  <option value="admin">Admin</option>
+</select>
 
             <button type="submit">Register</button>
           </form>

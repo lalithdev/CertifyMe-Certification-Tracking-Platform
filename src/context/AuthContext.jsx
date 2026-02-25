@@ -14,48 +14,47 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // SIGNUP
-  const signup = (name, email, password) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+  const signup = (name, email, password, role) => {
+  console.log("Signup called");
 
-    // check if email already exists
-    const existingUser = users.find((u) => u.email === email);
+  const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    if (existingUser) {
-      return { success: false, message: "Account already exists." };
-    }
+  const existingUser = users.find((u) => u.email === email);
 
-    const newUser = {
-      name,
-      email,
-      password,
-      role: "student"
-    };
+  if (existingUser) {
+    return { success: false, message: "Account already exists." };
+  }
 
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
+  const newUser = { name, email, password, role };
 
-    return { success: true };
-  };
+  users.push(newUser);
+
+  localStorage.setItem("users", JSON.stringify(users));
+
+  console.log("Users after signup:", users);
+
+  return { success: true };
+};
 
   // LOGIN
   const login = (email, password) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+  const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const foundUser = users.find((u) => u.email === email);
+  const foundUser = users.find((u) => u.email === email);
 
-    if (!foundUser) {
-      return { success: false, message: "No account found. Please create one." };
-    }
+  if (!foundUser) {
+    return { success: false, message: "No account found." };
+  }
 
-    if (foundUser.password !== password) {
-      return { success: false, message: "Incorrect password." };
-    }
+  if (foundUser.password !== password) {
+    return { success: false, message: "Incorrect password." };
+  }
 
-    localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
-    setUser(foundUser);
+  localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
+  setUser(foundUser);
 
-    return { success: true };
-  };
+  return { success: true, user: foundUser }; // ✅ return user
+};
 
   // LOGOUT
   const logout = () => {

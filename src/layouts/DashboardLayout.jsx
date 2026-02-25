@@ -16,6 +16,7 @@ function DashboardLayout() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
+  console.log("Current User:", user);
 
   const hour = new Date().getHours();
   const greeting =
@@ -24,9 +25,9 @@ function DashboardLayout() {
     "Good Evening";
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/");
-  };
+  logout();
+  navigate("/");
+};
 
   return (
     <div className="dashboard-container">
