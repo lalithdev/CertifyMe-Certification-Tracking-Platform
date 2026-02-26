@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Overview.css";
-import { Search, Plus } from "lucide-react";
+import { BadgeCheck, Globe, Search, Users, GraduationCap, ClipboardList, Compass, Plus} from "lucide-react";
 import StatCard from "./components/StatCard";
 import CertificationCard from "./components/CertificationCard";
 
