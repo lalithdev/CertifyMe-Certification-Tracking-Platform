@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { BadgeCheck, Globe, Search } from "lucide-react";
+import { BadgeCheck, Globe, Search, Linkedin, Instagram, Youtube, Facebook, Phone, Mail, MapPin } from "lucide-react";
 import "./PublicLayout.css";
 
 function PublicLayout() {
@@ -49,7 +49,6 @@ function PublicLayout() {
           
         </div>
       </div>
-    {/* MAIN FOOTER */}
     
       {/* MAIN HEADER */}
       <header className="main-header">
@@ -108,7 +107,7 @@ function PublicLayout() {
 
       {/* WHY SECTION */}
       <section className="why-section">
-        <h2>Why Use Our Platform?</h2>
+        <h2>Why Use Our CertifyMe?</h2>
         <p>
           Our platform helps professionals stay up-to-date with certification
           renewals, track expiry deadlines, and securely store certificates
@@ -119,60 +118,90 @@ function PublicLayout() {
       </section>
 
       {/* FOOTER */}
-      <footer className="footer">
+ {/* FOOTER */}
+<footer className="footer">
   <div className="footer-inner">
 
     <div className="footer-grid">
 
+      {/* BRAND */}
       <div className="footer-brand">
-        <h3>Certification Tracking Platform</h3>
+
+        <h3 className="footer-logo">
+          <BadgeCheck size={26} />
+          CertifyMe
+        </h3>
+
         <p>
-          Track and manage your certifications efficiently and never miss a renewal deadline.
+          Track, manage and renew your certifications effortlessly.
+          Stay future-ready with structured credential monitoring.
         </p>
 
+        {/* SOCIAL ICONS */}
         <div className="footer-social">
-          <span>Instagram</span>
-          <span>LinkedIn</span>
-          <span>Twitter</span>
+          <p className="social-label">Learn more on</p>
+          <div className="social-box"><Instagram size={14} /></div>
+          <div className="social-box"><Facebook size={14} /></div>
+          <div className="social-box"><Youtube size={14} /></div>
+          <div className="social-box"><Linkedin size={14} /></div>
         </div>
       </div>
 
+      {/* PLATFORM */}
       <div className="footer-column">
-        <h4>Features</h4>
-        <a>Core features</a>
-        <a>Pro experience</a>
+        <h4>Platform</h4>
+        <a>Features</a>
         <a>Integrations</a>
+        <a>Pricing</a>
+        <a>Roadmap</a>
       </div>
 
+      {/* RESOURCES */}
       <div className="footer-column">
-        <h4>Learn More</h4>
-        <a>Blog</a>
-        <a>Case studies</a>
-        <a>Customer stories</a>
-        <a>Best practices</a>
+        <h4>Resources</h4>
+        <a>Documentation</a>
+        <a>Help Center</a>
+        <a>Community</a>
+        <a>Tutorials</a>
       </div>
 
+      {/* CONTACT */}
+      <div className="footer-column">
+        <h4>Contact</h4>
+
+        <div className="footer-contact-item">
+          <Phone size={16} /> +91 8341647137
+        </div>
+
+        <div className="footer-contact-item">
+          <Mail size={16} /> 2400031810cse4@gmail.com
+        </div>
+
+        <div className="footer-contact-item">
+          <MapPin size={16} /> India
+        </div>
+      </div>
+
+      {/* SUPPORT */}
       <div className="footer-column">
         <h4>Support</h4>
-        <a>Contact</a>
-        <a>Support</a>
-        <a>Legal</a>
+        <a>Privacy</a>
+        <a>Terms</a>
+        <a>Security</a>
+        <a>Cookies</a>
       </div>
 
     </div>
 
-    <div className="footer-bottom">
-      <div className="footer-pill">
-        <span>Work</span>
-        <span>About</span>
-        <span>Contact</span>
-      </div>
+    {/* FOOTER DIVIDER */}
+    <div className="footer-divider"></div>
 
-      <p>© 2026 Certification Tracking Platform. All rights reserved.</p>
+    {/* FOOTER BOTTOM */}
+    <div className="footer-bottom">
+      © 2026 CertifyMe — All Rights Reserved
     </div>
 
   </div>
-  
 </footer>
 
     </div>
