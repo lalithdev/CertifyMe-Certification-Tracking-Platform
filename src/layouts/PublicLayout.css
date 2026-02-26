@@ -22,9 +22,19 @@ body {
 /* ===== TOP STRIP ===== */
 .top-right {
   display: flex;
-  gap: 24px;        /* adds space between each span */
   align-items: center;
-  margin-right: 80px; /* moves the whole group to the right */
+   margin-left: auto;
+  gap: 24px;
+}
+
+.top-links {
+  display: flex;
+  gap: 24px;
+}
+
+.top-icons {
+  display: flex;
+  gap: 18px;   /* change this for spacing */
 }
 
 .top-right span {
@@ -52,6 +62,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.top-icon:hover {
+  color: #0b3c5d;
 }
 
 .top-left span {
@@ -88,6 +102,10 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-right: 40px;
+
+    min-width: 220px;   /* prevents shrinking */
+
 }
 
 .logo-icon {
@@ -114,12 +132,21 @@ body {
 }
 
 .header-content {
-  max-width: 1300px;
+  width: 100%;
   margin: auto;
-  padding: 22px 30px;
+  position: relative;
+  padding: 18px 50px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+}
+
+.header-inner {
+  max-width: 1300px;
+  margin: auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
 }
 
 body {
@@ -127,11 +154,13 @@ body {
   background-color: #fafafa;
   color: #111;
 }
+
 .main-nav {
   display: flex;
   gap: 35px;
   align-items: center;
 }
+
 .nav-links a {
   font-family: 'Inter', sans-serif;
   font-size: 15px;
@@ -150,39 +179,89 @@ body {
   opacity: 0.8;
 }
 
+.auth-links {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 18px;
+}
+
+.signup-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 54px;              /* 🔥 Increased height */
+  padding: 0 26px;           /* Slightly wider */
+
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.3px;
+
+  background: #f8fafc;
+  color: #0b3c5d;
+
+  border: none;
+  border-radius: 16px;       /* Slightly more rounded */
+
+  font-size: 16px;           /* Slightly bigger */
+  font-weight: 800;
+  text-decoration: none;
+
+  box-shadow: 
+    0 6px 14px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transition: all 0.25s ease;
+}
+
+.signup-btn:hover {
+  background: #f8fafc;
+  color: #0b3c5d;
+}
+
 .login-btn {
   display: inline-flex;
-
   align-items: center;
-  font-family: 'Inter', sans-serif;
   justify-content: center;
-  height: 44px;              /* Increased height */
-  padding: 0 26px;           /* Horizontal spacing */
-  background: #ffffff;
+
+  height: 54px;              /* 🔥 Increased height */
+  padding: 0 30px;           /* Slightly wider */
+
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.3px;
+
+  background: #f8fafc;
   color: #0b3c5d;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 10px;
+
+  border: none;
+  border-radius: 16px;       /* Slightly more rounded */
+
+  font-size: 16px;           /* Slightly bigger */
+  font-weight: 800;
   text-decoration: none;
-  transition: all 0.2s ease;
-}
 
+  box-shadow: 
+    0 6px 14px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
 
-.login-btn:hover {
-  background: #f2f2f2;
-}
-
-.login-btn:hover {
-  background: #f3f3f3;
+  transition: all 0.25s ease;
 }
 
 .login-btn:hover {
-  background: #e6e6e6;
-}
+  background: #ffffff;
+  transform: translateY(-2px);
 
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+
+  color: #0b3c5d;
+}
 /* ===== HERO SECTION ===== */
 .hero-section {
-  padding: 100px 20px 80px;
+  padding: 80px 20px 80px;
   text-align: center;
 }
 

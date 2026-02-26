@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { BadgeCheck } from "lucide-react";
+import { BadgeCheck, Globe, Search } from "lucide-react";
 import "./PublicLayout.css";
 
 function PublicLayout() {
@@ -8,40 +8,44 @@ function PublicLayout() {
     const [hoveredTab, setHoveredTab] = useState(null);
     
   return (
-    <div className="public-container">
-        
-      {/* TOP STRIP */}
-      <div className="top-strip">
-        <div className="top-content">
-          <div className="top-left">
-  {[
-    "Global Certifications",
-    "For certified professionals",
-    "For eligibilty criteria",
-    "Explore skilling solutions"
-  ].map((item) => (
-    <span
-      key={item}
-      className={
-        (hoveredTab === item || (!hoveredTab && activeTab === item))
-          ? "tab active"
-          : "tab"
-      }
-      onMouseEnter={() => setHoveredTab(item)}
-      onMouseLeave={() => setHoveredTab(null)}
-      onClick={() => setActiveTab(item)}
-    >
-      {item}
-    </span>
-  ))}
-</div>
-          <div className="top-right">
-  <span>About us</span>
-  <span>Contact</span>
-  <span>Support</span>   {/* new */}
-</div>
-
-
+      <div className="public-container">
+            
+          {/* TOP STRIP */}
+          <div className="top-strip">
+            <div className="top-content">
+              <div className="top-left">
+      {[
+        "Global Certifications",
+        "For certified professionals",
+        "For eligibilty criteria",
+        "Explore skilling solutions"
+      ].map((item) => (
+        <span
+          key={item}
+          className={
+            (hoveredTab === item || (!hoveredTab && activeTab === item))
+              ? "tab active"
+              : "tab"
+          }
+          onMouseEnter={() => setHoveredTab(item)}
+          onMouseLeave={() => setHoveredTab(null)}
+          onClick={() => setActiveTab(item)}
+        >
+          {item}
+        </span>
+      ))}
+    </div>
+      <div className="top-right">
+      <div className="top-links">
+        <span>About us</span>
+        <span>Contact</span>
+        <span>Support</span>
+      </div>
+      <div className="top-icons">
+        <Globe size={18} className="top-icon" />
+        <Search size={18} className="top-icon" />
+    </div>
+    </div>
           
         </div>
       </div>
@@ -49,16 +53,17 @@ function PublicLayout() {
     
       {/* MAIN HEADER */}
       <header className="main-header">
-        <div className="header-content">
+      <div className="header-content">
+
+        <div className="header-inner">
 
           <div className="landing-logo">
-  <BadgeCheck size={20} className="logo-icon" />
-  <div className="logo-text">
-    <h2>CertifyMe</h2>
-    <span>Track. Manage. Renew.</span>
-  </div>
-</div>
-          
+            <BadgeCheck size={20} className="logo-icon" />
+            <div className="logo-text">
+              <h2>CertifyMe</h2>
+              <span>Track. Manage. Renew.</span>
+            </div>
+          </div>
 
           <nav className="main-nav">
             <span>Resources and FAQs</span>
@@ -68,13 +73,15 @@ function PublicLayout() {
             <span>Reports & Analytics</span>
           </nav>
 
-          <Link to="/login" className="login-btn">
-            Log in
-          </Link>
-
         </div>
-      </header>
 
+        <div className="auth-links">
+            <Link to="/login" className="login-btn">Log in</Link>
+            <Link to="/signup" className="signup-btn">Sign up</Link>
+          </div>
+
+      </div>
+    </header>
       {/* HERO SECTION */}
       <section className="hero-section">
         <h1>
