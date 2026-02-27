@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { BadgeCheck } from "lucide-react";
+import { BadgeCheck, Eye, EyeOff } from "lucide-react";
 import "./Signup.css";
 import { useAuth } from "../../context/AuthContext";
 
 function Signup() {
   const navigate = useNavigate();
   const { signup } = useAuth(); // ✅ use custom hook
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [form, setForm] = useState({
-  email: "",
-  password: "",
-  firstName: "",
-  lastName: "",
-  country: "",
-  role: ""   // ✅ ADD THIS
-});
+    email: "",
+    password: "",
+    confirmPassword: "",   // ✅ ADD
+    firstName: "",
+    lastName: "",
+    country: "",
+    role: ""
+  });
 
   const [error, setError] = useState("");
 
@@ -26,30 +28,24 @@ function Signup() {
   const handleSubmit = (e) => {
   e.preventDefault();
   setError("");
+if (
+  !form.email ||
+  !form.password ||
+  !form.confirmPassword ||   // ✅ ADD
+  !form.firstName ||
+  !form.lastName ||
+  !form.country ||
+  !form.role
+) {
+  setError("Please fill all required fields.");
+  return;
+}
 
-  if (
-    !form.email ||
-    !form.password ||
-    !form.firstName ||
-    !form.lastName ||
-    !form.country ||
-    !form.role
-  ) {
-    setError("Please fill all required fields.");
-    return;
-  }
-
-  const result = signup(
-    `${form.firstName} ${form.lastName}`,
-    form.email,
-    form.password,
-    form.role
-  );
-
-  if (!result.success) {
-    setError(result.message);
-    return;
-  }
+// ✅ Password match check
+if (form.password !== form.confirmPassword) {
+  setError("Passwords do not match.");
+  return;
+}
 
   alert("Account created successfully!");
   navigate("/login");
@@ -59,8 +55,19 @@ function Signup() {
     <div className="signup-wrapper">
       {/* LEFT SIDE */}
       <div className="signup-left">
+        <div className="back-home" onClick={() => navigate("/")}>
+          ← Back to Website
+        </div>
         <div className="brand-content">
+
+         <img 
+          src="/signup-illustration.png" 
+          alt="Learning Illustration"
+          className="signup-illus"
+        />
+        <div className="brand-text">
           <h1>Certification Tracker</h1>
+        </div>
           <p>
             Manage, track and renew your certifications
             in one professional dashboard.
@@ -98,14 +105,34 @@ function Signup() {
             />
 
             <label>Password *</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              value={form.password}
-              onChange={handleChange}
-              required
-            />
+        <div className="password-wrapper">
+        <input
+          type={showPassword ? "text" : "password"}
+          name="password"
+          placeholder="Enter your password"
+          value={form.password}
+          onChange={handleChange}
+          required
+        />
+        <span onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? <EyeOff size={18}/> : <Eye size={18}/>}
+        </span>
+        </div>
+
+        <label>Confirm Password *</label>
+        <div className="password-wrapper">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirmPassword"
+            placeholder="Confirm your password"
+            value={form.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+          <span onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+            {showConfirmPassword ? <EyeOff size={18}/> : <Eye size={18}/>}
+          </span>
+        </div>
 
             <label>First Name *</label>
             <input

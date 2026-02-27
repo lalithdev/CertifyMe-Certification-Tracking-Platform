@@ -27,7 +27,7 @@ function AppRoutes() {
     <Routes>
       {/* PUBLIC */}
       <Route element={<PublicLayout />}>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<PublicLayout />} />
       </Route>
 
       {/* AUTH */}

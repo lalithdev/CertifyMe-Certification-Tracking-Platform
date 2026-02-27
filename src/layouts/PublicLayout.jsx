@@ -1,3 +1,5 @@
+
+
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { BadgeCheck, Globe, Search, Linkedin, Instagram, Youtube, Facebook, Phone, Mail, MapPin } from "lucide-react";
@@ -81,41 +83,111 @@ function PublicLayout() {
 
       </div>
     </header>
-      {/* HERO SECTION */}
-      <section className="hero-section">
-        <h1>
-          Track, manage and monitor your professional certifications with ease.
-        </h1>
+{/* HERO SECTION */}
+<section className="hero-final">
 
-        <div className="stats">
-            <div className="stat-item">
-            <h2 className="hero-number">1000+</h2>
-            <p>Certified Students</p>
-            </div>
+  <div className="hero-final-inner">
 
-            <div className="stat-item">
-            <h2 className="hero-number">800+</h2>
-            <p>Global Certifications</p>
-            </div>
+    {/* LEFT */}
+    <div className="hero-left">
 
-            <div className="stat-item">
-            <h2 className="hero-number">120+</h2>
-            <p>Certification Providers</p>
-            </div>
-        </div>
-      </section>
+      <h1>
+        Manage your certifications
+        <span> smarter & faster </span>
+      </h1>
 
-      {/* WHY SECTION */}
-      <section className="why-section">
-        <h2>Why Use Our CertifyMe?</h2>
-        <p>
-          Our platform helps professionals stay up-to-date with certification
-          renewals, track expiry deadlines, and securely store certificates
-          for easy access and verification. Designed for students, working
-          professionals and administrators, the system ensures that no
-          certification ever expires unnoticed.
-        </p>
-      </section>
+      <p>
+        Track renewals, monitor expiry dates and stay compliant
+        with a centralized certification dashboard.
+      </p>
+
+      <Link to="/signup" className="hero-cta">
+        Get Started →
+      </Link>
+
+    </div>
+
+    {/* RIGHT */}
+    <div className="hero-right">
+      <img src="/hero-illustration.png" alt="hero" />
+    </div>
+
+  </div>
+
+</section>
+
+
+{/* WHY SECTION */}
+
+<section className="why-final">
+
+  <div className="why-inner">
+
+    {/* LEFT IMAGE */}
+    <div className="why-image">
+      <img src="/why-certify.png" alt="why certifyme" />
+    </div>
+
+    {/* RIGHT TEXT */}
+    <div className="why-text">
+      <h2>Why Use CertifyMe?</h2>
+
+      <p>
+        Our platform helps professionals stay up-to-date with certification
+        renewals, track expiry deadlines, and securely store certificates
+        for easy access and verification.
+      </p>
+
+      <p className="why-trust">
+         Stay Certified. Stay Ahead. 
+         Never Miss a Renewal Again
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+    {/* STATS SECTION */}
+<section className="stats-final">
+  <div className="stats-inner">
+
+    <h2 className="stats-heading">
+      Trusted by Students & Professionals across the globe.
+    </h2>
+
+    <div className="stats-row">
+
+      <div className="stat-box">
+        <h2 className="stat-number">1000+</h2>
+        <p>Certified Students</p>
+      </div>
+
+      <div className="stat-box">
+        <h2 className="stat-number">800+</h2>
+        <p>Global Certifications</p>
+      </div>
+
+      <div className="stat-box">
+        <h2 className="stat-number">120+</h2>
+        <p>Certification Providers</p>
+      </div>
+
+      <div className="stat-box">
+        <h2 className="stat-number">5k+</h2>
+        <p>Renewal Alerts Sent</p>
+      </div>
+
+    </div>
+    <div className="stats-highlight">
+    <p>"
+      CertifyMe is built for the Future of professionals, where Certifications Stay Active, Not Forgotten
+      Helping Professionals Stay Certified & Compliant"</p>
+      </div>
+
+  </div>
+</section>
 
       {/* FOOTER */}
  {/* FOOTER */}

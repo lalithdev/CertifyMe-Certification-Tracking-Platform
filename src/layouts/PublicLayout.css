@@ -25,6 +25,7 @@ body {
   align-items: center;
    margin-left: auto;
   gap: 24px;
+  
 }
 
 .top-links {
@@ -49,7 +50,11 @@ body {
 }
 
 .top-strip {
-  background: #f5f6f7;
+  background: linear-gradient(
+    180deg,
+    #f1f5f9 0%,
+    #e2e8f0 100%
+  );
   height: 52px;
   display: flex;
   align-items: flex-end;   /* important */
@@ -129,6 +134,8 @@ body {
 .main-header {
   background: #0b3c5d;
   padding: 18px 0;
+  position: relative;
+  z-index: 10;
 }
 
 .header-content {
@@ -266,56 +273,177 @@ body {
   color: #0b3c5d;
 }
 /* ===== HERO SECTION ===== */
-.hero-section {
-  position: relative;
-  padding: 100px 20px 90px;
-  text-align: center;
-  overflow: hidden;
-  background: url("/hero-bg.jpg") center/cover no-repeat;
-  text-align: center;
-  z-index: 0;
+/* ===== HERO FINAL ===== */
+
+/* ===== HERO CLEAN FINAL ===== */
+
+.hero-final {
+  padding: 80px 60px;
+  background: linear-gradient(
+    180deg,
+    #f1f5f9 0%,
+    #e2e8f0 100%
+  );
 }
 
-.hero-section::before {
-  display: none;
+.hero-final-inner {
+  max-width: 1300px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.hero-section h1 {
-  font-size: 34px;
+.hero-left {
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hero-left h1 {
+  font-size: 56px;
+  line-height: 1.1;
   font-weight: 600;
+}
+
+.hero-left span {
+  display: block;
+  color: #3b82f6;
+}
+
+.hero-left p {
+  margin: 20px 0;
+  font-size: 18px;
+  color: #475569;
+}
+
+/* CTA */
+.hero-cta {
+  display: inline-block;
+  background: #0b3c5d;
+  padding: 14px 32px;
+  border-radius: 12px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.hero-cta:hover {
+  background: #07283d;
+  transform: translateY(-2px);
+}
+
+.hero-right img {
+  width: 520px;
+}
+/* ===== WHY FINAL ===== */
+.why-final {
+  padding: 80px 60px;
+  background: #f7f7f7;
+}
+
+.why-inner {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+
+.why-text h2 {
+  font-size: 38px;
+  margin-bottom: 20px;
+  color: #153f5c;
+}
+
+.why-text p {
+  font-size: 17px;
+  color: black;
+  line-height: 1.7;
+}
+
+.why-trust {
+  color: #0b3c5d;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.why-image img {
+  width: 460px;
+}
+/* ===== STATS FINAL ===== */
+/* ===== STATS FINAL ===== */
+
+.stats-final {
+  background: linear-gradient(
+    180deg,
+    #f1f5f9 0%,
+    #e2e8f0 100%
+  );
+  padding: 90px 20px;
+  text-align: center;
+}
+
+.stats-inner {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.stats-heading {
+  font-size: 32px;
+  color: black;
+  margin-bottom: 60px;
+  font-family: 'Times New Roman', Times, serif
+}
+
+/* ROW */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   max-width: 900px;
   margin: auto;
-  margin-bottom: 70px;
-  color: #1a1a1a;
-}
-
-/* ===== STATS ===== */
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 140px;
-}
-
-.stats div {
   text-align: center;
+  gap: 40px;
 }
+/* BOX */
 
-.stats h2 {
-  font-size: 42px;
-  font-weight: 700;
-  color: #0b3c5d;
-  margin-bottom: 10px;
-}
+
+/* NUMBERS */
 .stat-number {
   font-family: 'Playfair Display', serif;
-  font-size: 44px;
+  font-size: 48px;
   font-weight: 700;
   color: #0b3c5d;
   letter-spacing: 1px;
+  margin-bottom: 10px;
 }
-.stats p {
+
+/* LABEL */
+.stat-box p {
   font-size: 16px;
-  color: #555;
+  color: #475569;
+}
+
+
+/*STATS HIGHLIGHT TEXT*/
+
+.stats-highlight {
+  margin: 40px 0;              /* gap above & below */
+  text-align: center;
+}
+
+.stats-highlight p {
+  font-size: 18px;             /* slightly bigger */
+  line-height: 1.8;            /* nice two-line breathing */
+  color: grey;              /* soft professional text */
+  max-width: 750px;
+  margin: auto;
+  font-weight: 800;
+
 }
 
 /* ===== WHY SECTION ===== */
@@ -325,11 +453,7 @@ body {
   text-align: center;
 }
 
-.why-section h2 {
-  font-size: 30px;
-  margin-bottom: 35px;
-  font-weight: 600;
-}
+
 
 .why-section p {
   max-width: 900px;
@@ -346,7 +470,7 @@ body {
               inset 0 40px 80px rgba(0,0,0,0.25);
   color: #cbd5e1;
   width: 100%;
-  margin-top: 140px;
+  margin-top: 0px;
   position: relative;
   overflow: hidden;
 }
@@ -605,3 +729,5 @@ color: #38bdf8;
   color: #0b3c5d;
   letter-spacing: 1px;
 }
+
+
