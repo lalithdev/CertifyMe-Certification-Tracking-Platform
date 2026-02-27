@@ -32,12 +32,9 @@ body {
 .sidebar-top {
   display: flex;
   align-items: center;
-
-  padding: 40px 28px 30px 28px;
   justify-content: space-between;
-  padding: 24px; /* upgraded from 20px */
+  padding: 24px 18px;
 }
-
 .sidebar-brand {
   align-items: flex-start;
   padding: 24px 22px;
@@ -48,11 +45,31 @@ body {
   color: #ffffff; /* upgraded to white for dark sidebar */
 }
 
+.sidebar-brand svg {
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: #60a5fa !important;
+}
+
+
 /* Collapsed behavior */
 
 .sidebar.collapsed .sidebar-top {
   padding: 20px 10px;
 }
+.sidebar.collapsed .sidebar-brand {
+  padding: 0;
+  justify-content: center;
+  width: 100%;
+}
+
+.sidebar.collapsed .sidebar-brand svg {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  margin: 0 auto;
+}
+
 
 .sidebar.collapsed .nav-item span,
 .sidebar.collapsed .sidebar-title span {
@@ -147,6 +164,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  border-radius: 12px;
+  color:white;
 }
 .brand-tagline {
   font-size: 12px;
@@ -325,6 +347,15 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.user-name {
+  font-weight: 600;
+}
+
+.user-role {
+  color: #64748b;
+  text-transform: capitalize;
 }
 
 .avatar {
@@ -1124,3 +1155,77 @@ body {
 .brand-tagline {
   color: #94a3b8 !important;
 }
+
+
+
+/* === Brand: icon left, two-line text right, aligned perfectly === */
+.sidebar-brand {
+  display: grid;
+  grid-template-columns: 22px auto;     /* icon column + text column */
+  grid-template-areas:
+    "icon name"
+    "icon tagline";
+  align-items: center;                   /* center icon against the two lines */
+  column-gap: 12px;
+  padding: 22px 22px 20px;               /* subtle top/bottom balance */
+  color: #fff;
+}
+
+/* Icon column — ONLY the icon uses blue */
+.sidebar-brand .brand-icon {
+  grid-area: icon;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  color: #60a5fa;                        /* 🔵 blue stroke (icon only) */
+}
+
+/* Lucide icon inside .brand-icon */
+.sidebar-brand .brand-icon svg {
+  width: 18px;
+  height: 18px;
+  color: currentColor;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* Text column (grid places children directly) */
+.sidebar-brand .brand-text {
+  display: contents;
+}
+
+/* “CertifyMe” line — font size increased */
+.sidebar-brand .brand-name {
+  grid-area: name;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: 700;
+  font-size: 22px;                       /* ⬆️ increase to 24px if preferred */
+  line-height: 1.15;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+}
+
+/* Tagline directly under name (not under icon) */
+.sidebar-brand .brand-tagline {
+  grid-area: tagline;
+  margin: 4px 0 0 0;
+  font-size: 12.5px;
+  line-height: 1.1;
+  color: #cbd5e1;                         /* soft slate */
+  letter-spacing: 0.2px;
+  -webkit-text-fill-color: #cbd5e1;
+  max-width: 170px;                       /* controls where it wraps */
+  white-space: normal;                    /* allow wrap naturally */
+}
+
+/* Collapsed state: center icon, text hidden via JSX */
+.sidebar.collapsed .sidebar-brand {
+  grid-template-columns: 1fr;
+  grid-template-areas: "icon";
+  justify-items: center;
+  padding: 18px 10px;
+}
+

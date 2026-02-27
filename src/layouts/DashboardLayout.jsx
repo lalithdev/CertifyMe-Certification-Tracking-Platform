@@ -36,10 +36,12 @@ function DashboardLayout() {
       <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
         <div className="sidebar-top">
         <div className="sidebar-brand">
-  <BadgeCheck size={28} strokeWidth={2.5} />
+      <BadgeCheck size={28} strokeWidth={2.5} color="#ffffff" />
 
   {!collapsed && (
+
      <div className="brand-text">
+      
         <div className="brand-name">CertifyMe</div>
         <div className="brand-tagline">
           Track. Manage. Renew.
@@ -189,11 +191,21 @@ function DashboardLayout() {
 
   <div className="user-block">
     <div className="avatar">
-  {user?.name?.charAt(0).toUpperCase()}
-</div>
+      {user?.name
+        ?.split(" ")
+        .map(n => n[0])
+        .join("")
+        .toUpperCase()
+      }
+    </div>
     <div className="user-info">
-  <span>{user?.name}</span>
-  <small>{user?.role}</small>
+  <span className="user-name">
+    {user?.name}
+  </span>
+
+  <small className="user-role">
+    {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
+  </small>
 </div>
   </div>
 

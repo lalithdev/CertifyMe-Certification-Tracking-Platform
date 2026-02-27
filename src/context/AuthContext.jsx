@@ -1,11 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import defaultUsers from "../data/defaultUsers.json";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Load logged in user on refresh
+  // Load logged in user
   useEffect(() => {
     const storedUser = localStorage.getItem("loggedInUser");
     if (storedUser) {
@@ -13,50 +14,61 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  // Get ALL users (JSON + localStorage)
+  const getAllUsers = () => {
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    return [...defaultUsers, ...storedUsers];
+  };
+
   // SIGNUP
   const signup = (name, email, password, role) => {
-  console.log("Signup called");
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const allUsers = getAllUsers();
 
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+    const existingUser = allUsers.find((u) => u.email === email);
 
-  const existingUser = users.find((u) => u.email === email);
+    if (existingUser) {
+      return { success: false, message: "Account already exists." };
+    }
 
-  if (existingUser) {
-    return { success: false, message: "Account already exists." };
-  }
+    const newUser = { name, email, password, role };
 
-  const newUser = { name, email, password, role };
+    storedUsers.push(newUser);
+    localStorage.setItem("users", JSON.stringify(storedUsers));
 
-  users.push(newUser);
-
-  localStorage.setItem("users", JSON.stringify(users));
-
-  console.log("Users after signup:", users);
-
-  return { success: true };
-};
+    return { success: true };
+  };
 
   // LOGIN
   const login = (email, password) => {
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+    const allUsers = getAllUsers();
 
-  const foundUser = users.find((u) => u.email === email);
+    const foundUser = allUsers.find((u) => u.email === email);
 
-  if (!foundUser) {
-    return { success: false, message: "No account found." };
-  }
+    if (!foundUser) {
+      return { success: false, message: "No account found." };
+    }
 
-  if (foundUser.password !== password) {
-    return { success: false, message: "Incorrect password." };
-  }
+    if (foundUser.password !== password) {
+      return { success: false, message: "Incorrect password." };
+    }
 
-  localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
-  setUser(foundUser);
+    localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
+    setUser(foundUser);
 
-  return { success: true, user: foundUser }; // ✅ return user
+    const formattedUser = {
+  ...foundUser,
+  name: foundUser.name
+    ? foundUser.name
+    : `${foundUser.firstName || ""} ${foundUser.lastName || ""}`.trim()
 };
 
-  // LOGOUT
+localStorage.setItem("loggedInUser", JSON.stringify(formattedUser));
+setUser(formattedUser);
+
+return { success: true, user: formattedUser };
+  };
+
   const logout = () => {
     localStorage.removeItem("loggedInUser");
     setUser(null);

@@ -25,32 +25,44 @@ function Signup() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
   e.preventDefault();
   setError("");
-if (
-  !form.email ||
-  !form.password ||
-  !form.confirmPassword ||   // ✅ ADD
-  !form.firstName ||
-  !form.lastName ||
-  !form.country ||
-  !form.role
-) {
-  setError("Please fill all required fields.");
-  return;
-}
 
-// ✅ Password match check
-if (form.password !== form.confirmPassword) {
-  setError("Passwords do not match.");
-  return;
-}
+  if (
+    !form.email ||
+    !form.password ||
+    !form.confirmPassword ||
+    !form.firstName ||
+    !form.lastName ||
+    !form.country ||
+    !form.role
+  ) {
+    setError("Please fill all required fields.");
+    return;
+  }
+
+  if (form.password !== form.confirmPassword) {
+    setError("Passwords do not match.");
+    return;
+  }
+
+  // ✅ CALL AUTH SIGNUP HERE
+    const result = signup(
+    form.firstName + " " + form.lastName,
+    form.email,
+    form.password,
+    form.role
+  );
+
+  if (!result.success) {
+    setError(result.message);
+    return;
+  }
 
   alert("Account created successfully!");
   navigate("/login");
 };
-
   return (
     <div className="signup-wrapper">
       {/* LEFT SIDE */}
@@ -58,21 +70,21 @@ if (form.password !== form.confirmPassword) {
         <div className="back-home" onClick={() => navigate("/")}>
           ← Back to Website
         </div>
-        <div className="brand-content">
 
-         <img 
+        <img 
           src="/signup-illustration.png" 
           alt="Learning Illustration"
           className="signup-illus"
         />
-        <div className="brand-text">
+
+        <div className="signup-overlay-center">
           <h1>Certification Tracker</h1>
-        </div>
           <p>
             Manage, track and renew your certifications
             in one professional dashboard.
           </p>
         </div>
+
       </div>
 
       {/* RIGHT SIDE */}
