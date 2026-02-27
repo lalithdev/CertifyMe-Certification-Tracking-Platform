@@ -16,6 +16,7 @@ function DashboardLayout() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   console.log("Current User:", user);
 
   const hour = new Date().getHours();
@@ -33,7 +34,7 @@ function DashboardLayout() {
     <div className="dashboard-container">
 
       {/* Sidebar */}
-      <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
+      <aside className={`sidebar ${collapsed ? "collapsed" : ""} ${mobileOpen ? "open" : ""}`}>
         <div className="sidebar-top">
         <div className="sidebar-brand">
       <BadgeCheck size={28} strokeWidth={2.5} color="#ffffff" />
@@ -170,7 +171,13 @@ function DashboardLayout() {
  <div className="header-left">
   <button
     className="header-menu-btn"
-    onClick={() => setCollapsed(!collapsed)}
+    onClick={() => {
+      if (window.innerWidth <= 768) {
+        setMobileOpen(!mobileOpen);
+      } else {
+        setCollapsed(!collapsed);
+      }
+    }}
   >
     <Menu size={20} />
   </button>

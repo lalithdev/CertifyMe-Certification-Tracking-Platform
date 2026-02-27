@@ -1,3 +1,44 @@
+/* ================= MOBILE RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+  /* Sidebar becomes overlay */
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    top: 0;
+    height: 100%;
+    z-index: 999;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  /* Main should take full width */
+  .dashboard-main {
+    width: 100%;
+  }
+
+  /* Header spacing */
+  .dashboard-header {
+    padding: 0 16px;
+  }
+
+  .dashboard-content {
+    padding: 20px;
+  }
+
+  /* Hide sidebar brand text */
+  .sidebar-brand .brand-text {
+    display: none;
+  }
+
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+
 /* ===== GLOBAL BACKGROUND LAYER ===== */
 
 body {
