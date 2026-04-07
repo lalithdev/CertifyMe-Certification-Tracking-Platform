@@ -1,25 +1,23 @@
-const certifications = [
-  {
-    id: 1,
-    name: "AWS Solutions Architect",
-    provider: "Amazon",
-    issueDate: "2024-01-15",
-    expiryDate: "2027-01-15",
-    status: "active",
-  },
-];
+import { axiosInstance } from "./axiosInstance";
 
 export const certificationApi = {
-  getAll: async () => {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(certifications), 500);
-    });
+
+  getAll: async (userId) => {
+    const res = await axiosInstance.get(`/certifications/user/${userId}`);
+    return res.data;
   },
 
-  create: async (data) => {
-    return new Promise((resolve) => {
-      certifications.push({ id: Date.now(), ...data });
-      resolve(data);
-    });
+  update: async (id, data) => {
+    const res = await axiosInstance.put(`/certifications/${id}`, data);
+    return res.data;
+  },
+
+  delete: async (id) => {
+    await axiosInstance.delete(`/certifications/${id}`);
+  },
+
+  create: async (userId, data) => {
+    const res = await axiosInstance.post(`/certifications/user/${userId}`, data);
+    return res.data;
   },
 };

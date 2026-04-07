@@ -1,25 +1,23 @@
-// Fake DB using localStorage
+import { axiosInstance } from "./axiosInstance";
 
-const USERS_KEY = "certifyme_users";
+export const authApi = {
 
-export const getUsers = () => {
-  const users = localStorage.getItem(USERS_KEY);
-  return users ? JSON.parse(users) : [];
-};
+  // ✅ SIGNUP → BACKEND
+  signup: async (data) => {
+    const res = await axiosInstance.post("/auth/register", data);
+    return res.data;
+  },
 
-export const saveUsers = (users) => {
-  localStorage.setItem(USERS_KEY, JSON.stringify(users));
-};
+  // ✅ LOGIN → BACKEND
+  login: async (data) => {
+    const res = await axiosInstance.post("/auth/login", data);
+    return res.data;
+  },
 
-export const addUser = (user) => {
-  const users = getUsers();
-  users.push(user);
-  saveUsers(users);
-};
+  // ✅ RESEND OTP → BACKEND
+  resendOtp: async (email) => {
+    const res = await axiosInstance.post("/auth/resend-otp", { email });
+    return res.data;
+  },
 
-export const findUser = (email, password) => {
-  const users = getUsers();
-  return users.find(
-    (u) => u.email === email && u.password === password
-  );
 };

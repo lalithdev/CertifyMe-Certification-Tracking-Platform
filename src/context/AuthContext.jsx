@@ -1,81 +1,102 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import defaultUsers from "../data/defaultUsers.json";
-
-export const AuthContext = createContext();
+import { useContext, useState } from "react";
+import { AuthContext } from "./AuthContextValue";
+import { authApi } from "../api/authApi"; // ✅ ADDED
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
 
-  // Load logged in user
-  useEffect(() => {
-    const storedUser = localStorage.getItem("loggedInUser");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
+  // ✅ SIGNUP HANDLED BY BACKEND
+  const signup = async (userData) => {
+    try {
+      const response = await authApi.signup(userData);
+      const { token, user: backendUser } = response;
+      if (token) {
+        localStorage.setItem("token", token);
+      }
+      
+      const formattedUser = {
+        ...backendUser,
+        name: backendUser?.firstName ? `${backendUser.firstName} ${backendUser.lastName}` : backendUser?.name,
+      };
+      
+      localStorage.setItem("user", JSON.stringify(formattedUser));
+      setUser(formattedUser);
+      
+      return { success: true, user: formattedUser };
+    } catch (err) {
+      const message = err.response?.data?.message || err.message || "Signup failed";
+      return { success: false, message };
     }
-  }, []);
-
-  // Get ALL users (JSON + localStorage)
-  const getAllUsers = () => {
-    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-    return [...defaultUsers, ...storedUsers];
   };
 
-  // SIGNUP
-  const signup = (name, email, password, role) => {
-    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const allUsers = getAllUsers();
+  // ✅ LOGIN USING BACKEND
+  const login = async (data) => {
+    try {
+      const response = await authApi.login(data);
+      
+      // Handle the two-stage Admin OTP flow
+      if (response.otpRequired) {
+        return { 
+          success: true, 
+          otpRequired: true,
+          remainingValiditySeconds: response.remainingValiditySeconds,
+          resendCooldownSeconds: response.resendCooldownSeconds
+        };
+      }
 
-    const existingUser = allUsers.find((u) => u.email === email);
+      const { token, user: backendUser } = response;
 
-    if (existingUser) {
-      return { success: false, message: "Account already exists." };
+      if (!token || !backendUser) {
+        return { success: false, message: "Invalid login response" };
+      }
+
+      localStorage.setItem("token", token);
+
+      const formattedUser = {
+        ...backendUser,
+        name: backendUser.firstName && backendUser.lastName
+          ? `${backendUser.firstName} ${backendUser.lastName}`
+          : backendUser.name || backendUser.firstName || "User",
+      };
+
+      localStorage.setItem("user", JSON.stringify(formattedUser));
+      setUser(formattedUser);
+
+      return { success: true, user: formattedUser };
+
+    } catch (err) {
+      console.error("Login Error:", err);
+      const msg = err.response?.data?.message || err.response?.data || "Invalid email or password";
+      return { success: false, message: typeof msg === 'string' ? msg : "Login failed" };
     }
-
-    const newUser = { name, email, password, role };
-
-    storedUsers.push(newUser);
-    localStorage.setItem("users", JSON.stringify(storedUsers));
-
-    return { success: true };
   };
 
-  // LOGIN
-  const login = (email, password) => {
-    const allUsers = getAllUsers();
-
-    const foundUser = allUsers.find((u) => u.email === email);
-
-    if (!foundUser) {
-      return { success: false, message: "No account found." };
+  const resendOtp = async (email) => {
+    try {
+      const response = await authApi.resendOtp(email);
+      return { 
+        success: true, 
+        remainingValiditySeconds: response.remainingValiditySeconds,
+        resendCooldownSeconds: response.resendCooldownSeconds
+      };
+    } catch (err) {
+      const msg = err.response?.data?.message || err.response?.data || "Resend failed";
+      return { success: false, message: typeof msg === 'string' ? msg : "Resend failed" };
     }
-
-    if (foundUser.password !== password) {
-      return { success: false, message: "Incorrect password." };
-    }
-
-    localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
-    setUser(foundUser);
-
-    const formattedUser = {
-  ...foundUser,
-  name: foundUser.name
-    ? foundUser.name
-    : `${foundUser.firstName || ""} ${foundUser.lastName || ""}`.trim()
-};
-
-localStorage.setItem("loggedInUser", JSON.stringify(formattedUser));
-setUser(formattedUser);
-
-return { success: true, user: formattedUser };
   };
 
   const logout = () => {
-    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, signup, login, logout }}>
+    <AuthContext.Provider value={{ user, signup, login, resendOtp, logout }}>
       {children}
     </AuthContext.Provider>
   );

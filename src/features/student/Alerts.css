@@ -1,0 +1,110 @@
+.alerts-page {
+  padding: 40px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+.alerts-header {
+  margin-bottom: 40px;
+}
+
+.alerts-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+  margin-bottom: 8px;
+}
+
+.alerts-header p {
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* ALERTS LIST */
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.alert-item {
+  background: white;
+  padding: 24px 32px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+  border: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.alert-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: #6366f1;
+}
+
+.alert-item.warning::before { background: #f59e0b; }
+.alert-item.danger::before { background: #ef4444; }
+.alert-item.success::before { background: #10b981; }
+
+.alert-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04);
+}
+
+.alert-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.alert-item.warning .alert-icon { background: #fffbeb; color: #d97706; }
+.alert-item.danger .alert-icon { background: #fef2f2; color: #dc2626; }
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-content h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.alert-content p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.alert-time {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .alerts-page { padding: 24px; }
+  .alert-item { flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px; }
+  .alert-time { align-self: flex-end; }
+}

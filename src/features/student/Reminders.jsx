@@ -1,87 +1,130 @@
-import { AlertTriangle, Calendar, Bell, CheckCircle } from "lucide-react";
+import { Bell, CheckCircle } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import { useAuth } from "../../context";
+import { notificationApi } from "../../api/notificationApi";
+import { toast } from "sonner";
+import { formatDate } from "../../utils/dateFormatter";
+import "./Reminders.css";
 
 const Reminders = () => {
+
+  const { user } = useAuth();
+  const [reminders, setReminders] = useState([]);
+  const prevCountRef = useRef(0);
+
+  // ✅ SAFE DATE FORMAT
+  const formatSafeDate = (date) => {
+    if (!date) return "-";
+    try {
+      return new Date(date).toISOString().split("T")[0];
+    } catch {
+      return "-";
+    }
+  };
+
+  // ✅ REAL-TIME POLLING FOR ADMIN REMINDERS
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const loadRemindersAndSync = async () => {
+      try {
+        const response = await notificationApi.getNotifications(0, 50); // Get recent 50
+        const data = response.content || [];
+        
+        // Map backend notifications to UI reminder format
+        const reminderList = data.map(n => ({
+          id: n.id,
+          title: n.title,
+          issuer: n.certificationTitle || "Admin System",
+          reminderDate: n.createdAt,
+          message: n.message,
+          type: n.type
+        }));
+
+        // ✅ TOAST COMPARISON LOGIC
+        // Only trigger if count increases AND it's not the initial load
+        if (reminderList.length > prevCountRef.current && prevCountRef.current !== 0) {
+          toast.success("New Reminder Received!", {
+            description: "You have a new message from the administrator.",
+            duration: 5000,
+            style: {
+              background: "#6366f1", // INDIGO THEME
+              color: "#ffffff",
+              border: "none",
+              borderRadius: "12px"
+            },
+            icon: <Bell size={18} color="#fff" />,
+          });
+        }
+
+        // Only update state if data actually changed to prevent flicker
+        setReminders(reminderList);
+        prevCountRef.current = reminderList.length;
+
+      } catch (err) {
+        console.error("Error loading reminders from polling", err);
+      }
+    };
+
+    // Initial Load
+    loadRemindersAndSync();
+
+    // Heartbeat: 10 Seconds
+    const intervalId = setInterval(loadRemindersAndSync, 10000);
+
+    // Cleanup interval on unmount
+    return () => {
+      clearInterval(intervalId);
+      console.log("Reminders polling cleared");
+    };
+  }, [user?.id]);
+
   return (
-    <div className="alerts-page">
+    <div className="reminders-page">
 
-      {/* Header */}
-      <div className="alerts-header">
-        <h1>Expiration Alerts</h1>
-        <p>Monitor renewal deadlines and take action</p>
+      {/* HEADER */}
+      <div className="reminders-header">
+        <h1>Reminders</h1>
+        <p>Notifications and alerts sent by the administrator</p>
       </div>
 
-      {/* Summary Cards */}
-      <div className="alerts-summary-grid">
+      {/* LIST */}
+      <div className="reminder-list">
 
-        <div className="alert-card expired">
-          <div className="alert-icon red">
-            <AlertTriangle size={22} />
+        {reminders.length === 0 ? (
+          <div className="empty-state">
+            <CheckCircle size={20} />
+            <span>No reminders from admin</span>
           </div>
-          <h2>0</h2>
-          <p>Expired</p>
-        </div>
+        ) : (
+          reminders.map((r) => (
+            <div key={r.id} className={`reminder-card ${r.type === 'REMINDER' ? 'priority-card' : ''}`}>
 
-        <div className="alert-card thirty">
-          <div className="alert-icon yellow">
-            <Calendar size={22} />
-          </div>
-          <h2>0</h2>
-          <p>Expiring in 30 Days</p>
-        </div>
+              <div className="reminder-header-row">
+                <Bell size={18} />
+                <h3>{r.title}</h3>
+              </div>
 
-        <div className="alert-card ninety">
-          <div className="alert-icon blue">
-            <Bell size={22} />
-          </div>
-          <h2>0</h2>
-          <p>Expiring in 90 Days</p>
-        </div>
+              <div className="reminder-body">
+                <p className="issuer">Source: {r.issuer}</p>
+                <p className="reminder-message">{r.message}</p>
+              </div>
 
-      </div>
+              <div className="reminder-footer">
+                <p className="reminder-date">
+                  Received: {formatSafeDate(r.reminderDate)}
+                </p>
+                {r.type === 'REMINDER' && (
+                  <p className="reminder-action">
+                    ⚡ Action required: Check your certification details
+                  </p>
+                )}
+              </div>
 
-      {/* Expired Section */}
-      <div className="alert-section red-bg">
-        <div className="alert-section-header">
-          <AlertTriangle size={20} />
-          <div>
-            <h3>Expired Certifications</h3>
-            <p>These certifications have already expired and need immediate attention</p>
-          </div>
-        </div>
-        <div className="alert-empty">
-          <CheckCircle size={18} />
-          <span>No certifications in this category</span>
-        </div>
-      </div>
+            </div>
+          ))
+        )}
 
-      {/* 30 Days */}
-      <div className="alert-section yellow-bg">
-        <div className="alert-section-header">
-          <Calendar size={20} />
-          <div>
-            <h3>Expiring Within 30 Days</h3>
-            <p>Take action soon to renew these certifications</p>
-          </div>
-        </div>
-        <div className="alert-empty">
-          <CheckCircle size={18} />
-          <span>No certifications in this category</span>
-        </div>
-      </div>
-
-      {/* 90 Days */}
-      <div className="alert-section blue-bg">
-        <div className="alert-section-header">
-          <Bell size={20} />
-          <div>
-            <h3>Expiring Within 90 Days</h3>
-            <p>Plan ahead for these upcoming renewals</p>
-          </div>
-        </div>
-        <div className="alert-empty">
-          <CheckCircle size={18} />
-          <span>No certifications in this category</span>
-        </div>
       </div>
 
     </div>

@@ -1,41 +1,66 @@
 import "./ExpiringCerts.css";
 import { AlertCircle, Eye, Bell } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { adminApi } from "../../api/adminApi";
+import { getUserName } from "../../utils/userUtils";
+import { toast } from "sonner";
 
 function ExpiringCerts() {
   const [selectedCert, setSelectedCert] = useState(null);
-  const [toast, setToast] = useState("");
+  const [expiringCerts, setExpiringCerts] = useState([]);
 
-  const expiringCerts = [
-    {
-      id: 1,
-      user: "Sarah Smith",
-      email: "sarah@example.com",
-      title: "Google Cloud Professional",
-      issuer: "Google",
-      expiry: "2026-03-10",
-      daysLeft: 15,
-    },
-    {
-      id: 2,
-      user: "Lisa Anderson",
-      email: "lisa@example.com",
-      title: "PMP Certification",
-      issuer: "PMI",
-      expiry: "2026-08-15",
-      daysLeft: 25,
-    },
-  ];
+  // ✅ LOAD DATA
+  const loadExpiringCerts = useCallback(async () => {
+    try {
+      const data = await adminApi.getAllCertifications();
+      console.log("Admin Expiring Certs - Raw Data:", data);
 
-  const handleReminder = (cert) => {
-    setToast(`Reminder sent to ${cert.user}`);
-    setTimeout(() => setToast(""), 3000);
+      const today = new Date();
+
+      const certsList = Array.isArray(data) ? data : (data?.content || []);
+
+      const filtered = certsList
+        .map((c) => {
+          const expiry = new Date(c.expiryDate);
+          const diff = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+
+          return {
+            id: c.id,
+            user: getUserName(c),
+            email: c.user?.email || "N/A",
+            title: c.title,
+            issuer: c.issuer,
+            expiry: c.expiryDate,
+            daysLeft: diff,
+          };
+        })
+        .filter((c) => c.daysLeft > 0 && c.daysLeft <= 30);
+
+      setExpiringCerts(filtered);
+    } catch (err) {
+      console.error("Error fetching expiring certs", err);
+      if (err.response?.status !== 401) {
+        toast.error("Failed to load expiring certifications");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    loadExpiringCerts();
+  }, [loadExpiringCerts]);
+
+  const handleReminder = async (cert) => {
+    try {
+      await adminApi.sendReminder(cert.id);
+      toast.success(`Reminder sent to ${cert.user}`);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to send reminder");
+    }
   };
 
   return (
     <div className="expiring-page">
-
-      {toast && <div className="toast">{toast}</div>}
 
       <h2>Expiring Certifications</h2>
       <p className="sub-text">

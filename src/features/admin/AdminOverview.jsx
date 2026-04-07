@@ -1,86 +1,139 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Users, Award, CheckCircle, Clock, Eye, Search } from "lucide-react";
 import "./AdminOverview.css";
+import { adminApi } from "../../api/adminApi";
+import { toast } from "sonner";
+import { getUserName } from "../../utils/userUtils";
 
 function AdminOverview() {
 
-    const certifications = [
-  {
-    id: 1,
-    user: "Rahul Sharma",
-    name: "AWS Solutions Architect",
-    issuer: "Amazon Web Services",
-    issueDate: "2024-01-15",
-    expiryDate: "2027-01-15",
-    daysLeft: 365,
-    status: "Active"
-  },
-  {
-    id: 2,
-    user: "Anita Verma",
-    name: "PMP Certification",
-    issuer: "PMI",
-    issueDate: "2024-02-01",
-    expiryDate: "2026-03-10",
-    daysLeft: 15,
-    status: "Expiring"
-  },
-  {
-    id: 3,
-    user: "Vikram Reddy",
-    name: "CISSP",
-    issuer: "ISC2",
-    issueDate: "2023-06-20",
-    expiryDate: "2025-06-20",
-    daysLeft: 120,
-    status: "Active"
-  },
-  {
-    id: 4,
-    user: "Sneha Iyer",
-    name: "SCRUM Master",
-    issuer: "Scrum Alliance",
-    issueDate: "2023-09-10",
-    expiryDate: "2025-09-10",
-    daysLeft: 90,
-    status: "Active"
-  },
-  {
-    id: 5,
-    user: "Arjun Patel",
-    name: "Google Cloud Professional",
-    issuer: "Google",
-    issueDate: "2023-05-05",
-    expiryDate: "2024-08-20",
-    daysLeft: 10,
-    status: "Expiring"
-  }
-];
-    const [search, setSearch] = useState("");
-    const [filter, setFilter] = useState("All");
-    const [selectedCert, setSelectedCert] = useState(null);
-    const [selected, setSelected] = useState(null);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("All");
+  const [selectedCert, setSelectedCert] = useState(null);
 
-    const filteredCerts = useMemo(() => {
-  return certifications.filter((cert) => {
-    const matchesSearch =
-      cert.user.toLowerCase().includes(search.toLowerCase()) ||
-      cert.name.toLowerCase().includes(search.toLowerCase());
-
-    const matchesFilter =
-      filter === "All" || cert.status === filter;
-
-    return matchesSearch && matchesFilter;
+  const [showModal, setShowModal] = useState(false);
+  const [newUser, setNewUser] = useState({
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    email: "",
+    password: ""
   });
-}, [search, filter]);
 
-    const openModal = (id) => {
-        setSelected(id);
-    };
+  const [users, setUsers] = useState([]);
+  const [certifications, setCertifications] = useState([]);
 
-    const closeModal = () => {
-  setSelected(null);
-    };
+  // ✅ LOAD USERS
+  const loadUsers = useCallback(async () => {
+    try {
+      const data = await adminApi.getAllUsers();
+      console.log("RAW JSON RESPONSE (USERS):", data);
+
+      const usersList = Array.isArray(data) ? data : (data?.content || []);
+      setUsers(usersList);
+    } catch (err) {
+      console.error("Error fetching users", err);
+      if (err.response?.status !== 401) {
+        toast.error("Failed to fetch users");
+      }
+    }
+  }, []);
+
+  // ✅ LOAD CERTIFICATIONS
+  const loadCerts = useCallback(async () => {
+    try {
+      const data = await adminApi.getAllCertifications();
+      console.log("RAW JSON RESPONSE (CERTIFICATIONS):", data);
+
+      const today = new Date();
+
+      const certsList = Array.isArray(data) ? data : (data?.content || []);
+
+      const formatted = certsList.map((c) => {
+        const expiry = new Date(c.expiryDate);
+        const diff = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+
+        return {
+          id: c.id,
+          user: getUserName(c),
+          name: c.title,
+          issuer: c.issuer,
+          issueDate: c.issueDate,
+          expiryDate: c.expiryDate,
+          daysLeft: diff,
+          status:
+            diff <= 0
+              ? "Expired"
+              : diff <= 30
+                ? "Expiring"
+                : "Active",
+        };
+      });
+
+      setCertifications(formatted);
+
+    } catch (err) {
+      console.error("Error fetching certs", err);
+      if (err.response?.status !== 401) {
+        toast.error("Failed to fetch certifications");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    loadUsers();
+    loadCerts();
+  }, [loadUsers, loadCerts]);
+
+  // ✅ STATS
+  const stats = {
+    totalUsers: users.length,
+    totalCerts: certifications.length,
+    active: certifications.filter(c => c.status === "Active").length,
+    expiring: certifications.filter(c => c.status === "Expiring").length,
+  };
+
+  // ✅ FILTER
+  const filteredCerts = useMemo(() => {
+    return certifications.filter((cert) => {
+      const matchesSearch =
+        cert.user.toLowerCase().includes(search.toLowerCase()) ||
+        cert.name.toLowerCase().includes(search.toLowerCase());
+
+      const matchesFilter =
+        filter === "All" || cert.status === filter;
+
+      return matchesSearch && matchesFilter;
+    });
+  }, [search, filter, certifications]);
+
+  // ✅ EXPIRING LIST
+  const expiringSoon = certifications.filter(c => c.daysLeft > 0 && c.daysLeft <= 30);
+
+  // ✅ RECENT (latest 3)
+  const recentCerts = [...certifications]
+    .sort((a, b) => new Date(b.issueDate) - new Date(a.issueDate))
+    .slice(0, 3);
+
+  const handleAddStudent = async () => {
+    try {
+      const studentData = {
+        ...newUser,
+        role: "STUDENT"
+      };
+
+      await adminApi.addStudent(studentData);
+
+      setShowModal(false);
+      loadUsers();
+      alert("Student added successfully");
+    } catch (err) {
+      console.error(err);
+      alert("Error adding student");
+    }
+  };
+
+
   return (
     <div className="admin-overview">
 
@@ -91,132 +144,119 @@ function AdminOverview() {
           <p>Manage and monitor all certifications professionally.</p>
         </div>
 
-        <button className="primary-btn">+ Add Student</button>
+        <button
+          className="primary-btn"
+          onClick={() => setShowModal(true)}
+        >
+          + Add Student
+        </button>
       </div>
 
-      {/* ===== Stats Section (Student Style) ===== */}
+      {/* STATS */}
       <div className="stats-row">
 
         <div className="stat-card">
           <div>
             <p>Total Users</p>
-            <h2>128</h2>
+            <h2>{stats.totalUsers}</h2>
           </div>
-          <div className="stat-icon blue">
-            <Users size={22} />
-          </div>
+          <div className="stat-icon blue"><Users size={22} /></div>
         </div>
 
         <div className="stat-card">
           <div>
             <p>Total Certifications</p>
-            <h2>542</h2>
+            <h2>{stats.totalCerts}</h2>
           </div>
-          <div className="stat-icon green">
-            <Award size={22} />
-          </div>
+          <div className="stat-icon green"><Award size={22} /></div>
         </div>
 
         <div className="stat-card">
           <div>
             <p>Active Certifications</p>
-            <h2>520</h2>
+            <h2>{stats.active}</h2>
           </div>
-          <div className="stat-icon emerald">
-            <CheckCircle size={22} />
-          </div>
+          <div className="stat-icon emerald"><CheckCircle size={22} /></div>
         </div>
 
         <div className="stat-card">
           <div>
             <p>Expiring Soon</p>
-            <h2>22</h2>
+            <h2>{stats.expiring}</h2>
           </div>
-          <div className="stat-icon yellow">
-            <Clock size={22} />
-          </div>
+          <div className="stat-icon yellow"><Clock size={22} /></div>
         </div>
 
       </div>
 
-      {/* ===== Expiring + Recent Section ===== */}
+      {/* EXPIRING + RECENT */}
       <div className="overview-grid">
 
-        {/* Expiring Certifications */}
+        {/* Expiring */}
         <div className="overview-card">
           <h3>Expiring Certifications (Next 30 Days)</h3>
 
-          <div className="list-row">
-            <div>
-              <strong>AWS Solutions Architect</strong>
-              <p>Rahul Sharma — Expires: 25 Aug 2025</p>
-            </div>
-            <span className="badge warning">Expiring</span>
-          </div>
-
-          <div className="list-row">
-            <div>
-              <strong>PMP Certification</strong>
-              <p>Anita Verma — Expires: 30 Aug 2025</p>
-            </div>
-            <span className="badge warning">Expiring</span>
-          </div>
-
+          {expiringSoon.length === 0 ? (
+            <p>No expiring certifications</p>
+          ) : (
+            expiringSoon.map((cert) => (
+              <div key={cert.id} className="list-row">
+                <div>
+                  <strong>{cert.name}</strong>
+                  <p>{cert.user} — Expires: {cert.expiryDate}</p>
+                </div>
+                <span className="badge warning">Expiring</span>
+              </div>
+            ))
+          )}
         </div>
 
-        {/* Recent Certifications */}
+        {/* Recent */}
         <div className="overview-card">
           <h3>Recent Certifications</h3>
 
-          <div className="list-row">
-            <div>
-              <strong>SCRUM Master</strong>
-              <p>Sneha Iyer — Registered Today</p>
-            </div>
-            <span className="badge success">New</span>
-          </div>
-
-          <div className="list-row">
-            <div>
-              <strong>CISSP</strong>
-              <p>Arun kumar — Registered 1 week Ago</p>
-            </div>
-            <span className="badge success">New</span>
-          </div>
-
-          <div className="list-row">
-            <div>
-              <strong>CISSP</strong>
-              <p>Vikram Reddy — Registered 2 Days Ago</p>
-            </div>
-            <span className="badge success">New</span>
-          </div>
-
+          {recentCerts.length === 0 ? (
+            <p>No recent certifications</p>
+          ) : (
+            recentCerts.map((cert) => (
+              <div key={cert.id} className="list-row">
+                <div>
+                  <strong>{cert.name}</strong>
+                  <p>{cert.user} — Registered Recently</p>
+                </div>
+                <span className="badge success">New</span>
+              </div>
+            ))
+          )}
         </div>
 
       </div>
-        <div className="table-top-bar">
-  <div className="search-bar">
-    <Search size={18} />
-    <input
-      type="text"
-      placeholder="Search by user or certification..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
-  </div>
 
-  <select
-    className="filter-dropdown"
-    value={filter}
-    onChange={(e) => setFilter(e.target.value)}
-  >
-    <option value="All">All</option>
-    <option value="Active">Active</option>
-    <option value="Expiring">Expiring</option>
-  </select>
-</div>
-      {/* ===== Full Activity Table (Complete Version) ===== */}
+      {/* SEARCH + FILTER */}
+      <div className="table-top-bar">
+        <div className="search-bar">
+          <Search size={18} />
+          <input
+            type="text"
+            placeholder="Search by user or certification..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+
+        <select
+          className="filter-dropdown"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option value="Active">Active</option>
+          <option value="Expiring">Expiring</option>
+          <option value="Expired">Expired</option>
+        </select>
+      </div>
+
+      {/* TABLE */}
       <div className="overview-card">
         <h3>Recent Activity</h3>
 
@@ -263,63 +303,122 @@ function AdminOverview() {
           </tbody>
         </table>
       </div>
+
+      {/* ADD STUDENT MODAL */}
+      {showModal && (
+        <div className="admin-modal-overlay">
+          <div className="admin-modal">
+            <h3>Add New Student</h3>
+            <input
+              type="text"
+              placeholder="First Name"
+              value={newUser.firstName}
+              onChange={(e) =>
+                setNewUser({ ...newUser, firstName: e.target.value })
+              }
+            />
+            <input
+              type="text"
+              placeholder="Middle Name (Optional)"
+              value={newUser.middleName}
+              onChange={(e) =>
+                setNewUser({ ...newUser, middleName: e.target.value })
+              }
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={newUser.lastName}
+              onChange={(e) =>
+                setNewUser({ ...newUser, lastName: e.target.value })
+              }
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              value={newUser.email}
+              onChange={(e) =>
+                setNewUser({ ...newUser, email: e.target.value })
+              }
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={newUser.password}
+              onChange={(e) =>
+                setNewUser({ ...newUser, password: e.target.value })
+              }
+            />
+            <div className="modal-actions">
+              <button onClick={handleAddStudent} className="primary-btn">
+                Add Student
+              </button>
+              <button
+                onClick={() => setShowModal(false)}
+                className="secondary-btn"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ✅ VIEW CERTIFICATION MODAL */}
       {selectedCert && (
-  <div className="modal-overlay" onClick={() => setSelectedCert(null)}>
-    <div
-      className="cert-modal"
-      onClick={(e) => e.stopPropagation()}
-    >
+        <div className="admin-modal-overlay">
+          <div className="admin-modal cert-detail-modal">
+            <div className="modal-header-flex">
+              <h3>Certification Details</h3>
+              <span className={`badge ${selectedCert.status === "Active" ? "success" : "warning"}`}>
+                {selectedCert.status}
+              </span>
+            </div>
 
-      <div className="modal-header">
-        <div className="modal-icon">
-          <Award size={28} />
+            <div className="detail-grid">
+              <div className="detail-item">
+                <label>User</label>
+                <strong>{selectedCert.user}</strong>
+              </div>
+              <div className="detail-item">
+                <label>Certification</label>
+                <strong>{selectedCert.name}</strong>
+              </div>
+              <div className="detail-item">
+                <label>Issuer</label>
+                <strong>{selectedCert.issuer}</strong>
+              </div>
+              <div className="detail-item">
+                <label>Credential ID</label>
+                <strong>{selectedCert.id}</strong>
+              </div>
+              <div className="detail-item">
+                <label>Issue Date</label>
+                <strong>{selectedCert.issueDate}</strong>
+              </div>
+              <div className="detail-item">
+                <label>Expiry Date</label>
+                <strong>{selectedCert.expiryDate}</strong>
+              </div>
+            </div>
+
+            <div className="days-left-highlight">
+              <Clock size={20} />
+              <span>{selectedCert.daysLeft} days remaining until expiry</span>
+            </div>
+
+            <div className="modal-actions">
+              <button
+                onClick={() => setSelectedCert(null)}
+                className="secondary-btn"
+                style={{ width: "100%" }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
         </div>
-
-        <div>
-          <h2>{selectedCert.name}</h2>
-          <p className="credential-id">
-            Credential ID: CERT-{selectedCert.id}234
-          </p>
-        </div>
-
-        <span className={`badge ${selectedCert.status === "Active" ? "success" : "warning"}`}>
-          {selectedCert.status.toUpperCase()}
-        </span>
-      </div>
-
-      <div className="modal-grid">
-        <div className="info-card">
-          <p>Issuer</p>
-          <strong>{selectedCert.issuer}</strong>
-        </div>
-
-        <div className="info-card">
-          <p>Issue Date</p>
-          <strong>{selectedCert.issueDate}</strong>
-        </div>
-
-        <div className="info-card">
-          <p>Expiry Date</p>
-          <strong>{selectedCert.expiryDate}</strong>
-        </div>
-
-        <div className="info-card">
-          <p>Days Remaining</p>
-          <strong className={selectedCert.status === "Expiring" ? "orange-text" : ""}>
-            {selectedCert.daysLeft} days
-          </strong>
-        </div>
-      </div>
-
-      <div className="modal-actions">
-        <button className="primary-btn">Download Certificate</button>
-        <button className="secondary-btn">Share</button>
-        <button className="close-btn" onClick={() => setSelectedCert(null)}>Close</button>
-      </div>
-
-    </div>
-  </div>
-)}
+      )}
     </div>
   );
 }

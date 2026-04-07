@@ -1,0 +1,112 @@
+.reminders-page {
+  padding: 40px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+.reminders-header {
+  margin-bottom: 40px;
+}
+
+.reminders-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+  margin-bottom: 8px;
+}
+
+.reminders-header p {
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* REMINDER LIST */
+.reminders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.reminder-item {
+  background: white;
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.25s ease;
+}
+
+.reminder-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.reminder-content h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.reminder-meta {
+  display: flex;
+  gap: 24px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.reminder-meta strong {
+  color: #6366f1;
+}
+
+/* ACTIONS */
+.reminder-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.delete-btn, .secondary-btn {
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+}
+
+.delete-btn:hover {
+  background: #fecaca;
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  background: #f1f5f9;
+  color: #475569;
+  border: none;
+}
+
+.secondary-btn:hover {
+  background: #e2e8f0;
+}
+
+@media (max-width: 640px) {
+  .reminders-page { padding: 24px; }
+  .reminder-item { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .reminder-actions { width: 100%; border-top: 1px solid #f1f5f9; padding-top: 20px; }
+  .delete-btn, .secondary-btn { flex: 1; text-align: center; }
+}

@@ -11,6 +11,7 @@ import Signup from "../features/auth/Signup";
 import Overview from "../features/student/Overview";
 import MyCertifications from "../features/student/MyCertifications";
 import Reminders from "../features/student/Reminders";
+import Alerts from "../features/student/Alerts";
 import Renewals from "../features/student/Renewals";
 import Reports from "../features/student/Reports";
 import Progress from "../features/student/Progress";
@@ -19,8 +20,10 @@ import Remarks from "../features/student/Remarks";
 
 import AdminOverview from "../features/admin/AdminOverview";
 import AdminAllCertifications from "../features/admin/AdminAllCertifications";
+import AdminAllStudents from "../features/admin/AdminAllStudents";
 import ExpiringCerts from "../features/admin/ExpiringCerts";
 import RenewalManagement from "../features/admin/RenewalManagement";
+import Profile from "../features/common/Profile";
 
 function AppRoutes() {
   return (
@@ -50,9 +53,11 @@ function AppRoutes() {
         <Route path="progress" element={<Progress />} />
         <Route path="renewals" element={<Renewals />} />
         <Route path="reminders" element={<Reminders />} />
+        <Route path="alerts" element={<Alerts />} />
         <Route path="certifications" element={<MyCertifications />} />
         <Route path="reports" element={<Reports />} />
         <Route path="remarks" element={<Remarks />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
 
       {/* ADMIN ROUTES */}
@@ -67,8 +72,10 @@ function AppRoutes() {
         {/* ✅ child paths must be relative */}
         <Route path="dashboard" element={<AdminOverview />} />
         <Route path="certifications" element={<AdminAllCertifications />} />
+        <Route path="mystudents" element={<AdminAllStudents />} />
         <Route path="expiring" element={<ExpiringCerts />} />
         <Route path="renewals" element={<RenewalManagement />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
     </Routes>
   );

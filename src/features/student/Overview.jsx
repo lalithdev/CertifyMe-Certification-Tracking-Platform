@@ -1,66 +1,72 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ added
 import "./Overview.css";
-import { BadgeCheck, Globe, Search, Users, GraduationCap, ClipboardList, Compass, Plus} from "lucide-react";
+import { BadgeCheck, Globe, Search, Users, GraduationCap, ClipboardList, Compass, Plus, TriangleAlert} from "lucide-react";
 import StatCard from "./components/StatCard";
 import CertificationCard from "./components/CertificationCard";
+import { certificationApi } from "../../api/certificationApi";
+import { formatDate } from "../../utils/dateformatter";
+import { useAuth } from "../../context";
 
 const Overview = () => {
+
+  const navigate = useNavigate(); // ✅ added
+  const { user } = useAuth(); // 🔥 get logged-in user
+
   const [search, setSearch] = useState("");
   const [selectedCert, setSelectedCert] = useState(null);
   const [showToast, setShowToast] = useState(false);
+  const [certifications, setCertifications] = useState([]);
 
-  const certifications = [
-    {
-      id: 1,
-      title: "AWS Solutions Architect Associate",
-      holder: "John Doe",
-      issuer: "Amazon Web Services",
-      issued: "January 15, 2024",
-      expires: "January 15, 2027",
-      credentialId: "AWS-SA-2024-001",
-      description: "Professional cloud architecture certification",
-      status: "Active",
-    },
-    {
-      id: 2,
-      title: "CompTIA Security+",
-      holder: "John Doe",
-      issuer: "CompTIA",
-      issued: "September 12, 2023",
-      expires: "September 12, 2026",
-      credentialId: "SEC-2023-889",
-      description: "Cybersecurity foundation certification",
-      status: "Active",
-    },
-    {
-      id: 3,
-      title: "Microsoft Azure Administrator",
-      holder: "John Doe",
-      issuer: "Microsoft",
-      issued: "May 10, 2023",
-      expires: "May 10, 2026",
-      credentialId: "AZ-104-556",
-      description: "Azure cloud infrastructure certification",
-      status: "Active",
-    },
-    {
-      id: 4,
-      title: "Google Professional Data Engineer",
-      holder: "John Doe",
-      issuer: "Google Cloud",
-      issued: "November 01, 2022",
-      expires: "November 01, 2025",
-      credentialId: "GCP-DE-778",
-      description: "Data engineering on Google Cloud",
-      status: "Active",
-    },
-  ];
+  const fetchCerts = useCallback(async () => {
+    try {
+      const data = await certificationApi.getAll(user.id);
 
+      const formatted = data.map((c) => {
+        const today = new Date();
+        const expiry = new Date(c.expiryDate);
+        const diff = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+
+        return {
+          id: c.id,
+          title: c.title,
+          holder: `${user.firstName}${user.middleName ? ' ' + user.middleName : ''} ${user.lastName}`,
+          issuer: c.issuer,
+          issued: formatDate(c.issueDate),
+        expires: formatDate(c.expiryDate),
+          credentialId: c.credentialId || "N/A",
+          description: "Certification from " + c.issuer,
+          status:
+            diff <= 0
+              ? "Expired"
+              : diff <= 30
+              ? "Expiring Soon"
+              : "Active",
+        };
+      });
+
+      setCertifications(formatted);
+
+    } catch (error) {
+      console.error("Error fetching certifications", error);
+    }
+  }, [user]);
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const loadCerts = async () => {
+      await fetchCerts();
+    };
+
+    loadCerts();
+  }, [fetchCerts, user?.id]);
+
+  // 🔥 STATS (DYNAMIC)
   const stats = {
     total: certifications.length,
-    active: certifications.length,
-    expiring: 0,
-    expired: 0,
+    active: certifications.filter(c => c.status === "Active").length,
+    expiring: certifications.filter(c => c.status === "Expiring Soon").length,
+    expired: certifications.filter(c => c.status === "Expired").length,
   };
 
   const filtered = certifications.filter(
@@ -76,15 +82,70 @@ const Overview = () => {
     return Math.ceil(diff / (1000 * 60 * 60 * 24));
   };
 
-  const handleRenewal = () => {
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
+  const handleDelete = async (id) => {
+    try {
+      await certificationApi.delete(id);
+      setCertifications((prev) => prev.filter((cert) => cert.id !== id));
+      alert("Deleted successfully");
+    } catch (error) {
+      console.error(error);
+      alert("Unable to delete certification.");
+    }
+  };
+
+  const handleEdit = async (cert) => {
+    const newTitle = prompt("Enter new title", cert.title);
+    if (!newTitle) return;
+
+    const updatedCert = {
+      title: newTitle,
+      issuer: cert.issuer,
+      issueDate: cert.issued,
+      expiryDate: cert.expires,
+      credentialId: cert.credentialId,
+      url: null,
+    };
+
+    try {
+      await certificationApi.update(cert.id, updatedCert);
+
+      setCertifications((prev) =>
+        prev.map((item) =>
+          item.id === cert.id ? { ...item, title: newTitle } : item
+        )
+      );
+
+      alert("Updated successfully");
+    } catch (error) {
+      console.error(error);
+      alert("Unable to update certification.");
+    }
+  };
+  
+  const handleRenewal = async (cert) => {
+    try {
+      const updated = {
+        ...cert,
+        renewalStatus: "PENDING"
+      };
+
+      await certificationApi.update(cert.id, updated);
+
+      alert("Renewal request sent ✅");
+
+      // refresh data
+      fetchCerts();
+
+    } catch (err) {
+      console.error(err);
+      alert("Failed ❌");
+    }
   };
 
   return (
     <div className="dashboard-page">
 
-      {/* Success Toast */}
+      {/* Toast */}
       {showToast && (
         <div className="toast-success">
           Renewal requested successfully!
@@ -95,15 +156,15 @@ const Overview = () => {
       <div className="page-header">
         <div className="page-title-section">
           <h1 className="page-title">Overview</h1>
-            <p className="page-subtitle">
-              Manage and track your certifications professionally.
-            </p>
-      </div>
+          <p className="page-subtitle">
+            Manage and track your certifications professionally.
+          </p>
+        </div>
 
-      <button className="add-btn">
-        <Plus size={18} />
-        <span>Add Certification</span>
-      </button>
+        <button className="add-btn" onClick={() => navigate("/student/register")}> {/* ✅ added */}
+          <Plus size={18} />
+          <span>Add Certification</span>
+        </button>
       </div>
 
       {/* Stats */}
@@ -115,18 +176,17 @@ const Overview = () => {
       </div>
 
       {/* Search */}
-      {/* Search */}
       <div className="overview-search-wrapper">
-  <div className="overview-search-container">
-    <Search size={18} className="overview-search-icon" />
-    <input
-      type="text"
-      placeholder="Search certifications..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
-  </div>
-</div>
+        <div className="overview-search-container">
+          <Search size={18} className="overview-search-icon" />
+          <input
+            type="text"
+            placeholder="Search certifications..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+      </div>
 
       {/* Cards */}
       <div className="cards-grid">
@@ -135,25 +195,24 @@ const Overview = () => {
             key={cert.id}
             cert={cert}
             onView={() => setSelectedCert(cert)}
-            onRenew={handleRenewal}
+            onRenew={() => handleRenewal(cert)}  // ✅ CORRECT
+            onEdit={() => handleEdit(cert)}
+            onDelete={() => handleDelete(cert.id)}
           />
         ))}
       </div>
 
-      {/* MODAL */}
+      {/* Modal */}
       {selectedCert && (
         <div className="modal-overlay">
           <div className="modal">
 
-            {/* Top Section */}
             <div className="modal-top">
               <div className="modal-icon">🏅</div>
 
               <div>
-                <h2 className="modal-title">
-                  {selectedCert.title}
-                </h2>
-                <span className="badge-active">Active</span>
+                <h2 className="modal-title">{selectedCert.title}</h2>
+                <span className="badge-active">{selectedCert.status}</span>
               </div>
 
               <button
@@ -164,7 +223,6 @@ const Overview = () => {
               </button>
             </div>
 
-            {/* First Row */}
             <div className="modal-grid">
               <div>
                 <p className="modal-label">Holder</p>
@@ -179,7 +237,6 @@ const Overview = () => {
 
             <hr className="modal-divider" />
 
-            {/* Second Row */}
             <div className="modal-grid">
               <div>
                 <p className="modal-label">Issue Date</p>
@@ -192,21 +249,17 @@ const Overview = () => {
               </div>
             </div>
 
-            {/* Time Remaining */}
             <div className="time-remaining-box">
-              Time Remaining:{" "}
-              {calculateDaysRemaining(selectedCert.expires)} days
+              Time Remaining: {calculateDaysRemaining(selectedCert.expires)} days
             </div>
 
             <hr className="modal-divider" />
 
-            {/* Credential */}
             <div style={{ marginBottom: "18px" }}>
               <p className="modal-label">Credential ID</p>
               <strong>{selectedCert.credentialId}</strong>
             </div>
 
-            {/* Description */}
             <div>
               <p className="modal-label">Description</p>
               <p>{selectedCert.description}</p>
