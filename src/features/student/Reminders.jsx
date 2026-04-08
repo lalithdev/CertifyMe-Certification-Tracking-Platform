@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useAuth } from "../../context";
 import { notificationApi } from "../../api/notificationApi";
 import { toast } from "sonner";
-import { formatDate } from "../../utils/dateFormatter";
+import { formatDate } from "../../utils/dateformatter";
 import "./Reminders.css";
 
 const Reminders = () => {
