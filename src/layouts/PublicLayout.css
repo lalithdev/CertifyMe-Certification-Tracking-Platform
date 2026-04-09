@@ -3,11 +3,13 @@
   width: 100%;
   min-height: 100vh;
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 .logo {
   font-size: 24px;
   font-weight: 600;
@@ -21,9 +23,9 @@
 .top-right {
   display: flex;
   align-items: center;
-   margin-left: auto;
+  margin-left: auto;
   gap: 24px;
-  
+
 }
 
 .top-links {
@@ -33,7 +35,8 @@
 
 .top-icons {
   display: flex;
-  gap: 18px;   /* change this for spacing */
+  gap: 18px;
+  /* change this for spacing */
 }
 
 .top-right span {
@@ -77,13 +80,17 @@
   gap: 5px;
 
   font-size: 13px;
-  cursor: pointer;.lang-switch:hover {
-  background: #f1f5f9;
+  cursor: pointer;
+
+  .lang-switch:hover {
+    background: #f1f5f9;
+  }
 }
-}
+
 .lang-switch:hover {
   background: #f1f5f9;
 }
+
 .top-link {
   font-size: 13px;
   color: #334155;
@@ -106,6 +113,7 @@
 .search-wrapper {
   position: relative;
 }
+
 .search-box {
   position: relative;
 }
@@ -128,7 +136,7 @@
   border: 1px solid #ddd;
   border-radius: 6px;
 
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   z-index: 999;
 }
 
@@ -150,11 +158,13 @@
   outline: none;
   font-size: 12px;
 }
+
 /* EMAIL */
 .top-email {
   font-size: 13px;
   color: #475569;
 }
+
 /* ===== MAIN HEADER ===== */
 
 .header-content {
@@ -162,8 +172,10 @@
   margin: auto;
   position: relative;
 
-  padding: 0 2px;   /* 🔥 FIX */
+  padding: 0 2px;
+  /* 🔥 FIX */
 }
+
 .header-inner {
   max-width: 1300px;
   margin: auto;
@@ -194,6 +206,7 @@ body {
   color: #e6eef4;
   text-decoration: none;
 }
+
 .main-nav span {
   color: white;
   font-size: 15px;
@@ -219,8 +232,10 @@ body {
   align-items: center;
   justify-content: center;
 
-  height: 54px;              /* 🔥 Increased height */
-  padding: 0 26px;           /* Slightly wider */
+  height: 54px;
+  /* 🔥 Increased height */
+  padding: 0 26px;
+  /* Slightly wider */
 
   font-family: 'Poppins', sans-serif;
   letter-spacing: 0.3px;
@@ -229,15 +244,17 @@ body {
   color: #0b3c5d;
 
   border: none;
-  border-radius: 16px;       /* Slightly more rounded */
+  border-radius: 16px;
+  /* Slightly more rounded */
 
-  font-size: 16px;           /* Slightly bigger */
+  font-size: 16px;
+  /* Slightly bigger */
   font-weight: 600;
   text-decoration: none;
 
-  box-shadow: 
-    0 6px 14px rgba(0,0,0,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.6);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
 
   transition: all 0.25s ease;
 }
@@ -247,8 +264,8 @@ body {
   transform: translateY(-2px);
 
   box-shadow:
-    0 10px 22px rgba(0,0,0,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.8);
+    0 10px 22px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 
   color: #0b3c5d;
 }
@@ -258,25 +275,29 @@ body {
   align-items: center;
   justify-content: center;
 
-  height: 54px;              /* 🔥 Increased height */
-  padding: 0 30px;           /* Slightly wider */
+  height: 54px;
+  /* 🔥 Increased height */
+  padding: 0 30px;
+  /* Slightly wider */
 
- font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif;
   letter-spacing: 0.3px;
 
   background: #f8fafc;
   color: #0b3c5d;
 
   border: none;
-  border-radius: 16px;       /* Slightly more rounded */
+  border-radius: 16px;
+  /* Slightly more rounded */
 
-  font-size: 16px;           /* Slightly bigger */
+  font-size: 16px;
+  /* Slightly bigger */
   font-weight: 600;
   text-decoration: none;
 
-  box-shadow: 
-    0 6px 14px rgba(0,0,0,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.6);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
 
   transition: all 0.25s ease;
 }
@@ -286,11 +307,12 @@ body {
   transform: translateY(-2px);
 
   box-shadow:
-    0 10px 22px rgba(0,0,0,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.8);
+    0 10px 22px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 
   color: #0b3c5d;
 }
+
 /* ===== HERO SECTION ===== */
 /* ===== HERO FINAL ===== */
 
@@ -298,11 +320,9 @@ body {
 
 .hero-final {
   padding: 80px 60px;
-  background: linear-gradient(
-    180deg,
-    #f1f5f9 0%,
-    #e2e8f0 100%
-  );
+  background: linear-gradient(180deg,
+      #f1f5f9 0%,
+      #e2e8f0 100%);
 }
 
 .hero-final-inner {
@@ -399,15 +419,14 @@ body {
 .why-image img {
   width: 460px;
 }
+
 /* ===== STATS FINAL ===== */
 /* ===== STATS FINAL ===== */
 
 .stats-final {
-  background: linear-gradient(
-    180deg,
-    #f1f5f9 0%,
-    #e2e8f0 100%
-  );
+  background: linear-gradient(180deg,
+      #f1f5f9 0%,
+      #e2e8f0 100%);
   padding: 90px 20px;
   text-align: center;
 }
@@ -435,6 +454,7 @@ body {
   text-align: center;
   gap: 40px;
 }
+
 /* BOX */
 
 
@@ -458,42 +478,46 @@ body {
 /*STATS HIGHLIGHT TEXT*/
 
 .stats-highlight {
-  margin: 40px 0;              /* gap above & below */
+  margin: 40px 0;
+  /* gap above & below */
   text-align: center;
 }
 
 .stats-highlight p {
-  font-size: 18px;             /* slightly bigger */
-  line-height: 1.8;            /* nice two-line breathing */
-  color: grey;              /* soft professional text */
+  font-size: 18px;
+  /* slightly bigger */
+  line-height: 1.8;
+  /* nice two-line breathing */
+  color: grey;
+  /* soft professional text */
   max-width: 750px;
   margin: auto;
   font-weight: 800;
 
 }
+
 /* ================= FINAL FOOTER POLISH ================= */
 /* ================= PREMIUM CERTIFYME FOOTER ================= */
 
 .footer {
-   background: linear-gradient(
-    90deg,
-    #02121a 0%,
-    #031c28 50%,
-    #042536 100%
-  );
-  box-shadow: 0 -1px 0 rgba(255,255,255,0.05);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(90deg,
+      #02121a 0%,
+      #031c28 50%,
+      #042536 100%);
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   color: #cbd5e1;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
 
   width: 100%;
   margin-top: 0px;
   position: relative;
 }
+
 .footer-logo {
   position: relative;
   color: #38bdf8;
-  
+
 
 }
 
@@ -504,18 +528,19 @@ body {
   height: 120px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
 
-  background: radial-gradient(circle, rgba(56,189,248,0.15), transparent 70%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent 70%);
   top: -40px;
   left: -30px;
   z-index: -1;
 }
+
 /* subtle premium glow */
 .footer::before {
   content: "";
   position: absolute;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(14,165,233,0.06), transparent 70%);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.06), transparent 70%);
   top: -250px;
   left: -200px;
   z-index: 0;
@@ -540,15 +565,15 @@ body {
 /* BRAND */
 .footer-brand {
   max-width: 320px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-    font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-weight: 600;
 
 }
 
 .footer-brand h3 {
   font-size: 35px;
   margin-bottom: 14px;
-  font-weight:900px;
+  font-weight: 900px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -561,7 +586,7 @@ body {
   line-height: 1.7;
   color: #94a3b8;
   margin-bottom: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
 
 }
 
@@ -569,7 +594,8 @@ body {
 .footer-social-wrapper {
   margin-top: 22px;
   display: flex;
-  flex-direction: column;   /* 🔥 forces vertical layout */
+  flex-direction: column;
+  /* 🔥 forces vertical layout */
   align-items: flex-start;
 }
 
@@ -588,8 +614,8 @@ body {
 .footer-social .social-box {
   width: 42px;
   height: 42px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -599,8 +625,8 @@ body {
 }
 
 .footer-social .social-box:hover {
-  background: rgba(56,189,248,0.15);
-  border-color: rgba(56,189,248,0.4);
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.4);
   transform: translateY(-2px);
 }
 
@@ -613,13 +639,11 @@ body {
   align-items: center;
   justify-content: center;
 
-  border: 1px solid rgba(56,189,248,0.25);
+  border: 1px solid rgba(56, 189, 248, 0.25);
 
-  background: linear-gradient(
-    145deg,
-    rgba(255,255,255,0.04),
-    rgba(255,255,255,0.01)
-  );
+  background: linear-gradient(145deg,
+      rgba(255, 255, 255, 0.04),
+      rgba(255, 255, 255, 0.01));
 
   backdrop-filter: blur(6px);
 
@@ -629,16 +653,16 @@ body {
 .footer-social a:hover {
   transform: translateY(-4px);
   border-color: #38bdf8;
-  background: rgba(56,189,248,0.08);
-  box-shadow: 0 8px 20px rgba(56,189,248,0.2);
+  background: rgba(56, 189, 248, 0.08);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.2);
 }
 
 /* COLUMN */
 .footer-column h4 {
   font-size: 15px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
 
-color: #38bdf8;
+  color: #38bdf8;
   margin-bottom: 18px;
   font-weight: 500;
 }
@@ -651,13 +675,15 @@ color: #38bdf8;
   color: #cbd5e1;
   transition: 0.25s ease;
   cursor: pointer;
-  text-decoration: none; /* prevents underline */
+  text-decoration: none;
+  /* prevents underline */
 }
 
 /* Hover = ONLY color change */
 .footer-column a:hover {
   color: #38bdf8;
-  text-decoration: none; /* ensures no underline */
+  text-decoration: none;
+  /* ensures no underline */
 }
 
 /* CONTACT ICON ROW */
@@ -685,11 +711,12 @@ color: #38bdf8;
   margin-top: 28px;
   flex-wrap: wrap;
 
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   padding: 10px;
   border-radius: 16px;
   backdrop-filter: blur(6px);
 }
+
 /* ================= TRUST BADGES UPGRADE ================= */
 .footer-trust-strip {
   display: flex;
@@ -701,12 +728,10 @@ color: #38bdf8;
 /* DIVIDER */
 .footer-divider {
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(56,189,248,0.4),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(56, 189, 248, 0.4),
+      transparent);
   margin: 40px 0 25px;
 }
 
@@ -714,9 +739,10 @@ color: #38bdf8;
 .footer-bottom {
   text-align: center;
   font-size: 13px;
-  
+
   color: #64748b;
 }
+
 /* ================= FOOTER COLOR POLISH ================= */
 
 /* BRAND TITLE */
@@ -725,7 +751,7 @@ color: #38bdf8;
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -739,7 +765,7 @@ color: #38bdf8;
 
 /* HOVER EFFECT */
 .footer-social .social-box:hover {
-  background: rgba(56,189,248,0.12);
+  background: rgba(56, 189, 248, 0.12);
   border-color: #38bdf8;
   transform: translateY(-3px);
 }
@@ -752,6 +778,7 @@ color: #38bdf8;
   color: #0b3c5d;
   letter-spacing: 1px;
 }
+
 /* ===== NEW HEADER ===== */
 
 
@@ -760,11 +787,23 @@ color: #38bdf8;
   text-decoration: none;
 }
 
+/* Desktop: Keep links horizontal, hide hamburger */
+.mobile-menu-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.hamburger-btn {
+  display: none;
+}
+
 /* ===== HERO ===== */
 /* ===== NEW HEADER (FINAL) ===== */
 .new-header {
   position: realtive;
-  top: 36px; /* below top strip */
+  top: 36px;
+  /* below top strip */
 
   left: 0;
   right: 0;
@@ -774,14 +813,12 @@ color: #38bdf8;
 
   z-index: 1000;
 
-  background: linear-gradient(
-    90deg,
-    #02121a 0%,
-    #031c28 50%,
-    #042536 100%
-  );
+  background: linear-gradient(90deg,
+      #02121a 0%,
+      #031c28 50%,
+      #042536 100%);
 
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .new-header-inner {
@@ -793,9 +830,11 @@ color: #38bdf8;
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 2px;   /* 🔥 FIX */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+  padding: 0 2px;
+  /* 🔥 FIX */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
+
 .new-logo {
   display: flex;
   align-items: center;
@@ -816,12 +855,16 @@ color: #38bdf8;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
   letter-spacing: 0px;
 }
+
 .new-nav a {
   color: #e2e8f0;
-  font-weight: 500;      /* default white */
-  text-decoration: none; /* remove underline */
+  font-weight: 500;
+  /* default white */
+  text-decoration: none;
+  /* remove underline */
   transition: 0.3s;
 }
+
 .new-nav a:hover {
   color: #3b82f6;
   opacity: 0.8;
@@ -830,8 +873,9 @@ color: #38bdf8;
 .new-nav span:hover {
   opacity: 0.7;
   color: #3b82f6;
-  
+
 }
+
 .new-nav a:visited {
   color: #ffffff;
 }
@@ -839,6 +883,7 @@ color: #38bdf8;
 .new-nav a:active {
   color: #ffffff;
 }
+
 .new-auth {
   display: flex;
   align-items: center;
@@ -857,60 +902,70 @@ color: #38bdf8;
 .divider {
   color: #aaa;
 }
+
 .new-nav span,
 .top-left span {
   cursor: pointer;
 }
-/* ===== HERO (FINAL) ===== *//* ===== FULL BACKGROUND HERO ===== */
+
+/* ===== HERO (FINAL) ===== */
+/* ===== FULL BACKGROUND HERO ===== */
 .new-hero-bg {
   position: relative;
 
-  height: calc(100vh - 111px); /* 36 + 75 */
+  height: calc(100vh - 111px);
+  /* 36 + 75 */
 
   background: url("/PublicLandingPageBg.jpg") center/cover no-repeat;
 
   display: flex;
   align-items: center;
 }
+
 /* DARK OVERLAY (VERY IMPORTANT) */
 .hero-overlay {
   width: 100%;
   height: 100%;
 
-  background: linear-gradient(
-    to right,
-    rgba(0,0,0,0.75) 20%,
-    rgba(0,0,0,0.4) 50%,
-    rgba(0,0,0,0.2) 100%
-  );
+  background: linear-gradient(to right,
+      rgba(0, 0, 0, 0.75) 20%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.2) 100%);
 
   display: flex;
   align-items: center;
 }
+
 .hero-title,
 .hero-desc {
   max-width: 520px;
 }
+
 /* CONTENT */
 .hero-content {
   max-width: 1200px;
   margin: 0 50px;
 
-  padding-left: 100px;   /* 🔥 THIS IS THE KEY */
+  padding-left: 100px;
+  /* 🔥 THIS IS THE KEY */
   padding-right: 20px;
 
   display: flex;
   flex-direction: column;
-  align-items: flex-start;  /* 🔥 force left */
-justify-content: flex-start;  /* 🔥 ensures left */
+  align-items: flex-start;
+  /* 🔥 force left */
+  justify-content: flex-start;
+  /* 🔥 ensures left */
   color: white;
-    align-items: flex-start;   /* 🔥 KEY FIX */
+  align-items: flex-start;
+  /* 🔥 KEY FIX */
 
-  text-align: left; 
+  text-align: left;
   opacity: 0;
   transform: translateY(40px);
   animation: fadeUp 1s ease forwards;
 }
+
 @keyframes fadeUp {
   to {
     opacity: 1;
@@ -935,17 +990,20 @@ justify-content: flex-start;  /* 🔥 ensures left */
   max-width: 500px;
   line-height: 1.6;
 }
+
 /* ===== HERO BUTTONS (PROTOTYPE EXACT STYLE) ===== */
 .hero-buttons {
   display: flex;
   gap: 18px;
   margin-top: 30px;
 }
+
 /* ===== PREMIUM HERO BUTTONS ===== */
 
 .hero-btn {
   padding: 14px 34px;
-  border-radius: 10px;   /* 🔥 slightly softer */
+  border-radius: 10px;
+  /* 🔥 slightly softer */
   font-weight: 100;
   font-size: 15px;
   cursor: pointer;
@@ -959,15 +1017,16 @@ justify-content: flex-start;  /* 🔥 ensures left */
 
 /* 🔵 PRIMARY BUTTON (PREMIUM) */
 .hero-btn.primary {
-    background: linear-gradient(180deg, #162a4d 0%, #0a192f 100%);
+  background: linear-gradient(180deg, #162a4d 0%, #0a192f 100%);
   color: white;
-  
-  font-family: Georgia, 'Times New Roman', serif; border: 1px solid rgba(255, 255, 255, 0.2); 
-  
+
+  font-family: Georgia, 'Times New Roman', serif;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
   /* The "SaaS Glow" - subtle blue shadow */
-  box-shadow: 
+  box-shadow:
     0 4px 14px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(37, 99, 235, 0.1); 
+    0 0 20px rgba(37, 99, 235, 0.1);
 
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -983,9 +1042,9 @@ justify-content: flex-start;  /* 🔥 ensures left */
 
 /* ⚪ SECONDARY BUTTON (PREMIUM OUTLINE) */
 .hero-btn-secondary {
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
 
-  border: 1.5px solid rgba(255,255,255,0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
   color: white;
 
   padding: 14px 34px;
@@ -998,7 +1057,7 @@ justify-content: flex-start;  /* 🔥 ensures left */
 
 /* HOVER */
 .hero-btn-secondary:hover {
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
   color: #0f172a;
 
   border-color: white;
@@ -1006,7 +1065,7 @@ justify-content: flex-start;  /* 🔥 ensures left */
   transform: translateY(-2px);
 
   box-shadow:
-    0 8px 24px rgba(0,0,0,0.25);
+    0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 /* ===== Landing hero text fall animation ===== */
@@ -1022,10 +1081,13 @@ justify-content: flex-start;  /* 🔥 ensures left */
     opacity: 0;
     transform: translateY(-55px);
   }
+
   72% {
     opacity: 1;
-    transform: translateY(8px); /* small bounce */
+    transform: translateY(8px);
+    /* small bounce */
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -1039,13 +1101,15 @@ justify-content: flex-start;  /* 🔥 ensures left */
     transform: none;
   }
 }
-/* ===== WHY SECTION ===== *//* ===== WHY SECTION (FULL BG STYLE) ===== */
+
+/* ===== WHY SECTION ===== */
+/* ===== WHY SECTION (FULL BG STYLE) ===== */
 
 .why-section {
   position: relative;
   width: 100%;
   min-height: 100vh;
-border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
   background: url("/WhySectionBg.jpg") center/cover no-repeat;
 }
@@ -1056,12 +1120,10 @@ border-top: 1px solid rgba(255,255,255,0.08);
   height: 100%;
   min-height: 100vh;
 
-  background: linear-gradient(
-  to right,
-  rgba(0, 20, 40, 0.55),
-  rgba(0, 20, 40, 0.35),
-  rgba(0, 20, 40, 0.15)
-);
+  background: linear-gradient(to right,
+      rgba(0, 20, 40, 0.55),
+      rgba(0, 20, 40, 0.35),
+      rgba(0, 20, 40, 0.15));
 
   display: flex;
   align-items: center;
@@ -1136,7 +1198,8 @@ border-top: 1px solid rgba(255,255,255,0.08);
   color: #ffffff;
   margin-top: 10px;
 }
-  @media (max-width: 768px) {
+
+@media (max-width: 768px) {
   .features-container {
     flex-direction: column;
     text-align: center;
@@ -1150,6 +1213,7 @@ border-top: 1px solid rgba(255,255,255,0.08);
     justify-content: center;
   }
 }
+
 /* ===== SCROLL REVEAL ===== */
 
 .feature-card,
@@ -1172,6 +1236,7 @@ border-top: 1px solid rgba(255,255,255,0.08);
   color: #cbd5e1;
   line-height: 1.6;
 }
+
 @keyframes fadeUp {
   to {
     opacity: 1;
@@ -1179,7 +1244,8 @@ border-top: 1px solid rgba(255,255,255,0.08);
   }
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 
@@ -1193,7 +1259,7 @@ html, body {
   padding: 120px 20px;
   background: #ffffff;
   text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
 
 }
 
@@ -1256,13 +1322,11 @@ html, body {
 .track-section {
   width: 100%;
   padding: 100px 20px;
-  background: linear-gradient(
-    135deg,
-    #0f172a,
-    #020617
-  );
+  background: linear-gradient(135deg,
+      #0f172a,
+      #020617);
   color: #fff;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
 
 }
 
@@ -1270,7 +1334,7 @@ html, body {
 .track-container {
   max-width: 1200px;
   margin: auto;
-  height:30vh;
+  height: 30vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1328,6 +1392,137 @@ html, body {
   max-width: 480px;
   object-fit: contain;
 }
+/*===== CTA SECTION ===== */
+.cta-section {
+
+  width: 100%;
+
+  /* Height adjusted to be more impactful/taller like the reference */
+
+  height: 90vh;
+
+  background: url("/ReadyBg.png") center/cover no-repeat;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+/* Overlay - subtle dark tint to make white text pop */
+
+.cta-overlay {
+
+  width: 100%;
+
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.2);
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 0 20px;
+
+}
+
+
+
+/* Heading - Exact Font Styles */
+
+.cta-overlay h2 {
+
+  /* Circular sans-serif fonts look closest to the image */
+
+  font-family: 'Inter', 'Circular Std', 'Helvetica Neue', sans-serif;
+
+  font-size: 80px;
+
+  /* Large hero size */
+
+  font-weight: 900;
+
+  /* Extra bold / Black weight */
+
+  color: #ffffff;
+
+  letter-spacing: -2px;
+
+  /* Tighter tracking for that modern look */
+
+  text-align: center;
+
+  margin-bottom: 40px;
+
+  line-height: 1.1;
+
+}
+
+
+
+/* Button - Pill Shaped */
+
+.cta-btn {
+
+  padding: 18px 48px;
+
+  /* More horizontal padding for the "pill" look */
+
+  font-family: 'Inter', sans-serif;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  /* Bold button text */
+
+  text-transform: none;
+
+
+
+  border: none;
+
+  border-radius: 500px;
+
+  /* High value ensures perfect pill shape */
+
+
+
+  background: #ffffff;
+
+  color: #000000;
+
+
+
+  cursor: pointer;
+
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+}
+
+
+
+.cta-btn:hover {
+
+  background: #f0f0f0;
+
+  transform: scale(1.04);
+
+  /* Subtle scale effect often used on these buttons */
+
+}
+
 
 /* MOBILE */
 @media (max-width: 768px) {
@@ -1347,12 +1542,13 @@ html, body {
   background: #ffffff;
   padding: 100px 20px;
 }
+
 .services-container {
   max-width: 1200px;
   margin: auto;
   text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-weight: 600;
 }
 
 /* Subtitle */
@@ -1385,7 +1581,7 @@ font-weight: 600;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 30px 25px;
-  
+
   transition: all 0.3s ease;
 }
 
@@ -1411,7 +1607,7 @@ font-weight: 600;
   justify-content: center;
 
   border-radius: 50%;
-  
+
 }
 
 /* Title */
@@ -1421,8 +1617,9 @@ font-weight: 600;
   color: #0f172a;
   margin-bottom: 10px;
 }
-.service-card h2{
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+
+.service-card h2 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
 
 }
 
@@ -1450,80 +1647,378 @@ font-weight: 600;
   background: #2563eb;
 }
 
-/* Responsive */
+/* ============================================================
+   UNIFIED MOBILE RESPONSIVE LAYOUT (Max 768px)
+   ============================================================ */
+
 @media (max-width: 768px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
-/* ===== CTA SECTION ===== */
+    /* Reset Global Overflows */
+    html, body {
+        overflow-x: hidden !important;
+        width: 100%;
+    }
+    .public-container, #root {
+        overflow-x: hidden;
+        width: 100%;
+    }
 
-.cta-section {
-  width: 100%;
-  /* Height adjusted to be more impactful/taller like the reference */
-  height: 90vh; 
-  background: url("/ReadyBg.png") center/cover no-repeat;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    /* Top Strip: compressed horizontal row on mobile */
+    .top-strip {
+        height: auto;
+        display: block;
+        margin-bottom: 0 !important;
+    }
+    .top-strip-inner {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 4px 10px !important;
+    }
+    .top-left, .top-right {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 10px;
+        width: auto;
+        font-size: 12px;
+    }
+    .top-link, .top-email, .lang-switch {
+        font-size: 11px !important;
+    }
 
-/* Overlay - subtle dark tint to make white text pop */
-.cta-overlay {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2); 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-}
+    /* Header: slim via padding crush, flush against top strip */
+    .new-header {
+        height: auto !important;
+        position: relative;
+        padding: 0 !important;
+        top: 0 !important;
+        margin-top: 0 !important;
+    }
 
-/* Heading - Exact Font Styles */
-.cta-overlay h2 {
-  /* Circular sans-serif fonts look closest to the image */
-  font-family: 'Inter', 'Circular Std', 'Helvetica Neue', sans-serif;
-  font-size: 80px;      /* Large hero size */
-  font-weight: 900;    /* Extra bold / Black weight */
-  color: #ffffff;
-  letter-spacing: -2px; /* Tighter tracking for that modern look */
-  text-align: center;
-  margin-bottom: 40px;
-  line-height: 1.1;
-}
+    /* Keep logo and hamburger side-by-side, tighter inner padding */
+    .new-header-inner {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 10px 20px !important;
+    }
+    
 
-/* Button - Pill Shaped */
-.cta-btn {
-  padding: 18px 48px;  /* More horizontal padding for the "pill" look */
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
-  font-weight: 700;    /* Bold button text */
-  text-transform: none;
+    /* ==================================================
+       PRO-LEVEL SIDE DRAWER
+       ================================================== */
+
+    /* Elevate the Hamburger so it sits on top of the open drawer */
+    .hamburger-btn {
+        display: block;
+        background: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
+        z-index: 9999;
+        position: relative;
+    }
+
+    /* Full Screen Glass Overlay */
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 5, 10, 0.8);
+        backdrop-filter: blur(8px);
+        z-index: 8000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+    }
+    .mobile-menu-overlay.open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* The Side Drawer Menu */
+    .mobile-menu-wrapper {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 85%;
+        max-width: 400px;
+        height: 100vh;
+        background: #02121a;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        box-shadow: -15px 0 40px rgba(0, 0, 0, 0.7);
+        z-index: 9000;
+        transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .mobile-menu-wrapper.open {
+        right: 0;
+    }
+
+    /* Spotify-style Massive Typography */
+    .new-nav {
+        flex-direction: column !important;
+        gap: 35px !important;
+        margin-bottom: 50px;
+        text-align: center;
+        width: 100%;
+    }
+    .new-nav span {
+        font-size: 22px !important;
+        font-weight: 700;
+        color: #e2e8f0;
+        letter-spacing: -0.5px;
+    }
+    .new-nav span:hover {
+        color: #38bdf8;
+    }
+
+    /* Clean Auth Buttons */
+    .new-auth {
+        flex-direction: column !important;
+        width: 100%;
+        gap: 20px !important;
+        align-items: center;
+    }
+    .new-auth .divider {
+        display: none;
+    }
+    .new-auth a {
+        font-size: 18px;
+        font-weight: 600;
+        padding: 15px 30px;
+        width: 100%;
+        max-width: 250px;
+        text-align: center;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* ==================================================
+       HERO SECTION (Pro Polish)
+       ================================================== */
+
+    /* Full-bleed hero background */
+    .new-hero-bg {
+        height: auto !important;
+        min-height: calc(100vh - 80px);
+        background-position: center center !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* Overlay: stretch edge-to-edge and center content */
+    .hero-overlay {
+        width: 100% !important;
+        height: 100% !important;
+        flex: 1 !important;
+        background: rgba(0, 0, 0, 0.55) !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .hero-content {
+        margin: 0 !important;
+        padding: 50px 24px !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100%;
+    }
+
+    /* Massive, punchy mobile title */
+    .hero-title {
+        font-size: 42px !important;
+        font-weight: 800 !important;
+        line-height: 1.1 !important;
+        margin-bottom: 16px;
+        max-width: 100%;
+    }
+
+    .hero-desc {
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+        margin-top: 12px !important;
+        padding: 0 8px;
+        max-width: 340px;
+    }
+
+    /* Pill-shaped stacked buttons */
+    .hero-buttons {
+        flex-direction: column !important;
+        width: 100%;
+        gap: 14px !important;
+        align-items: center;
+        margin-top: 28px;
+    }
+    /* Hero Buttons: pill shape, reduced width, inherit desktop typography */
+    .hero-btn {
+        width: 100%;
+        max-width: 220px;
+        text-align: center;
+        border-radius: 500px !important;
+        padding: 14px 28px !important;
+    }
+    /* Primary = high-contrast white pill */
+    .hero-btn.primary {
+        background: #ffffff !important;
+        color: #0a192f !important;
+        border: none !important;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.25) !important;
+    }
+    /* Secondary = outlined pill */
+    .hero-btn-secondary {
+        width: 100%;
+        max-width: 220px;
+        text-align: center;
+        border-radius: 500px !important;
+        padding: 14px 28px !important;
+    }
+
+    /* ==================================================
+       STATS SECTION
+       ================================================== */
+
+    .stats-row {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        max-width: 100%;
+    }
+
+    .stats-heading {
+        font-size: 24px;
+        margin-bottom: 40px;
+    }
+
+    /* ==================================================
+       WHY SECTION
+       ================================================== */
+
+    .why-container {
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    .why-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .why-content h2 {
+        font-size: 28px;
+    }
+
+    .why-list {
+        text-align: left;
+    }
+
+    /* ==================================================
+       SERVICES SECTION
+       ================================================== */
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .services-title {
+        font-size: 26px;
+    }
+
+    /* ==================================================
+       TRACK SECTION
+       ================================================== */
+
+    .track-container {
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+        gap: 30px;
+    }
+
+    .track-content h2 {
+        font-size: 28px;
+    }
+
+    .track-image img {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* ==================================================
+       CTA SECTION
+       ================================================== */
+
+    .cta-overlay h2 {
+        font-size: 40px;
+        letter-spacing: -1px;
+    }
+
+    .cta-section {
+        height: 70vh;
+    }
+
+    /* ==================================================
+       FOOTER SECTION
+       ================================================== */
+
+    .footer-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 36px;
+    }
+
+    .footer-brand {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-brand h3 {
+        justify-content: center;
+    }
+
+    .footer-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .footer-contact-item {
+        justify-content: center;
+    }
+
+    .footer-social {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .social-label {
+        width: 100%;
+        text-align: center;
+    }
+
+    .footer-inner {
+        padding: 40px 20px 24px;
+
+    }
   
-  border: none;
-  border-radius: 500px; /* High value ensures perfect pill shape */
-
-  background: #ffffff;
-  color: #000000;
-
-  cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.cta-btn:hover {
-  background: #f0f0f0;
-  transform: scale(1.04); /* Subtle scale effect often used on these buttons */
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .cta-overlay h2 {
-    font-size: 48px;
-  }
-  .cta-section {
-    height: 70vh;
-  }
 }

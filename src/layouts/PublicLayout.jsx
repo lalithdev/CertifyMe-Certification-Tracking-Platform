@@ -15,7 +15,9 @@ import {
   Facebook,
   Phone,
   Mail,
-  MapPin
+  MapPin,
+  Menu,
+  X
 } from "lucide-react";
 import "./PublicLayout.css";
 
@@ -34,6 +36,20 @@ function PublicLayout() {
 
   const [langIndex, setLangIndex] = useState(0);
   const currentLang = languages[langIndex];
+
+  // Mobile Menu State
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Locks background scrolling when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    // Cleanup incase component unmounts
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isMenuOpen]);
   
  const handleLangToggle = () => {
     const nextIndex = (langIndex + 1) % languages.length;
@@ -193,50 +209,69 @@ function PublicLayout() {
             <span>CertifyMe</span>
           </div>
 
-          <nav className="new-nav">
+          {/* HAMBURGER BUTTON */}
+          <button
+            className="hamburger-btn"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
 
-            <span
-              onClick={() => {
-                if (window.scrollY === 0) {
-                  window.location.reload(); // reload if already at top
-                } else {
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }
-              }}
-            >
-              Home
-            </span>
-            <span onClick={() => scrollToSection("services")}>
-              About
-            </span>
+          {/* MOBILE MENU WRAPPER */}
+          <div className={`mobile-menu-wrapper ${isMenuOpen ? "open" : ""}`}>
+            <nav className="new-nav">
 
-            <span onClick={() => scrollToSection("faq")}>
-              Resources and FAQs
-            </span>
+              <span
+                onClick={() => {
+                  if (window.scrollY === 0) {
+                    window.location.reload(); // reload if already at top
+                  } else {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                  setIsMenuOpen(false);
+                }}
+              >
+                Home
+              </span>
+              <span onClick={() => { scrollToSection("services"); setIsMenuOpen(false); }}>
+                About
+              </span>
 
-            <span onClick={() => scrollToSection("track")}>
-              Global Certifications
-            </span>
-            <span
-              onClick={() => {
-                if (window.location.pathname === "/") {
-                  document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
-                } else {
-                  navigate("/");
-                  setTimeout(() => {
+              <span onClick={() => { scrollToSection("faq"); setIsMenuOpen(false); }}>
+                Resources and FAQs
+              </span>
+
+              <span onClick={() => { scrollToSection("track"); setIsMenuOpen(false); }}>
+                Global Certifications
+              </span>
+              <span
+                onClick={() => {
+                  if (window.location.pathname === "/") {
                     document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
-                  }, 300);
-                }
-              }}
-            >
-              Contact Us
-            </span>
-          </nav>
-          <div className="new-auth">
-            <Link to="/signup">Sign up</Link>
-            <span className="divider">|</span>
-            <Link to="/login">Log in</Link>
+                  } else {
+                    navigate("/");
+                    setTimeout(() => {
+                      document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
+                    }, 300);
+                  }
+                  setIsMenuOpen(false);
+                }}
+              >
+                Contact Us
+              </span>
+            </nav>
+            <div className="new-auth">
+              <Link to="/signup" onClick={() => setIsMenuOpen(false)}>Sign up</Link>
+              <span className="divider">|</span>
+              <Link to="/login" onClick={() => setIsMenuOpen(false)}>Log in</Link>
+            </div>
           </div>
+
+          {/* BACKGROUND BLUR OVERLAY */}
+          <div
+            className={`mobile-menu-overlay ${isMenuOpen ? "open" : ""}`}
+            onClick={() => setIsMenuOpen(false)}
+          ></div>
 
         </div>
       </header>

@@ -183,13 +183,14 @@
 /* ------------------------------------------------------------
    4. THE LOGIN CARD (WHITE RECTANGLE)
    ------------------------------------------------------------ */
-/* Update these properties in .login-auth-card */.login-auth-card {
+/* Update these properties in .login-auth-card */
+.login-auth-card {
   background: #ffffff;
   padding: 40px;
   border-radius: 20px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
   width: 100%;
-  height: 650px; /* Fixed height for both states */
+  height: 750px; /* Fixed height for both states */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -206,18 +207,13 @@
 .login-main-subtitle {
   font-size: 14px;
   color: var(--soft-slate);
-  margin-bottom: 10px; /* Increased padding for vertical rhythm */
+  margin-bottom: 24px; /* Increased padding for vertical rhythm */
 }
 
 /* ------------------------------------------------------------
    5. THE RECTANGLE FORM INPUTS (PRECISE STYLE)
    ------------------------------------------------------------ */
-.login-form {
-  flex: 1; /* This is the secret: it fills the available card space */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly; /* This fills the "gaps" automatically */
-}
+
 .login-form label {
   font-size: 13px;
   font-weight: var(--weight-semi);
@@ -228,7 +224,7 @@
 
 .input-field-wrapper {
   position: relative;
-  margin-bottom: 16px; /* 8px system alignment */
+  margin-bottom: 10px;
   
   width: 100%;
 }
@@ -306,6 +302,7 @@
   display: flex;
   gap: 12px;
   align-items: center;
+  width: 100%;
 }
 
 .captcha-display-box {
@@ -351,7 +348,7 @@
 }
 
 .captcha-input-field {
-  flex: 1.2;
+  flex: 1;
   height: 44px !important;
   border: 1px solid #e2e8f0 !important;
   border-radius: 8px !important;
@@ -382,8 +379,8 @@
    ------------------------------------------------------------ */
 
 .otp-slot {
-  height: auto;
-  margin-top: 10px;
+  height: 180px; /* Increased to properly fit OTP + resend */
+  margin-top: 4px;
   transition: all 0.25s ease-in-out;
   position: relative;
   overflow: hidden;
@@ -392,14 +389,8 @@
   flex-direction: column;
   justify-content: space-between; /* Proper spacing inside */
 }
-
-.otp-slot.visible {
-  opacity: 1;
-  display: block;
-  pointer-events: auto;
-  visibility: visible;
-  transform: translateY(0);
-
+.otp-slot.visible{
+  margin-top: 4px;
 }
 .otp-slot.hidden {
   opacity: 0;
@@ -473,13 +464,15 @@
   justify-content: space-between;
   align-items: center;
   font-size: 13px;
-  margin: 16px 0;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .remember {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: black;
   cursor: pointer;
 }
@@ -497,7 +490,7 @@
   background: var(--primary-black);
   color: #ffffff;
   border: none;
-  border-radius: 50px;
+  border-radius: 500px;
   font-size: 16px;
   font-weight: var(--weight-semi);
   cursor: pointer;
@@ -557,6 +550,6 @@
   .login-left { display: none; }
   .login-right { margin-right: 0; width: 90%; max-width: 440px; }
   .login-auth-card { height: auto; min-height: 520px; overflow: visible; padding: 30px; }
-  .login-top-bar { color: #111; }
-  .login-brand-flat, .back-home-link { color: #111; }
+  .login-top-bar { color: #ffffff; }
+  .login-brand-flat, .back-home-link { color: #ffffff; }
 }
