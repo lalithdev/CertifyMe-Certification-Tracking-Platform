@@ -224,9 +224,13 @@
 
 .input-field-wrapper {
   position: relative;
-  margin-bottom: 10px;
-  
+  margin-bottom: 28px;
   width: 100%;
+  transition: margin-bottom 0.3s ease-in-out;
+}
+
+.login-auth-card.otp-active .input-field-wrapper {
+  margin-bottom: 14px;
 }
 
 .login-form input:not([type="checkbox"]) {
@@ -285,8 +289,13 @@
    ------------------------------------------------------------ */
 
 .security-gate {
-  margin-bottom: 8px;
+  margin-bottom: 28px;
   width: 100%;
+  transition: margin-bottom 0.3s ease-in-out;
+}
+
+.login-auth-card.otp-active .security-gate {
+  margin-bottom: 6px;
 }
 
 .security-gate label {
@@ -379,7 +388,7 @@
    ------------------------------------------------------------ */
 
 .otp-slot {
-  height: 180px; /* Increased to properly fit OTP + resend */
+  height: auto; /* Dynamic height fits OTP + resend without pushing buttons */
   margin-top: 4px;
   transition: all 0.25s ease-in-out;
   position: relative;
@@ -387,7 +396,7 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Proper spacing inside */
+  gap: 12px;
 }
 .otp-slot.visible{
   margin-top: 4px;
@@ -466,7 +475,12 @@
   font-size: 13px;
   width: 100%;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  transition: margin-bottom 0.3s ease-in-out;
+}
+
+.login-auth-card.otp-active .login-options {
+  margin-bottom: 12px;
 }
 
 .remember {
@@ -549,7 +563,7 @@
   .login-wrapper { padding-right: 0; justify-content: center; }
   .login-left { display: none; }
   .login-right { margin-right: 0; width: 90%; max-width: 440px; }
-  .login-auth-card { height: auto; min-height: 520px; overflow: visible; padding: 30px; }
+  .login-auth-card { height: auto; min-height: auto; max-height: 96vh; overflow: hidden; padding: 24px 30px; }
   .login-top-bar { color: #ffffff; }
   .login-brand-flat, .back-home-link { color: #ffffff; }
 }

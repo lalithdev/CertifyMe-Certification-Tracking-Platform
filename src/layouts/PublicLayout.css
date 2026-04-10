@@ -791,10 +791,16 @@ body {
 .mobile-menu-wrapper {
   display: flex;
   align-items: center;
+  flex: 1;
   gap: 32px;
 }
 
 .hamburger-btn {
+  display: none;
+}
+
+/* Hide mobile overlay on desktop to prevent flex layout issues */
+.mobile-menu-overlay {
   display: none;
 }
 
@@ -822,10 +828,11 @@ body {
 }
 
 .new-header-inner {
+  position: relative;
   max-width: 1200px;
   margin: auto;
   height: 100%;
-
+  
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -847,6 +854,9 @@ body {
 }
 
 .new-nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   gap: 32px;
   color: white;
@@ -887,6 +897,7 @@ body {
 .new-auth {
   display: flex;
   align-items: center;
+  margin-left: auto;
   gap: 18px;
 }
 
@@ -1725,6 +1736,7 @@ body {
 
     /* Full Screen Glass Overlay */
     .mobile-menu-overlay {
+        display: block;
         position: fixed;
         top: 0;
         left: 0;
@@ -1766,6 +1778,8 @@ body {
 
     /* Spotify-style Massive Typography */
     .new-nav {
+        position: static !important;
+        transform: none !important;
         flex-direction: column !important;
         gap: 35px !important;
         margin-bottom: 50px;
