@@ -1243,3 +1243,144 @@ height: 100vh;      /* Force exactly full screen height */
   padding: 18px 10px;
 }
 
+
+/* ======================================================
+   RESPONSIVE OVERRIDES
+====================================================== */
+
+/* --- TABLET BREAKPOINT (768px - 1024px) --- */
+@media (max-width: 1024px) {
+  .dashboard-header {
+    padding: 0 20px;
+    height: 80px;
+  }
+
+  .sidebar {
+    width: 80px;
+    min-width: 80px;
+  }
+
+  .sidebar .brand-text,
+  .sidebar .nav-item span {
+    display: none;
+  }
+
+  .sidebar .nav-item {
+    justify-content: center;
+    padding: 18px 0;
+  }
+
+  .dashboard-content {
+    padding: 20px;
+  }
+}
+
+/* --- MOBILE BREAKPOINT (< 768px) --- */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+    overflow-y: auto;
+    height: auto;
+  }
+
+  /* Sidebar as Drawer/Overlay */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 280px !important;
+    transform: translateX(-100%);
+    z-index: 2000;
+    visibility: hidden;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .sidebar .brand-text,
+  .sidebar .nav-item span {
+    display: flex !important;
+  }
+
+  .sidebar .nav-item {
+    justify-content: flex-start !important;
+    padding: 14px 24px !important;
+  }
+
+  /* Side Backdrop */
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 1500;
+    animation: fadeInBackground 0.3s ease;
+  }
+
+  @keyframes fadeInBackground {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Header scaling */
+  .dashboard-header {
+    padding: 0 15px;
+    height: auto;
+    min-height: 80px;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .header-left {
+    width: 100%;
+    order: 1;
+  }
+
+  .header-menu-btn {
+    margin-right: 10px;
+  }
+
+  .header-right {
+    width: 100%;
+    order: 2;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .user-info {
+    display: none; /* Hide name on very small screens to save space */
+  }
+
+  .header-text h2 {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .subtle-text {
+    font-size: 11px;
+  }
+
+  .dashboard-main {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+
+  .dashboard-content {
+    padding: 15px;
+  }
+
+  .logout-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}

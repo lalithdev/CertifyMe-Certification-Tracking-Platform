@@ -116,7 +116,7 @@ function Signup() {
           </div>
         </div>
         <div className="back-home-link" onClick={() => navigate("/")}>
-          ← Back to Home
+          ←   Back to Home
         </div>
       </div>
 
@@ -300,8 +300,10 @@ function Signup() {
               <div className="captcha-wrapper">
                 <div className="captcha-display-box">
                   <span className="captcha-text-visual">{captchaCode}</span>
-                  <div className="captcha-refresh-btn" onClick={generateCaptcha}>
-                    ↻
+                  <div className="captcha-refresh-btn" onClick={generateCaptcha} title="Refresh Code">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+                    </svg>
                   </div>
                 </div>
 
@@ -314,17 +316,17 @@ function Signup() {
                   required
                 />
               </div>
+              <p className="security-note">Cloudflare Protected - Captcha is case sensitive</p>
             </div>
+            <button 
+              type="submit" 
+              className="primary-login-btn"
+            >
+              Create Account
+            </button>
           </form>
-          <button 
-  type="button" 
-  className="primary-login-btn"
-  onClick={handleSignup}
->
-  Create Account
-</button>
           <div className="login-footer">
-            Already have an account? <Link to="/login">Login</Link>
+            Already have an account? <Link to="/login">Login here</Link>
           </div>
           
         </div>

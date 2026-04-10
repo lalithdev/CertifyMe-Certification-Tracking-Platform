@@ -133,7 +133,7 @@ function Login() {
           </div>
         </div>
         <div className="back-home-link" onClick={() => navigate("/")}>
-          ← Back to Home
+          ←   Back to Home
         </div>
       </div>
 
@@ -190,7 +190,7 @@ function Login() {
                   required
                 />
               </div>
-              <p className="security-note">Cloudflare Protected -  Captcha is case sentive</p>
+              <p className="security-note">Cloudflare Protected - Captcha is case sensitive</p>
             </div>
 
             <div className={`otp-slot ${otpRequired ? "visible" : "hidden"}`}>
@@ -225,22 +225,21 @@ function Login() {
                   </button>
                 </div>
               </div>
+
             </div>
-
+            <button
+              type="submit"
+              className="primary-login-btn"
+              disabled={otpRequired && expiryTimer === 0}
+            >
+              {otpRequired ? "Verify & Login" : "Login"}
+            </button>
+            <div className="login-options">
+              <label className="remember"><input type="checkbox" disabled={otpRequired} /> Remember Me</label>
+              <span className="forgot">Forgot Password?</span>
+            </div>
+            
           </form>
-
-          <div className="login-options">
-            <label className="remember"><input type="checkbox" disabled={otpRequired} /> Remember Me</label>
-            <span className="forgot">Forgot Password?</span>
-          </div>
-          <button
-            type="button"
-            className="primary-login-btn"
-            onClick={handleLogin}
-            disabled={otpRequired && expiryTimer === 0}
-          >
-            {otpRequired ? "Verify & Login" : "Login"}
-          </button>
           <div className="login-footer">
             Don't have an account? <Link to="/signup">Sign up here</Link>
           </div>

@@ -321,6 +321,14 @@ function DashboardLayout() {
           <Outlet />
         </div>
 
+        {/* Backdrop for mobile */}
+        {mobileOpen && (
+          <div 
+            className="sidebar-backdrop" 
+            onClick={() => setMobileOpen(false)}
+          ></div>
+        )}
+
       </div>
     </div>
   );
