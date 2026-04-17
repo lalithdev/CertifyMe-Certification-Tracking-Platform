@@ -318,16 +318,18 @@ function Signup() {
               </div>
               <p className="security-note">Cloudflare Protected - Captcha is case sensitive</p>
             </div>
-            <button 
+            
+          </form>
+          <button 
               type="submit" 
               className="primary-login-btn"
             >
               Create Account
             </button>
-          </form>
           <div className="login-footer">
             Already have an account? <Link to="/login">Login here</Link>
           </div>
+          
           
         </div>
       </div>
