@@ -87,19 +87,20 @@ function Signup() {
         password: form.password,
         country: form.country,
         gender: form.gender,
-        age: form.age
+        age: parseInt(form.age, 10)
       });
 
       if (result.success) {
-        toast.success("Signup Successful ✅");
+        toast.success("Account created successfully! Please log in. ✅");
         navigate("/login");
       } else {
+        // Surfaces backend messages: "Email already in use", validation errors, etc.
         toast.error(result.message || "Signup failed ❌");
       }
 
     } catch (err) {
       console.error(err);
-      toast.error("Signup failed ❌");
+      toast.error(err?.response?.data?.message || "Signup failed. Please try again. ❌");
     }
   };
 
@@ -318,14 +319,16 @@ function Signup() {
               </div>
               <p className="security-note">Cloudflare Protected - Captcha is case sensitive</p>
             </div>
-            
-          </form>
-          <button 
-              type="submit" 
+
+            <button
+              type="submit"
               className="primary-login-btn"
             >
               Create Account
             </button>
+
+          </form>
+
           <div className="login-footer">
             Already have an account? <Link to="/login">Login here</Link>
           </div>

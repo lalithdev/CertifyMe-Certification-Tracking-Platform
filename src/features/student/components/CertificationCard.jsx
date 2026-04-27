@@ -1,117 +1,64 @@
-import { Award, Eye, RefreshCw } from "lucide-react";
+import { Award, Eye, RefreshCw, Edit2, Trash2 } from "lucide-react";
+import "./CertificationCard.css";
 
 const CertificationCard = ({ cert, onView, onRenew, onEdit, onDelete }) => {
-  return (
-    <div
-      style={{
-        background: "#ffffff",
-        borderRadius: "18px",
-        padding: "24px",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
-        transition: "0.3s",
-      }}
-    >
-      {/* Top Section */}
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-        <Award size={34} color="#2563eb" />
+  const getStatusClass = (status) => {
+    switch (status) {
+      case "Active": return "cert-status-active";
+      case "Expiring Soon": return "cert-status-expiring";
+      case "Expired": return "cert-status-expired";
+      default: return "cert-status-active";
+    }
+  };
 
-        <span
-          style={{
-            background: "#dcfce7",
-            color: "#166534",
-            padding: "6px 14px",
-            borderRadius: "999px",
-            fontSize: "12px",
-            fontWeight: "500",
-          }}
-        >
+  return (
+    <div className="cert-card">
+      {/* Top Section */}
+      <div className="cert-card-header">
+        <div className="cert-card-icon">
+          <Award size={24} />
+        </div>
+
+        <span className={`cert-status-badge ${getStatusClass(cert.status)}`}>
           {cert.status}
         </span>
       </div>
 
       {/* Title */}
-      <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "6px" }}>
-        {cert.title}
-      </h3>
+      <h3 className="cert-card-title">{cert.title}</h3>
 
-      <p style={{ color: "#6b7280", marginBottom: "18px", fontSize: "14px" }}>
-        {cert.issuer}
-      </p>
+      <p className="cert-card-issuer">{cert.issuer}</p>
 
       {/* Dates */}
-      <div style={{ marginBottom: "20px", fontSize: "14px", color: "#374151" }}>
-        <div style={{ marginBottom: "6px" }}>
-          <strong>Issued:</strong> {cert.issued}
+      <div className="cert-card-dates">
+        <div className="cert-date-item">
+          <span className="cert-date-label">Issued</span>
+          <span className="cert-date-value">{cert.issued}</span>
         </div>
-        <div>
-          <strong>Expires:</strong> {cert.expires}
+        <div className="cert-date-item">
+          <span className="cert-date-label">Expires</span>
+          <span className="cert-date-value">{cert.expires}</span>
         </div>
       </div>
-      
-
-      
-
-      
-
 
       {/* Buttons */}
-      <div style={{ display: "flex", gap: "12px" }}>
-        <button
-          onClick={onView}
-          style={{
-            flex: 1,
-            border: "1px solid #e5e7eb",
-            background: "#f9fafb",
-            padding: "10px",
-            borderRadius: "10px",
-            cursor: "pointer",
-          }}
-        >
+      <div className="cert-card-actions">
+        <button onClick={onView} className="cert-btn cert-btn-secondary">
           <Eye size={16} /> View Details
         </button>
 
-        <button
-          onClick={() => onRenew(cert)}
-          style={{
-            flex: 1,
-            background: "#374151",
-            color: "white",
-            padding: "10px",
-            borderRadius: "10px",
-            cursor: "pointer",
-          }}
-        >
+        <button onClick={() => onRenew(cert)} className="cert-btn cert-btn-primary">
           <RefreshCw size={16} /> Request Renewal
         </button>
       </div>
 
-      <div style={{ display: "flex", gap: "12px", marginTop: "10px" }}>
-        <button
-          onClick={() => onEdit(cert)}
-          style={{
-            flex: 1,
-            background: "#2563eb",
-            color: "white",
-            padding: "10px",
-            borderRadius: "10px",
-            cursor: "pointer",
-          }}
-        >
-          Edit
+      <div className="cert-card-actions-row2">
+        <button onClick={() => onEdit(cert)} className="cert-btn cert-btn-secondary">
+          <Edit2 size={16} /> Edit
         </button>
 
-        <button
-          onClick={() => onDelete(cert.id)}
-          style={{
-            flex: 1,
-            background: "#dc2626",
-            color: "white",
-            padding: "10px",
-            borderRadius: "10px",
-            cursor: "pointer",
-          }}
-        >
-          Delete
+        <button onClick={() => onDelete(cert.id)} className="cert-btn cert-btn-danger">
+          <Trash2 size={16} /> Delete
         </button>
       </div>
     </div>

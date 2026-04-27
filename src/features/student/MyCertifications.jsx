@@ -52,7 +52,7 @@ const MyCertifications = () => {
   const requestRenewal = async (certId) => {
     try {
       await fetch(
-        `http://localhost:8080/api/certifications/${certId}/renewal?status=PENDING`,
+        `https://certifyme-api.up.railway.app/api/certifications/${certId}/renewal?status=PENDING`,
         { method: "PUT" }
       );
 

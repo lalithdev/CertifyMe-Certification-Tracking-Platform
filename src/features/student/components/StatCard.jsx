@@ -3,10 +3,17 @@ import { Users, BadgeCheck, Clock, AlertCircle } from "lucide-react";
 const StatCard = ({ label, value, color }) => {
 
   const colorMap = {
-    blue: "#3b82f6",
-    green: "#22c55e",
-    yellow: "#eab308",
-    red: "#ef4444",
+    blue: "#2563eb", /* primary-color */
+    green: "#10b981", /* status-active-bg equivalent text color */
+    yellow: "#f59e0b", /* status-expiring-bg equivalent text color */
+    red: "#ef4444", /* status-expired-bg equivalent text color */
+  };
+
+  const bgMap = {
+    blue: "rgba(37, 99, 235, 0.1)",
+    green: "#d1fae5",
+    yellow: "#fef3c7",
+    red: "#fee2e2",
   };
 
   const iconMap = {
@@ -25,7 +32,7 @@ const StatCard = ({ label, value, color }) => {
 
       <div
         className="stat-icon"
-        style={{ backgroundColor: colorMap[color] }}
+        style={{ backgroundColor: bgMap[color] || "rgba(0,0,0,0.05)", color: colorMap[color] }}
       >
         {iconMap[color]}
       </div>

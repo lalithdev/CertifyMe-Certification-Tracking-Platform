@@ -1,13 +1,49 @@
+:root {
+  /* Colors - Backgrounds */
+  --bg-main: #f8fafc;
+  --bg-sidebar: #0f172a;
+  --bg-card: #ffffff;
+  
+  /* Colors - Text */
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --text-inverse: #f8fafc;
+  
+  /* Colors - Accents */
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --sidebar-hover: rgba(255, 255, 255, 0.05);
+  --sidebar-active-bg: rgba(37, 99, 235, 0.15);
+  --sidebar-active-border: #3b82f6;
+
+  /* Colors - Semantic Statuses */
+  --status-active-bg: #d1fae5;
+  --status-active-text: #065f46;
+  --status-expiring-bg: #fef3c7;
+  --status-expiring-text: #92400e;
+  --status-expired-bg: #fee2e2;
+  --status-expired-text: #991b1b;
+  
+  /* Borders & Shadows */
+  --border-subtle: 1px solid #e2e8f0;
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Geometry */
+  --radius-card: 12px;
+  --radius-btn: 8px;
+  
+  /* Typography */
+  --font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
 
 /* ===== GLOBAL BACKGROUND LAYER ===== */
 
 body {
-  background: linear-gradient(
-    180deg,
-    #eef2ff 0%,
-    #f8fafc 40%,
-    #f8fafc 100%
-  );
+  background: var(--bg-main);
+  font-family: var(--font-family-base);
+  color: var(--text-primary);
 }
 
 /* Collapse button */
@@ -116,19 +152,18 @@ body {
   display: flex;
   min-height: 100vh;
   flex-wrap: nowrap;
-height: 100vh;      /* Force exactly full screen height */
+  height: 100vh;
   overflow: hidden; 
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%); /* upgraded gradient */
+  font-family: var(--font-family-base);
+  background: var(--bg-main);
 }
 
 /* ================= SIDEBAR ================= */
 
 .sidebar {
   width: 260px;
-  /* min-width retained earlier in collapsed state */
-  background: #0f172a;          /* upgraded to dark */
-  color: #cbd5e1;               /* upgraded text color */
+  background: var(--bg-sidebar);
+  color: var(--text-muted);
   display: flex;
   flex-direction: column;
   transition: width 0.3s ease;
@@ -269,24 +304,24 @@ height: 100vh;      /* Force exactly full screen height */
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 14px;              /* upgraded (was 16px) */
-  padding: 14px 24px;     /* upgraded (was 16px 22px) */
-  color: #94a3b8;         /* upgraded default */
+  gap: 14px;
+  padding: 14px 24px;
+  color: var(--text-muted);
   text-decoration: none;
-  font-size: 14px;        /* upgraded (was 15px) */
+  font-size: 14px;
   transition: all 0.2s ease;
   border-left: 3px solid transparent;
 }
 
 .nav-item:hover {
-  background: rgba(255,255,255,0.05); /* upgraded hover */
-  color: white;
+  background: var(--sidebar-hover);
+  color: var(--text-inverse);
 }
 
 .nav-item.active {
-  background: rgba(37, 99, 235, 0.15); /* upgraded active bg */
-  color: white;
-  border-left: 3px solid #3b82f6;      /* upgraded left bar */
+  background: var(--sidebar-active-bg);
+  color: var(--text-inverse);
+  border-left: 3px solid var(--sidebar-active-border);
 }
 
 /* Removed older active ::before accent to avoid double indicator */
@@ -307,26 +342,26 @@ height: 100vh;      /* Force exactly full screen height */
 /* Replaced older glass header with upgraded white header */
 
 .dashboard-header {
-  
-  height: 90px;                 /* upgraded (was 90px in one section) */
-  background: white;            /* upgraded */
+  height: 90px;
+  background: var(--bg-card);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 40px;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03); /* upgraded subtle shadow */
+  border-bottom: var(--border-subtle);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .header-left h2 {
-  font-size: 20px;      /* upgraded (was 22px/28px earlier) */
+  font-size: 20px;
   font-weight: 600;
   margin: 0;
+  color: var(--text-primary);
 }
 
 .subtle-text {
-  font-size: 13px;      /* upgraded */
-  color: #64748b;       /* upgraded to neutral */
+  font-size: 13px;
+  color: var(--text-secondary);
 }
 
 /* Header Right */
@@ -367,21 +402,21 @@ height: 100vh;      /* Force exactly full screen height */
 }
 
 .user-role {
-  color: #64748b;
+  color: var(--text-secondary);
   text-transform: capitalize;
 }
 
 .avatar {
-  width: 38px;  /* upgraded (kept larger) */
+  width: 38px;
   height: 38px;
-  background: linear-gradient(135deg, #2563eb, #1e40af);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   border-radius: 50%;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 15px; /* harmonized with 38px avatar */
+  font-size: 15px;
 }
 
 .user-info {
@@ -391,15 +426,15 @@ height: 100vh;      /* Force exactly full screen height */
 }
 
 .user-info small {
-  color: #777;
+  color: var(--text-muted);
 }
 
 .logout-btn {
-  background: #020202;
-  color: #ffffff;
-  border: none;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: var(--border-subtle);
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: var(--radius-btn);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -408,12 +443,12 @@ height: 100vh;      /* Force exactly full screen height */
 }
 .logout-btn:focus {
   outline: none;
-  border: none;
 }
-.logout-btn:hover {background: #020202;
-  color: white;
+.logout-btn:hover {
+  background: var(--bg-main);
+  color: var(--text-primary);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: var(--shadow-card);
 }
 /* ================= CONTENT ================= */
 
@@ -421,7 +456,7 @@ height: 100vh;      /* Force exactly full screen height */
   flex: 1;
   overflow-y: auto;
   padding: 30px;
-  background: #f8fafc; /* retained from existing */
+  background: var(--bg-main);
 }
 
 

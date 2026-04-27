@@ -195,7 +195,7 @@ const Renewals = () => {
                   <button
                     className="request-btn"
                     onClick={async () => {
-                      await fetch(`http://localhost:8080/api/certifications/${r.id}/renewal?status=PENDING`, {
+                      await fetch(`https://certifyme-api.up.railway.app/api/certifications/${r.id}/renewal?status=PENDING`, {
                         method: "PUT",
                       });
 
