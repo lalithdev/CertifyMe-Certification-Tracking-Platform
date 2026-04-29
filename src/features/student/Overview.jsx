@@ -188,10 +188,10 @@ const Overview = () => {
 
       {/* Stats */}
       <div className="stats-grid">
-        <StatCard label="Total" value={stats.total} color="blue" />
-        <StatCard label="Active" value={stats.active} color="green" />
-        <StatCard label="Expiring Soon" value={stats.expiring} color="yellow" />
-        <StatCard label="Expired" value={stats.expired} color="red" />
+        <StatCard label="Total" value={stats.total} color="blue" isLoading={loading} />
+        <StatCard label="Active" value={stats.active} color="green" isLoading={loading} />
+        <StatCard label="Expiring Soon" value={stats.expiring} color="yellow" isLoading={loading} />
+        <StatCard label="Expired" value={stats.expired} color="red" isLoading={loading} />
       </div>
 
       {/* Search */}
@@ -209,11 +209,25 @@ const Overview = () => {
 
       {/* Cards */}
       {loading ? (
-        <div className="global-loader">
-          <div className="spinner-wrapper">
-            <RefreshCw className="spinner" />
-          </div>
-          <span>Loading overview...</span>
+        <div className="cards-grid">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="cert-card skeleton-card" style={{ minHeight: '320px' }}>
+              <div className="cert-card-header">
+                <div className="skeleton-text" style={{ width: '40px', height: '40px', borderRadius: '12px' }}></div>
+                <div className="skeleton-text" style={{ width: '80px', height: '24px', borderRadius: '999px' }}></div>
+              </div>
+              <div className="skeleton-text" style={{ width: '70%', height: '24px', marginTop: '16px' }}></div>
+              <div className="skeleton-text" style={{ width: '40%', height: '16px', marginTop: '8px' }}></div>
+              <div className="cert-card-dates" style={{ marginTop: '24px', background: 'var(--bg-main)', padding: '16px', borderRadius: '12px' }}>
+                <div className="skeleton-text" style={{ width: '60%', height: '32px' }}></div>
+                <div className="skeleton-text" style={{ width: '60%', height: '32px' }}></div>
+              </div>
+              <div className="cert-card-actions" style={{ marginTop: 'auto', display: 'flex', gap: '12px' }}>
+                <div className="skeleton-text" style={{ flex: 1, height: '38px', borderRadius: 'var(--radius-btn)' }}></div>
+                <div className="skeleton-text" style={{ flex: 1, height: '38px', borderRadius: 'var(--radius-btn)' }}></div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         <div className="cards-grid">
@@ -229,6 +243,7 @@ const Overview = () => {
           ))}
         </div>
       )}
+
 
       {/* Modal */}
       {selectedCert && (

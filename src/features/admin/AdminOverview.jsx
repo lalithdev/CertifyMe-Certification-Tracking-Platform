@@ -157,22 +157,17 @@ function AdminOverview() {
         </button>
       </div>
 
-      {loading ? (
-        <div className="global-loader">
-          <div className="spinner-wrapper">
-            <RefreshCw className="spinner" />
-          </div>
-          <span>Loading admin overview...</span>
-        </div>
-      ) : (
-        <>
       {/* STATS */}
       <div className="stats-row">
 
         <div className="stat-card">
           <div>
             <p>Total Users</p>
-            <h2>{stats.totalUsers}</h2>
+            {loading ? (
+              <div className="skeleton-text" style={{ width: '40px', height: '28px', marginTop: '4px' }}></div>
+            ) : (
+              <h2>{stats.totalUsers}</h2>
+            )}
           </div>
           <div className="stat-icon blue"><Users size={22} /></div>
         </div>
@@ -180,7 +175,11 @@ function AdminOverview() {
         <div className="stat-card">
           <div>
             <p>Total Certifications</p>
-            <h2>{stats.totalCerts}</h2>
+            {loading ? (
+              <div className="skeleton-text" style={{ width: '40px', height: '28px', marginTop: '4px' }}></div>
+            ) : (
+              <h2>{stats.totalCerts}</h2>
+            )}
           </div>
           <div className="stat-icon green"><Award size={22} /></div>
         </div>
@@ -188,7 +187,11 @@ function AdminOverview() {
         <div className="stat-card">
           <div>
             <p>Active Certifications</p>
-            <h2>{stats.active}</h2>
+            {loading ? (
+              <div className="skeleton-text" style={{ width: '40px', height: '28px', marginTop: '4px' }}></div>
+            ) : (
+              <h2>{stats.active}</h2>
+            )}
           </div>
           <div className="stat-icon emerald"><CheckCircle size={22} /></div>
         </div>
@@ -196,7 +199,11 @@ function AdminOverview() {
         <div className="stat-card">
           <div>
             <p>Expiring Soon</p>
-            <h2>{stats.expiring}</h2>
+            {loading ? (
+              <div className="skeleton-text" style={{ width: '40px', height: '28px', marginTop: '4px' }}></div>
+            ) : (
+              <h2>{stats.expiring}</h2>
+            )}
           </div>
           <div className="stat-icon yellow"><Clock size={22} /></div>
         </div>
@@ -210,7 +217,13 @@ function AdminOverview() {
         <div className="overview-card">
           <h3>Expiring Certifications (Next 30 Days)</h3>
 
-          {expiringSoon.length === 0 ? (
+          {loading ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="skeleton-text" style={{ width: '100%', height: '48px', borderRadius: '8px' }}></div>
+              ))}
+            </div>
+          ) : expiringSoon.length === 0 ? (
             <p>No expiring certifications</p>
           ) : (
             expiringSoon.map((cert) => (
@@ -229,7 +242,13 @@ function AdminOverview() {
         <div className="overview-card">
           <h3>Recent Certifications</h3>
 
-          {recentCerts.length === 0 ? (
+          {loading ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="skeleton-text" style={{ width: '100%', height: '48px', borderRadius: '8px' }}></div>
+              ))}
+            </div>
+          ) : recentCerts.length === 0 ? (
             <p>No recent certifications</p>
           ) : (
             recentCerts.map((cert) => (
@@ -289,34 +308,49 @@ function AdminOverview() {
           </thead>
 
           <tbody>
-            {filteredCerts.map((cert) => (
-              <tr key={cert.id}>
-                <td>{cert.user}</td>
-                <td>{cert.name}</td>
-                <td>{cert.issuer}</td>
-                <td>{cert.issueDate}</td>
-                <td>{cert.expiryDate}</td>
-                <td className={cert.status === "Expiring" ? "orange-text" : ""}>
-                  {cert.daysLeft}
-                </td>
-                <td>
-                  <span className={`badge ${cert.status === "Active" ? "success" : "warning"}`}>
-                    {cert.status}
-                  </span>
-                </td>
-                <td>
-                  <button
-                    className="view-btn"
-                    onClick={() => setSelectedCert(cert)}
-                  >
-                    <Eye size={16} /> View
-                  </button>
-                </td>
+            {loading ? (
+              [1, 2, 3, 4, 5].map((i) => (
+                <tr key={i}>
+                  <td colSpan="8">
+                    <div className="skeleton-text" style={{ width: '100%', height: '40px', borderRadius: '4px' }}></div>
+                  </td>
+                </tr>
+              ))
+            ) : filteredCerts.length === 0 ? (
+              <tr>
+                <td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>No activity found</td>
               </tr>
-            ))}
+            ) : (
+              filteredCerts.map((cert) => (
+                <tr key={cert.id}>
+                  <td>{cert.user}</td>
+                  <td>{cert.name}</td>
+                  <td>{cert.issuer}</td>
+                  <td>{cert.issueDate}</td>
+                  <td>{cert.expiryDate}</td>
+                  <td className={cert.status === "Expiring" ? "orange-text" : ""}>
+                    {cert.daysLeft}
+                  </td>
+                  <td>
+                    <span className={`badge ${cert.status === "Active" ? "success" : "warning"}`}>
+                      {cert.status}
+                    </span>
+                  </td>
+                  <td>
+                    <button
+                      className="view-btn"
+                      onClick={() => setSelectedCert(cert)}
+                    >
+                      <Eye size={16} /> View
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
+
 
       {/* ADD STUDENT MODAL */}
       {showModal && (
@@ -433,8 +467,7 @@ function AdminOverview() {
           </div>
         </div>
       )}
-      </>
-      )}
+
     </div>
   );
 }

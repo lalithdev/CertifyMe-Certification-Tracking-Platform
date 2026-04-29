@@ -1,6 +1,6 @@
 import { Users, BadgeCheck, Clock, AlertCircle } from "lucide-react";
 
-const StatCard = ({ label, value, color }) => {
+const StatCard = ({ label, value, color, isLoading }) => {
 
   const colorMap = {
     blue: "#2563eb", /* primary-color */
@@ -27,8 +27,13 @@ const StatCard = ({ label, value, color }) => {
     <div className="stat-card">
       <div className="stat-content">
         <p className="stat-label">{label}</p>
-        <h2 className="stat-value">{value}</h2>
+        {isLoading ? (
+          <div className="skeleton-text" style={{ width: '40px', height: '32px', marginTop: '4px' }}></div>
+        ) : (
+          <h2 className="stat-value">{value}</h2>
+        )}
       </div>
+
 
       <div
         className="stat-icon"
