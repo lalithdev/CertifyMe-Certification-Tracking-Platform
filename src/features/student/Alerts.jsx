@@ -1,7 +1,8 @@
-import { AlertTriangle, Calendar, Bell, CheckCircle } from "lucide-react";
+import { AlertTriangle, Calendar, Bell, CheckCircle, RefreshCw } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../context";
 import { certificationApi } from "../../api/certificationApi";
+import "./Alerts.css";
 
 const Alerts = () => {
 
@@ -10,6 +11,7 @@ const Alerts = () => {
   const [expired, setExpired] = useState([]);
   const [thirtyDays, setThirtyDays] = useState([]);
   const [ninetyDays, setNinetyDays] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // ✅ FORMAT DATE (SAFE ADDITION)
   const formatDate = (date) => {
@@ -23,8 +25,12 @@ const Alerts = () => {
 
   // ✅ FETCH + PROCESS DATA
   const loadAlerts = useCallback(async () => {
+    setLoading(true);
     try {
-      if (!user?.id) return;
+      if (!user?.id) {
+        setLoading(false);
+        return;
+      }
 
       const data = await certificationApi.getAll(user.id);
 
@@ -66,6 +72,8 @@ const Alerts = () => {
 
     } catch (err) {
       console.error("Error loading alerts", err);
+    } finally {
+      setLoading(false);
     }
   }, [user]);
 
@@ -83,7 +91,16 @@ const Alerts = () => {
       </div>
 
       {/* Summary */}
-      <div className="alerts-summary-grid">
+      {loading ? (
+        <div className="global-loader">
+          <div className="spinner-wrapper">
+            <RefreshCw className="spinner" />
+          </div>
+          <span>Loading alerts...</span>
+        </div>
+      ) : (
+        <>
+          <div className="alerts-summary-grid">
 
         <div className="alert-card expired">
           <div className="alert-icon red">
@@ -185,6 +202,8 @@ const Alerts = () => {
           ))
         )}
       </div>
+      </>
+      )}
 
     </div>
   );

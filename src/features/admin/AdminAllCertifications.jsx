@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search, RefreshCw } from "lucide-react";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import "./AdminAllCertifications.css";
 import { certificationApi } from "../../api/certificationApi";
@@ -11,12 +11,13 @@ function AdminAllCertifications() {
   const [selectedCert, setSelectedCert] = useState(null);
   const [certifications, setCertifications] = useState([]);
 
-  // ✅ STATES
   const [editingId, setEditingId] = useState(null);
   const [remarksInput, setRemarksInput] = useState("");
+  const [loading, setLoading] = useState(true);
 
   // ✅ LOAD DATA
   const loadCertifications = useCallback(async () => {
+    setLoading(true);
     try {
       const data = await adminApi.getAllCertifications();
       console.log("RAW JSON RESPONSE (ADMIN ALL CERTS):", data);
@@ -51,6 +52,8 @@ function AdminAllCertifications() {
       if (err.response?.status !== 401) {
         toast.error("Failed to load certifications");
       }
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -120,7 +123,19 @@ function AdminAllCertifications() {
       </div>
 
       <div className="cert-grid">
-        {filteredCerts.map((cert) => (
+        {loading ? (
+          <div className="global-loader" style={{ gridColumn: "1 / -1" }}>
+            <div className="spinner-wrapper">
+              <RefreshCw className="spinner" />
+            </div>
+            <span>Loading certifications...</span>
+          </div>
+        ) : filteredCerts.length === 0 ? (
+          <div className="empty-state" style={{ gridColumn: "1 / -1", textAlign: "center", padding: "40px", color: "var(--text-muted)" }}>
+            No certifications found.
+          </div>
+        ) : (
+          filteredCerts.map((cert) => (
           <div key={cert.id} className="cert-card">
             <div className="card-top">
               <div>
@@ -195,7 +210,8 @@ function AdminAllCertifications() {
               </button>
             </div>
           </div>
-        ))}
+        ))
+        )}
       </div>
 
       {/* ✅ VIEW CERTIFICATION MODAL (FUNCTIONAL BUG FIX) */}

@@ -1,5 +1,32 @@
 :root {
   /* Inherits from DashboardLayout.css or global CSS */
+  .simplified-user-brief {
+    margin-bottom: 32px;
+    background: var(--bg-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 24px 32px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .simplified-user-brief h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 6px 0;
+    letter-spacing: -0.02em;
+  }
+
+  .simplified-user-brief p {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .simplified-user-brief p strong {
+    color: var(--text-primary);
+  }
 }
 
 .dashboard-page {

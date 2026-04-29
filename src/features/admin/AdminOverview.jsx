@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { Users, Award, CheckCircle, Clock, Eye, Search } from "lucide-react";
+import { Users, Award, CheckCircle, Clock, Eye, Search, RefreshCw } from "lucide-react";
 import "./AdminOverview.css";
 import { adminApi } from "../../api/adminApi";
 import { toast } from "sonner";
@@ -22,6 +22,7 @@ function AdminOverview() {
 
   const [users, setUsers] = useState([]);
   const [certifications, setCertifications] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // ✅ LOAD USERS
   const loadUsers = useCallback(async () => {
@@ -81,8 +82,12 @@ function AdminOverview() {
   }, []);
 
   useEffect(() => {
-    loadUsers();
-    loadCerts();
+    const fetchDashboardData = async () => {
+      setLoading(true);
+      await Promise.all([loadUsers(), loadCerts()]);
+      setLoading(false);
+    };
+    fetchDashboardData();
   }, [loadUsers, loadCerts]);
 
   // ✅ STATS
@@ -152,6 +157,15 @@ function AdminOverview() {
         </button>
       </div>
 
+      {loading ? (
+        <div className="global-loader">
+          <div className="spinner-wrapper">
+            <RefreshCw className="spinner" />
+          </div>
+          <span>Loading admin overview...</span>
+        </div>
+      ) : (
+        <>
       {/* STATS */}
       <div className="stats-row">
 
@@ -418,6 +432,8 @@ function AdminOverview() {
             </div>
           </div>
         </div>
+      )}
+      </>
       )}
     </div>
   );

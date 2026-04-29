@@ -1,5 +1,5 @@
 import "./ExpiringCerts.css";
-import { AlertCircle, Eye, Bell } from "lucide-react";
+import { AlertCircle, Eye, Bell, RefreshCw } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { adminApi } from "../../api/adminApi";
 import { getUserName } from "../../utils/userUtils";
@@ -8,9 +8,11 @@ import { toast } from "sonner";
 function ExpiringCerts() {
   const [selectedCert, setSelectedCert] = useState(null);
   const [expiringCerts, setExpiringCerts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // ✅ LOAD DATA
   const loadExpiringCerts = useCallback(async () => {
+    setLoading(true);
     try {
       const data = await adminApi.getAllCertifications();
       console.log("Admin Expiring Certs - Raw Data:", data);
@@ -42,6 +44,8 @@ function ExpiringCerts() {
       if (err.response?.status !== 401) {
         toast.error("Failed to load expiring certifications");
       }
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -86,7 +90,19 @@ function ExpiringCerts() {
           <span>Action</span>
         </div>
 
-        {expiringCerts.map((cert) => (
+        {loading ? (
+          <div className="global-loader" style={{ padding: "40px" }}>
+            <div className="spinner-wrapper">
+              <RefreshCw className="spinner" />
+            </div>
+            <span>Loading expiring certifications...</span>
+          </div>
+        ) : expiringCerts.length === 0 ? (
+          <div className="empty-state" style={{ textAlign: "center", padding: "40px", color: "var(--text-muted)" }}>
+            No expiring certifications found.
+          </div>
+        ) : (
+          expiringCerts.map((cert) => (
           <div key={cert.id} className="table-row">
             <span>{cert.user}</span>
             <span>{cert.title}</span>
@@ -111,7 +127,8 @@ function ExpiringCerts() {
               </button>
             </span>
           </div>
-        ))}
+        ))
+        )}
       </div>
 
       {/* Modal */}

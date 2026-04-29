@@ -19,7 +19,6 @@ function Profile() {
   return (
     <div className="profile-page">
       <div className="profile-container">
-        
         {/* Header Hero */}
         <div className="profile-hero">
           <div className="profile-avatar">

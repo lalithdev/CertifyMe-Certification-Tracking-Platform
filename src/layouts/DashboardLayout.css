@@ -271,8 +271,8 @@ body {
   margin: 0;
 }
 .brand-logo {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 12px;
   background: linear-gradient(135deg, #2563eb, #1e40af);
   display: flex;
@@ -342,7 +342,7 @@ body {
 /* Replaced older glass header with upgraded white header */
 
 .dashboard-header {
-  height: 90px;
+  height: 62px;
   background: var(--bg-card);
   display: flex;
   align-items: center;
@@ -455,8 +455,48 @@ body {
 .dashboard-content {
   flex: 1;
   overflow-y: auto;
-  padding: 30px;
+  padding: 0; /* Remove double padding to connect seamlessly */
   background: var(--bg-main);
+}
+
+/* GLOBAL STUDENT PAGE HEADING OVERRIDE */
+.page-title, 
+.mycert-header h1, 
+.reports-header h1, 
+.remarks-header h1, 
+.alerts-header h2,
+.progress-header h2,
+.renewals-header h2,
+.reminders-header h2,
+.profile-hero h1 {
+  font-size: 36px !important;
+  font-weight: 800 !important;
+  color: var(--secondary) !important;
+  letter-spacing: -0.03em !important;
+  margin-bottom: 12px !important;
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* FORCE REMOVE PAGE TOP PADDING FOR FLUSH HEADER JOIN */
+.dashboard-page,
+.progress-container,
+.mycert-page,
+.reports-page,
+.remarks-page,
+.alerts-container {
+  padding-top: 20px !important; /* Small breathing room, flush with top */
+}
+
+/* ✅ GLOBAL PAGE ANIMATION */
+.dashboard-content > * {
+  animation: pageFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 

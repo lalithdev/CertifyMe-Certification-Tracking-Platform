@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { FileText, Download } from "lucide-react";
+import { FileText, Download, RefreshCw } from "lucide-react";
 import { useAuth } from "../../context";
 import { reportApi } from "../../api/reportApi";
 
@@ -11,6 +11,7 @@ const Reports = () => {
   const [certifications, setCertifications] = useState([]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [loading, setLoading] = useState(true);
 
   // ✅ FORMAT DATE (GLOBAL FIX)
   const formatDate = (date) => {
@@ -28,8 +29,12 @@ const Reports = () => {
 
   // ✅ LOAD DATA
   const loadReports = useCallback(async () => {
+    setLoading(true);
     try {
-      if (!user?.id) return;
+      if (!user?.id) {
+        setLoading(false);
+        return;
+      }
 
       const data = await reportApi.getUserReports(user.id);
       const today = new Date();
@@ -62,6 +67,8 @@ const Reports = () => {
       if (err.response?.status !== 401) {
         alert("Failed to load reports: " + msg);
       }
+    } finally {
+      setLoading(false);
     }
   }, [user]);
 
@@ -151,7 +158,16 @@ const Reports = () => {
       </div>
 
       {/* Summary */}
-      <div className="reports-summary-grid">
+      {loading ? (
+        <div className="global-loader">
+          <div className="spinner-wrapper">
+            <RefreshCw className="spinner" />
+          </div>
+          <span>Loading reports...</span>
+        </div>
+      ) : (
+        <>
+          <div className="reports-summary-grid">
 
         <div className="report-card">
           <FileText size={22} />
@@ -273,6 +289,8 @@ const Reports = () => {
 
         </table>
       </div>
+      </>
+      )}
 
     </div>
   );

@@ -1,5 +1,5 @@
 import "./RenewalManagement.css";
-import { Check, X, Send, AlertTriangle, Download, Mail, Calendar, User } from "lucide-react";
+import { Check, X, Send, AlertTriangle, Download, Mail, Calendar, User, RefreshCw } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { adminApi } from "../../api/adminApi";
 import { getUserName } from "../../utils/userUtils";
@@ -8,9 +8,11 @@ import { toast } from "sonner";
 function RenewalManagement() {
   const [confirmAction, setConfirmAction] = useState(null);
   const [renewals, setRenewals] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // ✅ LOAD DATA (LOGIC PRESERVED)
   const loadRenewals = useCallback(async () => {
+    setLoading(true);
     try {
       const data = await adminApi.getAllCertifications();
       console.log("Admin Renewal Management - Raw Data:", data);
@@ -40,6 +42,8 @@ function RenewalManagement() {
       if (err.response?.status !== 401) {
         toast.error("Error loading renewals");
       }
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -96,7 +100,14 @@ function RenewalManagement() {
           </div>
 
           <div className="table-body">
-            {renewals.length > 0 ? (
+            {loading ? (
+              <div className="global-loader" style={{ padding: "40px" }}>
+                <div className="spinner-wrapper">
+                  <RefreshCw className="spinner" />
+                </div>
+                <span>Loading renewals...</span>
+              </div>
+            ) : renewals.length > 0 ? (
               renewals.map((item) => (
                 <div key={item.id} className="table-row">
 

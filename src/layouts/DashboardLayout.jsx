@@ -261,14 +261,11 @@ function DashboardLayout() {
               <Menu size={20} />
             </button>
 
-            <div className="header-text">
-              <h2>
-                Welcome back, {user?.firstName}{user?.middleName ? ' ' + user.middleName : ''} {user?.lastName}
-              </h2>
-              <span className="subtle-text">
-                {greeting}, here’s your certification performance overview.
-              </span>
-            </div>
+            <img 
+              src="/CertifyMeFavicon1.png" 
+              alt="CertifyMe Logo" 
+              style={{ height: '40px', width: 'auto', objectFit: 'contain', marginLeft: '12px' }} 
+            />
           </div>
 
           <div className="header-right">

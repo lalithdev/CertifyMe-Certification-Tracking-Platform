@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { Search, Users } from "lucide-react";
+import { Search, Users, RefreshCw } from "lucide-react";
 import "./AdminAllStudents.css";
 import { adminApi } from "../../api/adminApi";
 import { reportApi } from "../../api/reportApi";
@@ -12,9 +12,11 @@ function AdminAllStudents() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [toast, setToast] = useState("");
+  const [loading, setLoading] = useState(true);
 
   // ✅ FETCH USERS
   const fetchUsers = async () => {
+    setLoading(true);
     try {
       const data = await adminApi.getAllUsers();
       console.log("Admin All Students - Raw Data:", data);
@@ -36,6 +38,8 @@ function AdminAllStudents() {
       setUsers(formatted);
     } catch (err) {
       console.error("Error fetching students", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,7 +105,19 @@ function AdminAllStudents() {
 
         {/* GRID */}
         <div className="students-grid">
-          {filteredUsers.map((user) => (
+          {loading ? (
+            <div className="global-loader" style={{ gridColumn: "1 / -1" }}>
+              <div className="spinner-wrapper">
+                <RefreshCw className="spinner" />
+              </div>
+              <span>Loading students...</span>
+            </div>
+          ) : filteredUsers.length === 0 ? (
+            <div className="empty-state" style={{ gridColumn: "1 / -1", textAlign: "center", padding: "40px", color: "var(--text-muted)" }}>
+              No students found.
+            </div>
+          ) : (
+            filteredUsers.map((user) => (
             <div key={user.id} className="student-card">
 
               <div className="card-top">
@@ -137,15 +153,10 @@ function AdminAllStudents() {
               </div>
 
             </div>
-          ))}
-        </div>
-
-        {filteredUsers.length === 0 && (
-          <div className="empty-state">
-            No students found.
-          </div>
+          ))
         )}
       </div>
+    </div>
 
       {/* ✅ MODAL INSIDE SAME RETURN */}
       {selectedUser && (

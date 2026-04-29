@@ -12,6 +12,7 @@ const Renewals = () => {
   const { user } = useAuth();
   const [filter, setFilter] = useState("All");
   const [renewals, setRenewals] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // ✅ DATE FORMATTER (ADDED — SAFE)
   const formatDate = (date) => {
@@ -27,6 +28,7 @@ const Renewals = () => {
     if (!user?.id) return;
 
     const loadRenewals = async () => {
+      setLoading(true);
       try {
         const data = await certificationApi.getAll(user.id);
 
@@ -73,6 +75,8 @@ const Renewals = () => {
 
       } catch (error) {
         console.error("Error fetching renewals", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -143,8 +147,14 @@ const Renewals = () => {
       </div>
 
       <div className="renewal-list">
-
-        {filteredRenewals.length === 0 ? (
+        {loading ? (
+          <div className="global-loader">
+            <div className="spinner-wrapper">
+              <RefreshCw className="spinner" />
+            </div>
+            <span>Loading renewals...</span>
+          </div>
+        ) : filteredRenewals.length === 0 ? (
           <div className="empty-state">
             <CheckCircle size={20} />
             <p>

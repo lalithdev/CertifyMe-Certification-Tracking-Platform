@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom"; // ✅ added
 import "./Overview.css";
-import { BadgeCheck, Globe, Search, Users, GraduationCap, ClipboardList, Compass, Plus, TriangleAlert} from "lucide-react";
+import { BadgeCheck, Globe, Search, Users, GraduationCap, ClipboardList, Compass, Plus, TriangleAlert, RefreshCw} from "lucide-react";
 import StatCard from "./components/StatCard";
 import CertificationCard from "./components/CertificationCard";
 import { certificationApi } from "../../api/certificationApi";
@@ -17,8 +17,10 @@ const Overview = () => {
   const [selectedCert, setSelectedCert] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [certifications, setCertifications] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchCerts = useCallback(async () => {
+    setLoading(true);
     try {
       const data = await certificationApi.getAll(user.id);
 
@@ -49,6 +51,8 @@ const Overview = () => {
 
     } catch (error) {
       console.error("Error fetching certifications", error);
+    } finally {
+      setLoading(false);
     }
   }, [user]);
   useEffect(() => {
@@ -142,6 +146,12 @@ const Overview = () => {
     }
   };
 
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good Morning" :
+      hour < 18 ? "Good Afternoon" :
+        "Good Evening";
+
   return (
     <div className="dashboard-page">
 
@@ -167,6 +177,15 @@ const Overview = () => {
         </button>
       </div>
 
+      {/* User Profile Brief - Simplified layout */}
+      <div className="simplified-user-brief">
+        <h2>Welcome back, {user.firstName}{user.middleName ? ' ' + user.middleName : ''} {user.lastName}!</h2>
+        <p>
+          {greeting}, here's your certification performance overview. 
+          {user.studentId && <span> | Student ID: <strong>{user.studentId}</strong></span>}
+        </p>
+      </div>
+
       {/* Stats */}
       <div className="stats-grid">
         <StatCard label="Total" value={stats.total} color="blue" />
@@ -189,18 +208,27 @@ const Overview = () => {
       </div>
 
       {/* Cards */}
-      <div className="cards-grid">
-        {filtered.map((cert) => (
-          <CertificationCard
-            key={cert.id}
-            cert={cert}
-            onView={() => setSelectedCert(cert)}
-            onRenew={() => handleRenewal(cert)}  // ✅ CORRECT
-            onEdit={() => handleEdit(cert)}
-            onDelete={() => handleDelete(cert.id)}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <div className="global-loader">
+          <div className="spinner-wrapper">
+            <RefreshCw className="spinner" />
+          </div>
+          <span>Loading overview...</span>
+        </div>
+      ) : (
+        <div className="cards-grid">
+          {filtered.map((cert) => (
+            <CertificationCard
+              key={cert.id}
+              cert={cert}
+              onView={() => setSelectedCert(cert)}
+              onRenew={() => handleRenewal(cert)}
+              onEdit={() => handleEdit(cert)}
+              onDelete={() => handleDelete(cert.id)}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Modal */}
       {selectedCert && (

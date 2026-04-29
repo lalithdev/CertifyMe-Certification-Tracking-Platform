@@ -18,6 +18,31 @@
 }
 
 /* Search bar */
+/* Controls Row */
+.mycert-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 32px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mycert-search.full-width {
+  flex: 1;
+  min-width: 300px;
+  max-width: none;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  background: var(--bg-card);
+  padding: 0 20px;
+  border-radius: var(--radius-btn);
+  border: var(--border-subtle);
+  height: 52px;
+  transition: all 0.2s;
+}
+
 .mycert-search {
   display: flex;
   align-items: center;
@@ -46,6 +71,7 @@
   font-weight: 500;
   color: var(--text-primary);
   background: transparent;
+  padding-left: 12px;
 }
 
 .mycert-search input::placeholder {
@@ -56,11 +82,104 @@
   color: var(--text-secondary);
 }
 
-/* Grid layout */
-.mycert-list {
+.mycert-actions-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.premium-select {
+  background: var(--bg-card);
+  border: var(--border-subtle);
+  border-radius: var(--radius-btn);
+  padding: 0 16px;
+  height: 52px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.premium-select:hover {
+  border-color: var(--primary-color);
+}
+
+.view-mode-toggle {
+  display: flex;
+  background: var(--bg-card);
+  border: var(--border-subtle);
+  border-radius: var(--radius-btn);
+  padding: 4px;
+  height: 52px;
+  align-items: center;
+}
+
+.toggle-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-btn);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.toggle-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-main);
+}
+
+.toggle-btn.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Grid & List layout */
+.mycert-list.grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 24px;
+}
+
+.mycert-list.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mycert-list.list .mycert-card {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+}
+
+.mycert-list.list .mycert-top {
+  margin-bottom: 0;
+  flex: 1;
+  align-items: center;
+}
+
+.mycert-list.list .mycert-details {
+  margin-bottom: 0;
+  padding: 0 24px;
+  background: transparent;
+  border: none;
+  grid-template-columns: repeat(3, auto);
+  gap: 24px;
+  align-items: center;
+}
+
+.mycert-list.list .mycert-actions {
+  flex: 0 0 auto;
+  width: 200px;
 }
 
 /* Card */
@@ -114,6 +233,31 @@
   color: var(--status-active-text);
 }
 
+.status-badge.approved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.status-badge.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-badge.not_required {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.status-badge.renewal_required {
+  background: #ffe4e6;
+  color: #e11d48;
+}
+
 .status-badge.expiring_soon {
   background: var(--status-expiring-bg);
   color: var(--status-expiring-text);
@@ -161,7 +305,8 @@
   gap: 12px;
 }
 
-.btn-outline, .btn-primary {
+.btn-outline,
+.btn-primary {
   flex: 1;
   padding: 12px 24px;
   border-radius: var(--radius-btn);
@@ -234,7 +379,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    
+
     img {
       max-width: 100%;
       height: auto;
@@ -253,10 +398,23 @@
 }
 
 @media (max-width: 768px) {
-  .mycert-page { padding: 24px; }
-  .mycert-details { grid-template-columns: 1fr; }
-  .mycert-actions { flex-direction: column; }
-  .btn-outline, .btn-primary { justify-content: center; width: 100%; }
+  .mycert-page {
+    padding: 24px;
+  }
+
+  .mycert-details {
+    grid-template-columns: 1fr;
+  }
+
+  .mycert-actions {
+    flex-direction: column;
+  }
+
+  .btn-outline,
+  .btn-primary {
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 .certificate-overlay {
@@ -303,11 +461,23 @@
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 640px) {
-  .mycert-page { padding: 20px; }
-  .mycert-card { padding: 24px; }
+  .mycert-page {
+    padding: 20px;
+  }
+
+  .mycert-card {
+    padding: 24px;
+  }
 }

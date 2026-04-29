@@ -1,5 +1,6 @@
 import "./Remarks.css";
 import { useEffect, useState } from "react";
+import { RefreshCw } from "lucide-react";
 import { useAuth } from "../../context/AuthContextValue";
 import { certificationApi } from "../../api/certificationApi";
 
@@ -10,6 +11,7 @@ function Remarks() {
 
   // ✅ STATE (replacing dummy data)
   const [remarks, setRemarks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // ✅ FETCH FROM BACKEND
   useEffect(() => {
@@ -34,6 +36,8 @@ function Remarks() {
         }
       } catch (err) {
         console.error("Error fetching remarks", err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -84,46 +88,46 @@ function Remarks() {
 
       <div className="remarks-list">
 
-        {remarks.map((item, index) => (
-          <div className="remark-card" key={index}>
-
-            <div className="remark-top">
-              <div>
-                <h4>{item.certification}</h4>
-                <span className="reviewer">{item.reviewer}</span>
-              </div>
-
-              <div className={`status-badge ${
-                item.status === "Excellent"
-                  ? "excellent"
-                  : item.status === "Improving"
-                  ? "improving"
-                  : "attention"
-              }`}>
-                {item.status}
-              </div>
+        {loading ? (
+          <div className="global-loader">
+            <div className="spinner-wrapper">
+              <RefreshCw className="spinner" />
             </div>
-
-            <div className="remark-body">
-              <p>{item.comment}</p>
-            </div>
-
-            <div className="remark-footer">
-              <div className="rating">
-                {"★".repeat(item.rating)}
-                {"☆".repeat(5 - item.rating)}
-              </div>
-              <span className="date">{item.date}</span>
-            </div>
-
+            <span>Loading remarks...</span>
           </div>
-        ))}
-
-        {/* ✅ EMPTY STATE */}
-        {remarks.length === 0 && (
+        ) : remarks.length === 0 ? (
           <div className="empty-state">
             No remarks available yet.
           </div>
+        ) : (
+          remarks.map((item, index) => (
+            <div className="premium-remark-card" key={index}>
+              <div className="remark-header">
+                <div className="reviewer-avatar">
+                  {item.reviewer.charAt(0)}
+                </div>
+                <div className="reviewer-info">
+                  <h4>{item.certification}</h4>
+                  <span className="reviewer-name">Reviewed by {item.reviewer}</span>
+                </div>
+                <div className={`remark-status-pill ${item.status.toLowerCase().replace(' ', '-')}`}>
+                  {item.status}
+                </div>
+              </div>
+
+              <div className="remark-message-body">
+                <p>"{item.comment}"</p>
+              </div>
+
+              <div className="remark-footer-row">
+                <div className="remark-rating">
+                  {"★".repeat(item.rating)}
+                  {"☆".repeat(5 - item.rating)}
+                </div>
+                <span className="remark-date">{item.date}</span>
+              </div>
+            </div>
+          ))
         )}
 
       </div>

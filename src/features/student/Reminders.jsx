@@ -1,4 +1,4 @@
-import { Bell, CheckCircle } from "lucide-react";
+import { Bell, CheckCircle, RefreshCw } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { useAuth } from "../../context";
 import { notificationApi } from "../../api/notificationApi";
@@ -10,6 +10,7 @@ const Reminders = () => {
 
   const { user } = useAuth();
   const [reminders, setReminders] = useState([]);
+  const [loading, setLoading] = useState(true);
   const prevCountRef = useRef(0);
 
   // ✅ SAFE DATE FORMAT
@@ -63,6 +64,8 @@ const Reminders = () => {
 
       } catch (err) {
         console.error("Error loading reminders from polling", err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -91,36 +94,42 @@ const Reminders = () => {
       {/* LIST */}
       <div className="reminder-list">
 
-        {reminders.length === 0 ? (
+        {loading ? (
+          <div className="global-loader">
+            <div className="spinner-wrapper">
+              <RefreshCw className="spinner" />
+            </div>
+            <span>Loading reminders...</span>
+          </div>
+        ) : reminders.length === 0 ? (
           <div className="empty-state">
             <CheckCircle size={20} />
             <span>No reminders from admin</span>
           </div>
         ) : (
           reminders.map((r) => (
-            <div key={r.id} className={`reminder-card ${r.type === 'REMINDER' ? 'priority-card' : ''}`}>
-
-              <div className="reminder-header-row">
-                <Bell size={18} />
-                <h3>{r.title}</h3>
+            <div key={r.id} className={`reminder-bar ${r.type === 'REMINDER' ? 'priority-bar' : ''}`}>
+              <div className="reminder-left">
+                <div className="bell-icon-wrapper">
+                  <Bell size={20} />
+                </div>
               </div>
-
-              <div className="reminder-body">
-                <p className="issuer">Source: {r.issuer}</p>
-                <p className="reminder-message">{r.message}</p>
-              </div>
-
-              <div className="reminder-footer">
-                <p className="reminder-date">
-                  Received: {formatSafeDate(r.reminderDate)}
-                </p>
+              
+              <div className="reminder-center">
+                <div className="reminder-main">
+                  <h3>{r.title}</h3>
+                  <p className="reminder-message">{r.message}</p>
+                </div>
+                <div className="reminder-meta">
+                  <span className="issuer">Source: {r.issuer}</span>
+                  <span className="reminder-date">Received: {formatSafeDate(r.reminderDate)}</span>
+                </div>
                 {r.type === 'REMINDER' && (
-                  <p className="reminder-action">
+                  <div className="reminder-action">
                     ⚡ Action required: Check your certification details
-                  </p>
+                  </div>
                 )}
               </div>
-
             </div>
           ))
         )}
