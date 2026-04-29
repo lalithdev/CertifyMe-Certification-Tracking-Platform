@@ -98,10 +98,13 @@ function PublicLayout() {
 
   const [showSearch, setShowSearch] = useState(false);
   const searchItems = [
-    { label: "Track Certifications", id: "track" },
-    { label: "Services", id: "services" },
-    { label: "FAQ / Questions", id: "faq" },
-    { label: "Contact", id: "footer" },
+    { label: "Global Certifications", id: "track", desc: "Global certification records lookup" },
+    { label: "Services Offered", id: "services", desc: "Expiry tracking & alerts breakdown" },
+    { label: "FAQ / Questions", id: "faq", desc: "Find immediate implementation help" },
+    { label: "Contact Support", id: "footer", desc: "Support desks and regional addresses" },
+    { label: "Landing Hero", id: "hero", desc: "Return back to top carousel" },
+    { label: "Log In Portal", path: "/login", desc: "Enter authorized student spaces" },
+    { label: "Register Account", path: "/signup", desc: "Create secure verification profiles" }
   ];
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFAQ, setActiveFAQ] = useState(null);
@@ -167,19 +170,25 @@ function PublicLayout() {
                       <div className="search-dropdown">
                         {searchItems
                           .filter(item =>
-                            item.label.toLowerCase().includes(searchTerm.toLowerCase())
+                            item.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            item.desc.toLowerCase().includes(searchTerm.toLowerCase())
                           )
                           .map((item, index) => (
                             <div
                               key={index}
                               className="search-item"
                               onClick={() => {
-                                scrollToSection(item.id);
+                                if (item.path) {
+                                  navigate(item.path);
+                                } else {
+                                  scrollToSection(item.id);
+                                }
                                 setShowSearch(false);
                                 setSearchTerm("");
                               }}
                             >
-                              {item.label}
+                              <div className="search-item-title">{item.label}</div>
+                              <div className="search-item-desc">{item.desc}</div>
                             </div>
                           ))}
                       </div>

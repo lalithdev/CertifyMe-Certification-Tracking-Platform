@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import {
-  BadgeCheck, Menu, Bell, Award, Calendar, FileText, LogOut, LayoutDashboard, TriangleAlert, UserCircle
+  BadgeCheck, Menu, Bell, Award, Calendar, FileText, LogOut, LayoutDashboard, TriangleAlert, UserCircle, Search
 } from "lucide-react";
 import { Outlet, useNavigate, NavLink } from "react-router-dom";
 import { useAuth } from "../context";
@@ -16,6 +16,8 @@ function DashboardLayout() {
   const { user, logout } = useAuth();
   const [collapsed, setCollapsed] = useState(window.innerWidth <= 768);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
   console.log("Current User:", user);
 
   const roleString = user?.role?.toString().toLowerCase() || "";
@@ -23,6 +25,28 @@ function DashboardLayout() {
   const userRoleDisplay = roleString
     ? roleString.charAt(0).toUpperCase() + roleString.slice(1)
     : "";
+
+  const studentSearchItems = [
+    { label: "Overview", path: "/student/overview", desc: "Student performance overview and stats" },
+    { label: "Reminders", path: "/student/reminders", desc: "Check all certification deadline alerts" },
+    { label: "Alerts", path: "/student/alerts", desc: "View high priority certification expiration notices" },
+    { label: "My Certifications", path: "/student/certifications", desc: "Track all uploaded credentials" },
+    { label: "Reports", path: "/student/reports", desc: "Inspect charts and compliance aggregates" },
+    { label: "Remarks", path: "/student/remarks", desc: "Read verification feedback" },
+    { label: "Profile", path: "/student/profile", desc: "Update password or review profile meta" },
+    { label: "Add Certification", path: "/student/register", desc: "Upload new qualification details" }
+  ];
+
+  const adminSearchItems = [
+    { label: "Admin Dashboard", path: "/admin/overview", desc: "High level administrator console" },
+    { label: "All Certifications", path: "/admin/all-certifications", desc: "Browse database for all user credentials" },
+    { label: "All Students", path: "/admin/all-students", desc: "Manage and track academic user entries" },
+    { label: "Expiring Certs", path: "/admin/expiring", desc: "Quick overview of decaying certifications" },
+    { label: "Renewal Management", path: "/admin/renewals", desc: "Approve or reject ongoing renewals" },
+    { label: "Admin Profile", path: "/admin/profile", desc: "Access developer preferences" }
+  ];
+
+  const currentSearchItems = isAdmin ? adminSearchItems : studentSearchItems;
 
   const hour = new Date().getHours();
   const greeting =
@@ -266,6 +290,41 @@ function DashboardLayout() {
               alt="CertifyMe Logo" 
               style={{ height: '40px', width: 'auto', objectFit: 'contain', marginLeft: '12px' }} 
             />
+          </div>
+
+          <div className="header-center-search">
+            <input 
+              type="text" 
+              placeholder="Search..." 
+              className="header-search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <Search size={18} className="header-search-icon" />
+
+            {searchTerm && (
+              <div className="header-search-dropdown">
+                {currentSearchItems
+                  .filter(item => 
+                    item.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.desc.toLowerCase().includes(searchTerm.toLowerCase())
+                  )
+                  .map((item, index) => (
+                    <div 
+                      key={index} 
+                      className="header-search-item"
+                      onClick={() => {
+                        navigate(item.path);
+                        setSearchTerm("");
+                      }}
+                    >
+                      <div className="search-item-title">{item.label}</div>
+                      <div className="search-item-desc">{item.desc}</div>
+                    </div>
+                  ))
+                }
+              </div>
+            )}
           </div>
 
           <div className="header-right">
