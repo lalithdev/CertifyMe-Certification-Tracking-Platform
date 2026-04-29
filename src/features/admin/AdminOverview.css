@@ -16,14 +16,14 @@
   font-family: 'Inter', sans-serif;
 }
 
-.overview-header {
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
 }
 
-.overview-header h1 {
+.page-title {
   font-size: 32px;
   font-weight: 800;
   color: var(--admin-text-main);
@@ -31,9 +31,55 @@
   margin-bottom: 8px;
 }
 
-.overview-header p {
+.page-subtitle {
   color: var(--admin-text-sub);
   font-size: 16px;
+  font-weight: 500;
+}
+
+.add-btn {
+  background: var(--admin-primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+}
+
+.add-btn:hover {
+  background: var(--admin-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+}
+
+.simplified-user-brief {
+  margin-bottom: 32px;
+  background: var(--admin-card-bg);
+  border: 1px solid #f1f5f9;
+  border-radius: 24px;
+  padding: 24px 32px;
+  box-shadow: var(--admin-shadow);
+}
+
+.simplified-user-brief h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--admin-text-main);
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
+}
+
+.simplified-user-brief p {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--admin-text-sub);
+  margin: 0;
 }
 
 .primary-btn {
@@ -57,8 +103,8 @@
 /* Stats Cards */
 .stats-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 32px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
   margin-bottom: 40px;
   width: 100%;
 }

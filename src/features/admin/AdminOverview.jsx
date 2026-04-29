@@ -139,24 +139,39 @@ function AdminOverview() {
   };
 
 
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good Morning" :
+      hour < 18 ? "Good Afternoon" :
+        "Good Evening";
+
   return (
     <div className="admin-overview">
 
       {/* Header */}
-      <div className="overview-header">
-        <div>
-          <h1>Admin Dashboard</h1>
-          <p>Manage and monitor all certifications professionally.</p>
+      <div className="page-header">
+        <div className="page-title-section">
+          <h1 className="page-title">Overview</h1>
+          <p className="page-subtitle">
+            Manage and monitor all certifications professionally.
+          </p>
         </div>
 
-        <button
-          className="primary-btn"
+        <button 
+          className="add-btn" 
           onClick={() => setShowModal(true)}
-          style={{ display: "flex", alignItems: "center", gap: "8px" }}
         >
           <Plus size={18} />
           <span>Add Student</span>
         </button>
+      </div>
+
+      {/* User Profile Brief - Simplified layout */}
+      <div className="simplified-user-brief">
+        <h2>Welcome back, Admin!</h2>
+        <p>
+          {greeting}, here's the platform's certification performance overview.
+        </p>
       </div>
 
       {/* STATS */}

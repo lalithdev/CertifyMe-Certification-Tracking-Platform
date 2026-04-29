@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { Search, Users, RefreshCw, Download } from "lucide-react";
+import { Search, Users, RefreshCw, Download, LayoutGrid, List } from "lucide-react";
 import "./AdminAllStudents.css";
 import { adminApi } from "../../api/adminApi";
 import { reportApi } from "../../api/reportApi";
@@ -173,14 +173,16 @@ function AdminAllStudents() {
             <button 
               className={`toggle-btn ${viewMode === "grid" ? "active" : ""}`} 
               onClick={() => setViewMode("grid")}
+              title="Grid View"
             >
-              Grid
+              <LayoutGrid size={18} />
             </button>
             <button 
               className={`toggle-btn ${viewMode === "list" ? "active" : ""}`} 
               onClick={() => setViewMode("list")}
+              title="List View"
             >
-              List
+              <List size={18} />
             </button>
           </div>
 

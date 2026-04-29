@@ -1,4 +1,4 @@
-import { Search, RefreshCw, Download } from "lucide-react";
+import { Search, RefreshCw, Download, LayoutGrid, List } from "lucide-react";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import "./AdminAllCertifications.css";
 import { certificationApi } from "../../api/certificationApi";
@@ -14,6 +14,9 @@ function AdminAllCertifications() {
   const [editingId, setEditingId] = useState(null);
   const [remarksInput, setRemarksInput] = useState("");
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("All");
+  const [sortBy, setSortBy] = useState("title-asc");
+  const [viewMode, setViewMode] = useState("grid");
 
   // ✅ LOAD DATA
   const loadCertifications = useCallback(async () => {
@@ -79,14 +82,35 @@ function AdminAllCertifications() {
     }
   };
 
-  // ✅ SEARCH
+  // ✅ SEARCH, FILTER & SORT
   const filteredCerts = useMemo(() => {
-    return certifications.filter(
+    let result = certifications.filter(
       (cert) =>
         cert.student.toLowerCase().includes(search.toLowerCase()) ||
         cert.title.toLowerCase().includes(search.toLowerCase())
     );
-  }, [search, certifications]);
+
+    // Filter
+    if (filter !== "All") {
+      result = result.filter((c) => c.status.toLowerCase() === filter.toLowerCase());
+    }
+
+    // Sort
+    result.sort((a, b) => {
+      if (sortBy === "title-asc") {
+        return a.title.localeCompare(b.title);
+      } else if (sortBy === "title-desc") {
+        return b.title.localeCompare(a.title);
+      } else if (sortBy === "issuer-asc") {
+        return a.issuer.localeCompare(b.issuer);
+      } else if (sortBy === "expiry-date") {
+        return new Date(a.expires) - new Date(b.expires);
+      }
+      return 0;
+    });
+
+    return result;
+  }, [search, certifications, filter, sortBy]);
 
   const handleView = (cert) => setSelectedCert(cert);
 
@@ -149,12 +173,47 @@ function AdminAllCertifications() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
+
+        {/* FILTER */}
+        <select className="filter-dropdown" value={filter} onChange={(e) => setFilter(e.target.value)}>
+          <option value="All">All Statuses</option>
+          <option value="Active">Active</option>
+          <option value="Expiring">Expiring</option>
+          <option value="Expired">Expired</option>
+        </select>
+
+        {/* SORT */}
+        <select className="filter-dropdown" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <option value="title-asc">Title (A-Z)</option>
+          <option value="title-desc">Title (Z-A)</option>
+          <option value="issuer-asc">Issuer (A-Z)</option>
+          <option value="expiry-date">Expiry Date</option>
+        </select>
+
+        {/* VIEW TOGGLE */}
+        <div className="view-toggle">
+          <button 
+            className={`toggle-btn ${viewMode === "grid" ? "active" : ""}`} 
+            onClick={() => setViewMode("grid")}
+            title="Grid View"
+          >
+            <LayoutGrid size={18} />
+          </button>
+          <button 
+            className={`toggle-btn ${viewMode === "list" ? "active" : ""}`} 
+            onClick={() => setViewMode("list")}
+            title="List View"
+          >
+            <List size={18} />
+          </button>
+        </div>
+
         <button className="export-btn" onClick={exportToCSV}>
           <Download size={16} /> Export CSV
         </button>
       </div>
 
-      <div className="cert-grid">
+      <div className={`cert-container ${viewMode}-view`}>
         {loading ? (
           <div className="global-loader" style={{ gridColumn: "1 / -1" }}>
             <div className="spinner-wrapper">
