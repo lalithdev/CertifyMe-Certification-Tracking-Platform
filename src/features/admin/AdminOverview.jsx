@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { Users, Award, CheckCircle, Clock, Eye, Search, RefreshCw } from "lucide-react";
+import { Users, Award, CheckCircle, Clock, Eye, Search, RefreshCw, Plus } from "lucide-react";
 import "./AdminOverview.css";
 import { adminApi } from "../../api/adminApi";
 import { toast } from "sonner";
@@ -152,8 +152,10 @@ function AdminOverview() {
         <button
           className="primary-btn"
           onClick={() => setShowModal(true)}
+          style={{ display: "flex", alignItems: "center", gap: "8px" }}
         >
-          + Add Student
+          <Plus size={18} />
+          <span>Add Student</span>
         </button>
       </div>
 

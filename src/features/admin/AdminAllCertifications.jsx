@@ -1,4 +1,4 @@
-import { Search, RefreshCw } from "lucide-react";
+import { Search, RefreshCw, Download } from "lucide-react";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import "./AdminAllCertifications.css";
 import { certificationApi } from "../../api/certificationApi";
@@ -105,6 +105,33 @@ function AdminAllCertifications() {
     toast.success("Certification removed");
   };
 
+  const exportToCSV = () => {
+    const headers = ["Student", "Title", "Issuer", "Issued", "Expires", "Credential ID", "Status", "Remarks"];
+    const rows = filteredCerts.map(c => [
+      `"${c.student}"`,
+      `"${c.title}"`,
+      `"${c.issuer}"`,
+      `"${c.issued}"`,
+      `"${c.expires}"`,
+      `"${c.credential}"`,
+      `"${c.status}"`,
+      `"${c.remarks || ""}"`
+    ]);
+
+    let csvContent = "data:text/csv;charset=utf-8," 
+      + headers.join(",") + "\n" 
+      + rows.map(e => e.join(",")).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "certifications_report.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("CSV exported successfully");
+  };
+
   return (
     <div className="admin-certifications-page">
       <h2>All Certifications</h2>
@@ -112,14 +139,19 @@ function AdminAllCertifications() {
         Manage and monitor all student certifications.
       </p>
 
-      <div className="search-bar">
-        <Search size={18} />
-        <input
-          type="text"
-          placeholder="Search by student or certification..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      <div className="controls-row">
+        <div className="search-bar">
+          <Search size={18} />
+          <input
+            type="text"
+            placeholder="Search by student or certification..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        <button className="export-btn" onClick={exportToCSV}>
+          <Download size={16} /> Export CSV
+        </button>
       </div>
 
       <div className="cert-grid">

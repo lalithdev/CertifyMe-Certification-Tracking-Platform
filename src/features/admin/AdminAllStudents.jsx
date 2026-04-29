@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { Search, Users, RefreshCw } from "lucide-react";
+import { Search, Users, RefreshCw, Download } from "lucide-react";
 import "./AdminAllStudents.css";
 import { adminApi } from "../../api/adminApi";
 import { reportApi } from "../../api/reportApi";
@@ -13,6 +13,9 @@ function AdminAllStudents() {
   const [search, setSearch] = useState("");
   const [toast, setToast] = useState("");
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("All");
+  const [sortBy, setSortBy] = useState("name-asc");
+  const [viewMode, setViewMode] = useState("grid");
 
   // ✅ FETCH USERS
   const fetchUsers = async () => {
@@ -48,18 +51,64 @@ function AdminAllStudents() {
     fetchUsers();
   }, []);
 
-  // ✅ SEARCH FILTER
+  // ✅ SEARCH, FILTER & SORT
   const filteredUsers = useMemo(() => {
-    return users.filter(
+    let result = users.filter(
       (u) =>
         u.name.toLowerCase().includes(search.toLowerCase()) ||
         u.email.toLowerCase().includes(search.toLowerCase())
     );
-  }, [users, search]);
+
+    // Filter
+    if (filter === "With Certs") {
+      result = result.filter((u) => u.certCount > 0);
+    } else if (filter === "No Certs") {
+      result = result.filter((u) => u.certCount === 0);
+    }
+
+    // Sort
+    result.sort((a, b) => {
+      if (sortBy === "name-asc") {
+        return a.name.localeCompare(b.name);
+      } else if (sortBy === "name-desc") {
+        return b.name.localeCompare(a.name);
+      } else if (sortBy === "certs-high") {
+        return b.certCount - a.certCount;
+      } else if (sortBy === "certs-low") {
+        return a.certCount - b.certCount;
+      }
+      return 0;
+    });
+
+    return result;
+  }, [users, search, filter, sortBy]);
 
   const showToast = (msg) => {
     setToast(msg);
     setTimeout(() => setToast(""), 3000);
+  };
+
+  const exportToCSV = () => {
+    const headers = ["Name", "Email", "Student ID", "Certifications Count"];
+    const rows = filteredUsers.map(u => [
+      `"${u.name}"`,
+      `"${u.email}"`,
+      `"${u.studentId || "N/A"}"`,
+      u.certCount
+    ]);
+
+    let csvContent = "data:text/csv;charset=utf-8," 
+      + headers.join(",") + "\n" 
+      + rows.map(e => e.join(",")).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "students_report.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("CSV exported successfully");
   };
 
   const handleRemove = (id) => {
@@ -92,19 +141,57 @@ function AdminAllStudents() {
           Manage and monitor all registered students.
         </p>
 
-        {/* SEARCH */}
-        <div className="search-bar">
-          <Search size={18} />
-          <input
-            type="text"
-            placeholder="Search by name or email..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+        <div className="controls-row">
+          {/* SEARCH */}
+          <div className="search-bar">
+            <Search size={18} />
+            <input
+              type="text"
+              placeholder="Search by name or email..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+
+          {/* FILTER */}
+          <select className="filter-dropdown" value={filter} onChange={(e) => setFilter(e.target.value)}>
+            <option value="All">All Students</option>
+            <option value="With Certs">With Certs</option>
+            <option value="No Certs">No Certs</option>
+          </select>
+
+          {/* SORT */}
+          <select className="filter-dropdown" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+            <option value="name-asc">Name (A-Z)</option>
+            <option value="name-desc">Name (Z-A)</option>
+            <option value="certs-high">Certs (High-Low)</option>
+            <option value="certs-low">Certs (Low-High)</option>
+          </select>
+
+          {/* VIEW TOGGLE */}
+          <div className="view-toggle">
+            <button 
+              className={`toggle-btn ${viewMode === "grid" ? "active" : ""}`} 
+              onClick={() => setViewMode("grid")}
+            >
+              Grid
+            </button>
+            <button 
+              className={`toggle-btn ${viewMode === "list" ? "active" : ""}`} 
+              onClick={() => setViewMode("list")}
+            >
+              List
+            </button>
+          </div>
+
+          {/* EXPORT CSV */}
+          <button className="export-btn" onClick={exportToCSV}>
+            <Download size={16} /> Export CSV
+          </button>
         </div>
 
         {/* GRID */}
-        <div className="students-grid">
+        <div className={`students-container ${viewMode}-view`}>
           {loading ? (
             <div className="global-loader" style={{ gridColumn: "1 / -1" }}>
               <div className="spinner-wrapper">

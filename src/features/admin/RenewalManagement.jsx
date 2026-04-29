@@ -66,6 +66,31 @@ function RenewalManagement() {
     }
   };
 
+  const exportToCSV = () => {
+    const headers = ["User", "Email", "Certification", "Expiry", "Days Left", "Status"];
+    const rows = renewals.map(r => [
+      `"${r.user}"`,
+      `"${r.email}"`,
+      `"${r.certification}"`,
+      `"${r.expiry}"`,
+      r.daysLeft,
+      `"${r.status}"`
+    ]);
+
+    let csvContent = "data:text/csv;charset=utf-8," 
+      + headers.join(",") + "\n" 
+      + rows.map(e => e.join(",")).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "renewals_report.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("CSV exported successfully");
+  };
+
   return (
     <div className="renewal-wrapper">
 
@@ -76,7 +101,7 @@ function RenewalManagement() {
           <p>Track, approve, and send notifications for expiring credentials.</p>
         </div>
         <div className="header-actions">
-          <button className="export-btn" onClick={() => toast.info("Exporting data...")}>
+          <button className="export-btn" onClick={exportToCSV}>
             <Download size={16} /> Export CSV
           </button>
         </div>

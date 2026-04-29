@@ -293,4 +293,178 @@
   .status { margin-top: 12px; display: inline-block; }
   .card-actions { flex-direction: column; }
   .card-actions button { width: 100%; justify-content: center; }
+}
+
+/* CONTROLS ROW */
+.controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 32px;
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f5f9;
+}
+
+.controls-row .search-bar {
+  flex: 2;
+  min-width: 260px;
+  margin-bottom: 0;
+}
+
+.filter-dropdown {
+  flex: 1;
+  min-width: 160px;
+  height: 52px;
+  padding: 0 16px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-dropdown:focus {
+  border-color: #6366f1;
+  background: white;
+}
+
+.view-toggle {
+  display: flex;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+}
+
+.toggle-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggle-btn.active {
+  background: white;
+  color: #6366f1;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.export-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  height: 52px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.export-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+/* VIEWS */
+.students-container.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.students-container.list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* List View Card Overrides */
+.list-view .student-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  border-radius: 16px;
+}
+
+.list-view .card-top {
+  margin-bottom: 0;
+  flex: 2;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.list-view .card-top > div {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.list-view .card-top h3 {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.list-view .email {
+  margin-bottom: 0;
+}
+
+.list-view .student-id {
+  margin-bottom: 0;
+}
+
+.list-view .card-details {
+  margin-bottom: 0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  flex: 1;
+  text-align: center;
+}
+
+.list-view .card-actions {
+  padding-top: 0;
+  border-top: none;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+@media (max-width: 1024px) {
+  .list-view .student-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .list-view .card-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .list-view .card-top > div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .list-view .card-actions {
+    justify-content: flex-start;
+  }
 }
