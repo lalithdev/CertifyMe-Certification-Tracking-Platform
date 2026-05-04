@@ -194,25 +194,44 @@
 }
 
 @media (max-width: 768px) {
+  .profile-page {
+    padding: 20px;
+  }
+
   .profile-hero {
     flex-direction: column;
     text-align: center;
-    padding: 48px 32px;
-    gap: 32px;
+    padding: 40px 24px;
+    gap: 24px;
   }
   
   .info-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 16px;
   }
   
   .profile-avatar {
-    width: 120px;
-    height: 120px;
-    font-size: 48px;
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3), 0 0 0 6px rgba(255, 255, 255, 0.5);
+  }
+
+  .hero-info h1 {
+    font-size: 28px;
   }
   
   .info-section {
-    padding: 32px 24px;
+    padding: 28px 20px;
+  }
+
+  .info-item {
+    padding: 12px;
+    gap: 16px;
+  }
+
+  .icon-box {
+    width: 44px;
+    height: 44px;
   }
 }

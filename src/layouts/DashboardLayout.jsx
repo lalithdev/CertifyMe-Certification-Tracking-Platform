@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import {
-  BadgeCheck, Menu, Bell, Award, Calendar, FileText, LogOut, LayoutDashboard, TriangleAlert, UserCircle, Search
+  BadgeCheck, Menu, Bell, Award, Calendar, FileText, LogOut, LayoutDashboard, TriangleAlert, UserCircle, Search, MessageSquare, Activity, FilePlus
 } from "lucide-react";
 import { Outlet, useNavigate, NavLink } from "react-router-dom";
 import { useAuth } from "../context";
@@ -132,6 +132,7 @@ function DashboardLayout() {
                 className={({ isActive }) =>
                   isActive ? "nav-item active" : "nav-item"
                 }
+                onClick={() => setMobileOpen(false)}
               >
                 <LayoutDashboard size={18} />
                 <span>Dashboard</span>
@@ -142,6 +143,7 @@ function DashboardLayout() {
                 className={({ isActive }) =>
                   isActive ? "nav-item active" : "nav-item"
                 }
+                onClick={() => setMobileOpen(false)}
               >
                 <FileText size={18} />
                 <span>My Students</span>
@@ -152,6 +154,7 @@ function DashboardLayout() {
                 className={({ isActive }) =>
                   isActive ? "nav-item active" : "nav-item"
                 }
+                onClick={() => setMobileOpen(false)}
               >
                 <Award size={18} />
                 <span>All Certifications</span>
@@ -162,6 +165,7 @@ function DashboardLayout() {
                 className={({ isActive }) =>
                   isActive ? "nav-item active" : "nav-item"
                 }
+                onClick={() => setMobileOpen(false)}
               >
                 <Calendar size={18} />
                 <span>Expiring Certs</span>
@@ -172,6 +176,7 @@ function DashboardLayout() {
                 className={({ isActive }) =>
                   isActive ? "nav-item active" : "nav-item"
                 }
+                onClick={() => setMobileOpen(false)}
               >
                 <FileText size={18} />
                 <span>Renewal Management</span>
@@ -182,6 +187,7 @@ function DashboardLayout() {
                 className={({ isActive }) =>
                   isActive ? "nav-item active" : "nav-item"
                 }
+                onClick={() => setMobileOpen(false)}
               >
                 <UserCircle size={18} />
                 <span>Profile</span>
@@ -194,6 +200,7 @@ function DashboardLayout() {
                 className={({ isActive }) =>
                   isActive ? "nav-item active" : "nav-item"
                 }
+                onClick={() => setMobileOpen(false)}
               >
                 <LayoutDashboard size={18} />
                 <span>Overview</span>
@@ -201,61 +208,61 @@ function DashboardLayout() {
 
               <NavLink to="/student/register" className={({ isActive }) =>
                 isActive ? "nav-item active" : "nav-item"
-              }>
-                <Award size={18} />
+              } onClick={() => setMobileOpen(false)}>
+                <FilePlus size={18} />
                 <span>Register</span>
               </NavLink>
 
               <NavLink to="/student/progress" className={({ isActive }) =>
                 isActive ? "nav-item active" : "nav-item"
-              }>
-                <FileText size={18} />
+              } onClick={() => setMobileOpen(false)}>
+                <Activity size={18} />
                 <span>Progress</span>
               </NavLink>
 
               <NavLink to="/student/renewals" className={({ isActive }) =>
                 isActive ? "nav-item active" : "nav-item"
-              }>
+              } onClick={() => setMobileOpen(false)}>
                 <Calendar size={18} />
                 <span>Renewals</span>
               </NavLink>
 
               <NavLink to="/student/reminders" className={({ isActive }) =>
                 isActive ? "nav-item active" : "nav-item"
-              }>
+              } onClick={() => setMobileOpen(false)}>
                 <Bell size={18} />
                 <span>Reminders</span>
               </NavLink>
               <NavLink to="/student/alerts" className={({ isActive }) =>
                 isActive ? "nav-item active" : "nav-item"
-              }>
+              } onClick={() => setMobileOpen(false)}>
                 <TriangleAlert size={18} />
                 <span>Alerts</span>
               </NavLink>
               <NavLink to="/student/certifications" className={({ isActive }) =>
                 isActive ? "nav-item active" : "nav-item"
-              }>
+              } onClick={() => setMobileOpen(false)}>
                 <Award size={18} />
                 <span>My Certifications</span>
               </NavLink>
 
               <NavLink to="/student/reports" className={({ isActive }) =>
                 isActive ? "nav-item active" : "nav-item"
-              }>
+              } onClick={() => setMobileOpen(false)}>
                 <FileText size={18} />
                 <span>Reports</span>
               </NavLink>
 
               <NavLink to="/student/remarks" className={({ isActive }) =>
                 isActive ? "nav-item active" : "nav-item"
-              }>
-                <FileText size={18} />
+              } onClick={() => setMobileOpen(false)}>
+                <MessageSquare size={18} />
                 <span>Remarks</span>
               </NavLink>
 
               <NavLink to="/student/profile" className={({ isActive }) =>
                 isActive ? "nav-item active" : "nav-item"
-              }>
+              } onClick={() => setMobileOpen(false)}>
                 <UserCircle size={18} />
                 <span>Profile</span>
               </NavLink>

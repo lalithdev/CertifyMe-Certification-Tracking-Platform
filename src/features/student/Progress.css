@@ -331,16 +331,19 @@
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .progress-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .unique-progress-kpi-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .progress-container { padding: 24px; }
+  .progress-container { padding: 20px; }
   .progress-cards { grid-template-columns: 1fr; }
+  .unique-progress-kpi-grid { gap: 16px; }
 }
 
 @media (max-width: 640px) {
-  .progress-kpi-grid { grid-template-columns: 1fr; }
-  .stat-card { padding: 24px; }
-  .progress-card { padding: 24px; }
-}
+  .unique-progress-kpi-grid { grid-template-columns: 1fr; }
+  .unique-kpi-card { padding: 16px; gap: 12px; }
+  .unique-kpi-value { font-size: 22px; }
+  .progress-card { padding: 20px; }
+  .cert-name { font-size: 18px; }
+}
