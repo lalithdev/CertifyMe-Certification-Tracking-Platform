@@ -90,6 +90,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const setSession = (token, backendUser) => {
+    if (!token || !backendUser) {
+      console.warn("[AuthContext] setSession called with missing token or user data");
+      return;
+    }
+    
     localStorage.setItem("token", token);
     const formattedUser = {
       ...backendUser,

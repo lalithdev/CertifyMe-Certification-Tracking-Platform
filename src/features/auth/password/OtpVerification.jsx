@@ -46,12 +46,35 @@ function OtpVerification() {
   };
 
   const handleGoToDashboard = () => {
-    const role = verifiedSession?.user?.role?.toLowerCase();
-    if (role === "admin") {
-      navigate("/admin/dashboard");
-    } else {
-      navigate("/student/dashboard");
+    if (!verifiedSession) {
+      toast.error("Session lost. Please try again.");
+      return;
     }
+
+    setLoading(true);
+    
+    // Ensure session is set one more time just in case
+    setSession(verifiedSession.token, verifiedSession.user);
+    
+    // Robust role detection from the fresh session
+    const getRoleString = (r) => {
+      if (typeof r === "string") return r.toLowerCase();
+      if (r && typeof r === "object" && r.name) return r.name.toLowerCase();
+      return "";
+    };
+
+    const role = getRoleString(verifiedSession.user.role);
+    console.log("Redirecting with Role →", role);
+    
+    toast.success("Logging you in... Redirecting to dashboard 🚀");
+    
+    setTimeout(() => {
+      if (role === "admin") {
+        navigate("/admin/dashboard", { replace: true });
+      } else {
+        navigate("/student/dashboard", { replace: true });
+      }
+    }, 1000);
   };
 
   const handleResetPassword = () => {
@@ -141,6 +164,7 @@ function OtpVerification() {
                 <button 
                   onClick={handleResetPassword} 
                   className="primary-login-btn choice-btn"
+                  disabled={loading}
                 >
                   <KeyRound size={20} />
                   Set New Password
@@ -149,9 +173,14 @@ function OtpVerification() {
                 <button 
                   onClick={handleGoToDashboard} 
                   className="secondary-login-btn choice-btn-outline"
+                  disabled={loading}
                 >
-                  <LayoutDashboard size={20} />
-                  Proceed to Dashboard
+                  {loading ? <Loader2 className="spinner" size={20} /> : (
+                    <>
+                      <LayoutDashboard size={20} />
+                      Proceed to Dashboard
+                    </>
+                  )}
                 </button>
               </div>
 
