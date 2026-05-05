@@ -618,31 +618,40 @@
     overflow: visible;
   }
 
+  .sticky-btn {
+    position: static;
+    padding-top: 0;
+  }
+
   /* CAPTCHA MOBILE ENHANCEMENTS (768px and below) */
   .captcha-wrapper {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    height: auto !important;
-    gap: 16px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    height: 56px !important;
+    gap: 12px !important;
   }
   .captcha-display-box {
-    width: 100% !important;
-    height: 100px !important;
-    padding: 0 24px !important;
+    width: auto !important;
+    min-width: 132px !important;
+    flex: 1.15 !important;
+    height: 56px !important;
+    padding: 0 14px !important;
   }
   .captcha-text-visual {
-    font-size: 32px !important;
-    letter-spacing: 6px !important;
+    font-size: 18px !important;
+    letter-spacing: 2px !important;
+    white-space: nowrap;
     line-height: 1;
     display: flex;
     align-items: center;
   }
   .captcha-input-field {
-    width: 100% !important;
-    height: 100px !important;
-    font-size: 20px !important;
-    padding: 0 24px !important;
-    border-radius: 12px !important;
+    width: auto !important;
+    flex: 0.85 !important;
+    height: 56px !important;
+    font-size: 16px !important;
+    padding: 0 14px !important;
+    border-radius: 10px !important;
   }
 }
 

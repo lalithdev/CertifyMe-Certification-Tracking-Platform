@@ -1029,11 +1029,13 @@ body {
   padding: 14px 34px;
   border-radius: 10px;
   /* 🔥 slightly softer */
-  font-weight: 100;
-  font-size: 15px;
+  font-weight: inherit;
+  font-size: inherit;
   cursor: pointer;
 
-  letter-spacing: -0.2px;
+  letter-spacing: normal;
+  line-height: normal;
+  font-family: inherit;
 
   transition: all 0.25s ease;
   text-decoration: none;
@@ -1044,8 +1046,6 @@ body {
 .hero-btn.primary {
   background: linear-gradient(180deg, #162a4d 0%, #0a192f 100%);
   color: white;
-
-  font-family: Georgia, 'Times New Roman', serif;
   border: 1px solid rgba(255, 255, 255, 0.2);
 
   /* The "SaaS Glow" - subtle blue shadow */
@@ -1074,6 +1074,11 @@ body {
 
   padding: 14px 34px;
   border-radius: 10px;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: normal;
+  line-height: normal;
 
   backdrop-filter: blur(6px);
 

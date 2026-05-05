@@ -1,9 +1,12 @@
 import "./Login.css";
-import { BadgeCheck, Eye, EyeOff, User, Shield, Mail, Lock } from "lucide-react";
+import { BadgeCheck, Eye, EyeOff, Shield, Mail, Lock } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context";
 import { toast } from "sonner";
+
+const REMEMBER_ME_KEY = "rememberMe";
+const REMEMBERED_EMAIL_KEY = "rememberedEmail";
 
 function Login() {
   const navigate = useNavigate();
@@ -19,6 +22,7 @@ function Login() {
   // Captcha State
   const [captchaCode, setCaptchaCode] = useState("");
   const [userCaptchaInput, setUserCaptchaInput] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const generateCaptcha = () => {
     const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -31,6 +35,16 @@ function Login() {
 
   useEffect(() => {
     generateCaptcha();
+  }, []);
+
+  useEffect(() => {
+    const isRemembered = localStorage.getItem(REMEMBER_ME_KEY) === "true";
+    const savedEmail = localStorage.getItem(REMEMBERED_EMAIL_KEY) || "";
+
+    setRememberMe(isRemembered);
+    if (isRemembered && savedEmail) {
+      setEmail(savedEmail);
+    }
   }, []);
 
   const { login, resendOtp } = useAuth();
@@ -102,6 +116,14 @@ function Login() {
 
       if (!result.success) {
         throw new Error(result.message || "Login Failed ❌");
+      }
+
+      if (rememberMe) {
+        localStorage.setItem(REMEMBER_ME_KEY, "true");
+        localStorage.setItem(REMEMBERED_EMAIL_KEY, email);
+      } else {
+        localStorage.removeItem(REMEMBER_ME_KEY);
+        localStorage.removeItem(REMEMBERED_EMAIL_KEY);
       }
 
       const userData = result.user;
@@ -235,7 +257,15 @@ function Login() {
               {otpRequired ? "Verify & Login" : "Login"}
             </button>
             <div className="login-options">
-              <label className="remember"><input type="checkbox" disabled={otpRequired} /> Remember Me</label>
+              <label className="remember">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  disabled={otpRequired}
+                />
+                Remember Me
+              </label>
               <span className="forgot">Forgot Password?</span>
             </div>
             
