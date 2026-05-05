@@ -1,9 +1,17 @@
 import { useAuth } from "../../context/AuthContext";
-import { User, Mail, Calendar, MapPin, Hash, UserCircle } from "lucide-react";
+import { User, Mail, Calendar, MapPin, Hash, UserCircle, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { authApi } from "../../api/authApi";
+import { toast } from "sonner";
 import "./Profile.css";
 
 function Profile() {
   const { user } = useAuth();
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPasswords, setShowPasswords] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   if (!user) return null;
 
@@ -14,6 +22,26 @@ function Profile() {
       month: "long",
       day: "numeric",
     });
+  };
+
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    if (newPassword !== confirmPassword) {
+      toast.error("New passwords do not match");
+      return;
+    }
+    setLoading(true);
+    try {
+      await authApi.changePassword(currentPassword, newPassword);
+      toast.success("Password updated successfully");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to update password");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -97,6 +125,66 @@ function Profile() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="info-section password-section">
+            <h3>Security & Password</h3>
+            <form onSubmit={handlePasswordChange} className="password-change-form">
+              <div className="form-grid">
+                <div className="input-group">
+                  <label>Current Password</label>
+                  <div className="input-wrapper">
+                    <Lock size={16} className="field-icon" />
+                    <input
+                      type={showPasswords ? "text" : "password"}
+                      value={currentPassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      placeholder="••••••••"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="input-group">
+                  <label>New Password</label>
+                  <div className="input-wrapper">
+                    <Lock size={16} className="field-icon" />
+                    <input
+                      type={showPasswords ? "text" : "password"}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="••••••••"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="input-group">
+                  <label>Confirm New Password</label>
+                  <div className="input-wrapper">
+                    <Lock size={16} className="field-icon" />
+                    <input
+                      type={showPasswords ? "text" : "password"}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="••••••••"
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="show-password-toggle"
+                      onClick={() => setShowPasswords(!showPasswords)}
+                    >
+                      {showPasswords ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" className="update-password-btn" disabled={loading}>
+                {loading ? <Loader2 size={18} className="spinner" /> : "Update Password"}
+              </button>
+            </form>
           </div>
 
         </div>

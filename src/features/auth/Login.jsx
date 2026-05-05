@@ -266,7 +266,9 @@ function Login() {
                 />
                 Remember Me
               </label>
-              <span className="forgot">Forgot Password?</span>
+              <Link to="/login/forgotpassword" title="Click to reset password" style={{ textDecoration: 'none', color: '#6366f1', fontSize: '0.9rem', fontWeight: '500' }}>
+                Forgot Password?
+              </Link>
             </div>
             
           </form>

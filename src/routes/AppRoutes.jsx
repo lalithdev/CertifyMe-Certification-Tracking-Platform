@@ -7,6 +7,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import Landing from "../features/public/Landing";
 import Login from "../features/auth/Login";
 import Signup from "../features/auth/Signup";
+import ForgotPassword from "../features/auth/password/ForgotPassword";
+import OtpVerification from "../features/auth/password/OtpVerification";
+import ResetPassword from "../features/auth/password/ResetPassword";
 
 import Overview from "../features/student/Overview";
 import MyCertifications from "../features/student/MyCertifications";
@@ -36,6 +39,9 @@ function AppRoutes() {
       {/* AUTH */}
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
+        <Route path="/login/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/login/verify-otp" element={<OtpVerification />} />
+        <Route path="/login/reset-password" element={<ResetPassword />} />
         <Route path="/signup" element={<Signup />} />
       </Route>
 

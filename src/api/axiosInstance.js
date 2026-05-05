@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an Axios instance
 export const axiosInstance = axios.create({
-  baseURL: "https://certifyme-api.up.railway.app/api",
+  baseURL: "http://localhost:8080/api",
 });
 
 // Request interceptor to attach token
@@ -29,9 +29,14 @@ axiosInstance.interceptors.response.use(
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       
-      // ONLY trigger hard reload redirect if this 401 did NOT come from the login endpoint itself
+      // ONLY trigger hard reload redirect if this 401 did NOT come from auth/forgot flows or login
       const requestUrl = error.config?.url || "";
-      if (!requestUrl.includes("/auth/login")) {
+      const isAuthFlow = requestUrl.includes("/auth/login") || 
+                         requestUrl.includes("/auth/forgot-password") || 
+                         requestUrl.includes("/auth/verify-otp") || 
+                         requestUrl.includes("/auth/reset-password");
+
+      if (!isAuthFlow) {
         window.location.href = "/login"; 
       }
     }
