@@ -89,6 +89,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const setSession = (token, backendUser) => {
+    localStorage.setItem("token", token);
+    const formattedUser = {
+      ...backendUser,
+      name: backendUser.firstName && backendUser.lastName
+        ? `${backendUser.firstName} ${backendUser.lastName}`
+        : backendUser.name || backendUser.firstName || "User",
+    };
+    localStorage.setItem("user", JSON.stringify(formattedUser));
+    setUser(formattedUser);
+  };
+
   const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
@@ -96,7 +108,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, signup, login, resendOtp, logout }}>
+    <AuthContext.Provider value={{ user, signup, login, resendOtp, logout, setSession }}>
       {children}
     </AuthContext.Provider>
   );

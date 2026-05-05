@@ -721,3 +721,72 @@
     font-size: 12px;
   }
 }
+
+/* ------------------------------------------------------------
+   10. CHOICE STAGE (POST-OTP VERIFICATION)
+   ------------------------------------------------------------ */
+
+.choice-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.success-icon-wrapper {
+  margin-bottom: 24px;
+  animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.choice-buttons-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.choice-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.choice-btn-outline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 52px;
+  background: transparent;
+  color: var(--primary-black);
+  border: 1.5px solid var(--primary-black);
+  border-radius: 500px;
+  font-size: 16px;
+  font-weight: var(--weight-semi);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.choice-btn-outline:hover {
+  background: var(--bg-subtle);
+  transform: translateY(-2px);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
