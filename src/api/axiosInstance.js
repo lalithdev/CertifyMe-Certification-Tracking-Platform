@@ -1,8 +1,10 @@
 import axios from "axios";
 
-// Create an Axios instance
+// Create an Axios instance with dynamic base URL
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: import.meta.env.PROD 
+    ? "https://certifyme-api.up.railway.app/api" 
+    : "http://localhost:8080/api",
 });
 
 // Request interceptor to attach token
