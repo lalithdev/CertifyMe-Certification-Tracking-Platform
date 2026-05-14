@@ -14,31 +14,37 @@ export const authApi = {
     return res.data;
   },
 
-  // ✅ RESEND OTP → BACKEND
+  // ✅ RESEND OTP → BACKEND (Admin login flow)
   resendOtp: async (email) => {
     const res = await axiosInstance.post("/auth/resend-otp", { email });
     return res.data;
   },
 
-  // ✅ FORGOT PASSWORD
+  // ✅ FORGOT PASSWORD → Sends OTP to email (Student + Admin)
   forgotPassword: async (email) => {
     const res = await axiosInstance.post("/auth/forgot-password", { email });
     return res.data;
   },
 
-  // ✅ VERIFY OTP
+  // ✅ VERIFY OTP → Validates the reset OTP (Student + Admin)
   verifyOtp: async (email, otp) => {
     const res = await axiosInstance.post("/auth/verify-otp", { email, otp });
     return res.data;
   },
 
-  // ✅ RESET PASSWORD
+  // ✅ VERIFY RESET OTP → Alias endpoint for password reset flow
+  verifyResetOtp: async (email, otp) => {
+    const res = await axiosInstance.post("/auth/verify-reset-otp", { email, otp });
+    return res.data;
+  },
+
+  // ✅ RESET PASSWORD → Sets new password after OTP verification
   resetPassword: async (email, otp, newPassword) => {
     const res = await axiosInstance.post("/auth/reset-password", { email, otp, newPassword });
     return res.data;
   },
 
-  // ✅ CHANGE PASSWORD (Authenticated)
+  // ✅ CHANGE PASSWORD → Authenticated password change
   changePassword: async (currentPassword, newPassword) => {
     const res = await axiosInstance.post("/auth/change-password", { currentPassword, newPassword });
     return res.data;

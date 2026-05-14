@@ -61,7 +61,7 @@ const MyCertifications = () => {
   const requestRenewal = async (certId) => {
     try {
       await fetch(
-        `https://certifyme-api.up.railway.app/api/certifications/${certId}/renewal?status=PENDING`,
+        `https://certifyme-backend.onrender.com/api/certifications/${certId}/renewal?status=PENDING`,
         { method: "PUT" }
       );
 

@@ -3,7 +3,7 @@ import axios from "axios";
 // Create an Axios instance with dynamic base URL
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.PROD 
-    ? "https://certifyme-api.up.railway.app/api" 
+    ? "https://certifyme-backend.onrender.com/api" 
     : "http://localhost:8080/api",
 });
 
@@ -36,7 +36,10 @@ axiosInstance.interceptors.response.use(
       const isAuthFlow = requestUrl.includes("/auth/login") || 
                          requestUrl.includes("/auth/forgot-password") || 
                          requestUrl.includes("/auth/verify-otp") || 
-                         requestUrl.includes("/auth/reset-password");
+                         requestUrl.includes("/auth/verify-reset-otp") ||
+                         requestUrl.includes("/auth/reset-password") ||
+                         requestUrl.includes("/auth/change-password") ||
+                         requestUrl.includes("/auth/resend-otp");
 
       if (!isAuthFlow) {
         window.location.href = "/login"; 

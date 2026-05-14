@@ -19,7 +19,16 @@ function ForgotPassword() {
       toast.success("OTP sent to your email ✅");
       navigate("/login/verify-otp", { state: { email: trimmedEmail } });
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to send OTP ❌");
+      const status = error.response?.status;
+      const message = error.response?.data?.message;
+      
+      if (status === 503) {
+        toast.error("Email service is temporarily unavailable. Please try again in a moment.");
+      } else if (status === 404) {
+        toast.error(message || "No account found with this email address.");
+      } else {
+        toast.error(message || "Failed to send OTP. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
