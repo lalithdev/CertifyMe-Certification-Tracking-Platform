@@ -249,8 +249,8 @@ function AdminAllStudents() {
 
       {/* ✅ MODAL INSIDE SAME RETURN */}
       {selectedUser && (
-        <div className="admin-modal-overlay">
-          <div className="admin-modal">
+        <div className="global-modal-overlay">
+          <div className="global-modal">
 
             <h3>{selectedUser.name}</h3>
 
@@ -276,7 +276,7 @@ function AdminAllStudents() {
 
             <div className="modal-actions">
               <button
-                className="close-btn"
+                className="global-close-btn"
                 onClick={() => setSelectedUser(null)}
               >
                 Close

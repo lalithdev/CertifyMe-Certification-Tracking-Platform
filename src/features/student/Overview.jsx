@@ -7,6 +7,7 @@ import CertificationCard from "./components/CertificationCard";
 import { certificationApi } from "../../api/certificationApi";
 import { formatDate } from "../../utils/dateformatter";
 import { useAuth } from "../../context";
+import { toast } from "sonner";
 
 const Overview = () => {
 
@@ -35,7 +36,9 @@ const Overview = () => {
           holder: `${user.firstName}${user.middleName ? ' ' + user.middleName : ''} ${user.lastName}`,
           issuer: c.issuer,
           issued: formatDate(c.issueDate),
-        expires: formatDate(c.expiryDate),
+          expires: formatDate(c.expiryDate),
+          issueDateRaw: c.issueDate,
+          expiryDateRaw: c.expiryDate,
           credentialId: c.credentialId || "N/A",
           description: "Certification from " + c.issuer,
           status:
@@ -79,8 +82,9 @@ const Overview = () => {
       cert.issuer.toLowerCase().includes(search.toLowerCase())
   );
 
-  const calculateDaysRemaining = (dateString) => {
-    const expiry = new Date(dateString);
+  const calculateDaysRemaining = (rawDate) => {
+    if (!rawDate) return 0;
+    const expiry = new Date(rawDate);
     const today = new Date();
     const diff = expiry - today;
     return Math.ceil(diff / (1000 * 60 * 60 * 24));
@@ -104,8 +108,8 @@ const Overview = () => {
     const updatedCert = {
       title: newTitle,
       issuer: cert.issuer,
-      issueDate: cert.issued,
-      expiryDate: cert.expires,
+      issueDate: cert.issueDateRaw || cert.issued,
+      expiryDate: cert.expiryDateRaw || cert.expires,
       credentialId: cert.credentialId,
       url: null,
     };
@@ -127,22 +131,22 @@ const Overview = () => {
   };
   
   const handleRenewal = async (cert) => {
+    if (cert.status !== "Expired") {
+      toast.info("Certification is Active — No Renewal Needed");
+      return;
+    }
+
     try {
-      const updated = {
-        ...cert,
-        renewalStatus: "PENDING"
-      };
+      await fetch(
+        `https://certifyme-backend.onrender.com/api/certifications/${cert.id}/renewal?status=PENDING`,
+        { method: "PUT" }
+      );
 
-      await certificationApi.update(cert.id, updated);
-
-      alert("Renewal request sent ✅");
-
-      // refresh data
+      toast.success("Renewal Requested Successfully");
       fetchCerts();
-
     } catch (err) {
       console.error(err);
-      alert("Failed ❌");
+      toast.error("Renewal failed");
     }
   };
 
@@ -154,13 +158,6 @@ const Overview = () => {
 
   return (
     <div className="dashboard-page">
-
-      {/* Toast */}
-      {showToast && (
-        <div className="toast-success">
-          Renewal requested successfully!
-        </div>
-      )}
 
       {/* Header */}
       <div className="page-header">
@@ -247,67 +244,33 @@ const Overview = () => {
 
       {/* Modal */}
       {selectedCert && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <div className="global-modal-overlay">
+          <div className="global-modal">
 
-            <div className="modal-top">
-              <div className="modal-icon">🏅</div>
+            <h3>{selectedCert.title}</h3>
+            <p style={{ display: "inline-block", padding: "4px 12px", background: "#dcfce7", color: "#15803d", borderRadius: "999px", fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "16px" }}>
+              {selectedCert.status}
+            </p>
 
-              <div>
-                <h2 className="modal-title">{selectedCert.title}</h2>
-                <span className="badge-active">{selectedCert.status}</span>
-              </div>
+            <hr style={{ margin: "15px 0", border: "none", borderTop: "1px solid #f1f5f9" }} />
 
+            <h4>Details</h4>
+            <p><strong>Holder:</strong> {selectedCert.holder}</p>
+            <p><strong>Issuing Organization:</strong> {selectedCert.issuer}</p>
+            <p><strong>Issue Date:</strong> {selectedCert.issued}</p>
+            <p><strong>Expiration Date:</strong> {selectedCert.expires}</p>
+            <p><strong>Time Remaining:</strong> {calculateDaysRemaining(selectedCert.expiryDateRaw)} days</p>
+            <p><strong>Credential ID:</strong> {selectedCert.credentialId}</p>
+            <p><strong>Description:</strong> {selectedCert.description}</p>
+
+            <div className="modal-actions">
               <button
-                className="modal-close"
+                className="global-close-btn"
                 onClick={() => setSelectedCert(null)}
               >
-                ✕
+                Close
               </button>
             </div>
-
-            <div className="modal-grid">
-              <div>
-                <p className="modal-label">Holder</p>
-                <strong>{selectedCert.holder}</strong>
-              </div>
-
-              <div>
-                <p className="modal-label">Issuing Organization</p>
-                <strong>{selectedCert.issuer}</strong>
-              </div>
-            </div>
-
-            <hr className="modal-divider" />
-
-            <div className="modal-grid">
-              <div>
-                <p className="modal-label">Issue Date</p>
-                <strong>{selectedCert.issued}</strong>
-              </div>
-
-              <div>
-                <p className="modal-label">Expiration Date</p>
-                <strong>{selectedCert.expires}</strong>
-              </div>
-            </div>
-
-            <div className="time-remaining-box">
-              Time Remaining: {calculateDaysRemaining(selectedCert.expires)} days
-            </div>
-
-            <hr className="modal-divider" />
-
-            <div style={{ marginBottom: "18px" }}>
-              <p className="modal-label">Credential ID</p>
-              <strong>{selectedCert.credentialId}</strong>
-            </div>
-
-            <div>
-              <p className="modal-label">Description</p>
-              <p>{selectedCert.description}</p>
-            </div>
-
           </div>
         </div>
       )}

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import {
-  BadgeCheck, Menu, Bell, Award, Calendar, FileText, LogOut, LayoutDashboard, TriangleAlert, UserCircle, Search, MessageSquare, Activity, FilePlus
+  Home, BadgeCheck, Menu, Bell, Award, Calendar, FileText, LogOut, LayoutDashboard, TriangleAlert, UserCircle, Search, MessageSquare, Activity, FilePlus  
 } from "lucide-react";
 import { Outlet, useNavigate, NavLink } from "react-router-dom";
 import { useAuth } from "../context";
@@ -27,7 +27,7 @@ function DashboardLayout() {
     : "";
 
   const studentSearchItems = [
-    { label: "Overview", path: "/student/overview", desc: "Student performance overview and stats" },
+    { label: "Overview", path: "/student/dashboard", desc: "Student performance overview and stats" },
     { label: "Reminders", path: "/student/reminders", desc: "Check all certification deadline alerts" },
     { label: "Alerts", path: "/student/alerts", desc: "View high priority certification expiration notices" },
     { label: "My Certifications", path: "/student/certifications", desc: "Track all uploaded credentials" },
@@ -134,8 +134,8 @@ function DashboardLayout() {
                 }
                 onClick={() => setMobileOpen(false)}
               >
-                <LayoutDashboard size={18} />
-                <span>Dashboard</span>
+                <Home size={18} />
+                <span>Overview</span>
               </NavLink>
 
               <NavLink
@@ -202,7 +202,7 @@ function DashboardLayout() {
                 }
                 onClick={() => setMobileOpen(false)}
               >
-                <LayoutDashboard size={18} />
+                <Home size={18} />
                 <span>Overview</span>
               </NavLink>
 
@@ -292,17 +292,17 @@ function DashboardLayout() {
               <Menu size={20} />
             </button>
 
-            <img 
-              src="/CertifyMeFavicon1.png" 
-              alt="CertifyMe Logo" 
-              style={{ height: '40px', width: 'auto', objectFit: 'contain', marginLeft: '12px' }} 
+            <img
+              src="/CertifyMeFavicon1.png"
+              alt="CertifyMe Logo"
+              style={{ height: '40px', width: 'auto', objectFit: 'contain', marginLeft: '12px' }}
             />
           </div>
 
           <div className="header-center-search">
-            <input 
-              type="text" 
-              placeholder="Search..." 
+            <input
+              type="text"
+              placeholder="Search..."
               className="header-search-input"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -312,13 +312,13 @@ function DashboardLayout() {
             {searchTerm && (
               <div className="header-search-dropdown">
                 {currentSearchItems
-                  .filter(item => 
+                  .filter(item =>
                     item.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     item.desc.toLowerCase().includes(searchTerm.toLowerCase())
                   )
                   .map((item, index) => (
-                    <div 
-                      key={index} 
+                    <div
+                      key={index}
                       className="header-search-item"
                       onClick={() => {
                         navigate(item.path);
@@ -386,8 +386,8 @@ function DashboardLayout() {
 
         {/* Backdrop for mobile */}
         {mobileOpen && (
-          <div 
-            className="sidebar-backdrop" 
+          <div
+            className="sidebar-backdrop"
             onClick={() => setMobileOpen(false)}
           ></div>
         )}

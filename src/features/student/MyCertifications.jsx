@@ -293,21 +293,30 @@ const MyCertifications = () => {
 
       {/* MODAL */}
       {selectedCert && (
-        <div className="certificate-overlay">
-          <div className="certificate-modal">
-            <div className="certificate-header">
-              <h3>{selectedCert.title}</h3>
-              <button
-                className="certificate-close"
-                onClick={() => setSelectedCert(null)}
-              >
-                <X size={18} />
-              </button>
+        <div className="global-modal-overlay">
+          <div className="global-modal">
+            <h3>{selectedCert.title}</h3>
+            <p><strong>Issuer:</strong> {selectedCert.issuer}</p>
+
+            <hr style={{ margin: "15px 0", border: "none", borderTop: "1px solid #f1f5f9" }} />
+
+            <h4>Details</h4>
+            <p><strong>Credential ID:</strong> {selectedCert.credentialId}</p>
+            <p><strong>Issue Date:</strong> {formatDate(selectedCert.issueDate)}</p>
+            <p><strong>Expiry Date:</strong> {formatDate(selectedCert.expiryDate)}</p>
+
+            <div className="certificate-image-box" style={{ marginTop: "20px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#f8fafc", padding: "30px", borderRadius: "12px", border: "1px dashed #cbd5e1" }}>
+              <ImageIcon size={40} color="#94a3b8" />
+              <p style={{ marginTop: "10px", fontSize: "14px" }}>Certificate Image Not Available</p>
             </div>
 
-            <div className="certificate-image-box">
-              <ImageIcon size={60} />
-              <p>Certificate Image Not Available</p>
+            <div className="modal-actions">
+              <button
+                className="global-close-btn"
+                onClick={() => setSelectedCert(null)}
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>

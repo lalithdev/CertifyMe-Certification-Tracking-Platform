@@ -133,25 +133,31 @@ function ExpiringCerts() {
 
       {/* Modal */}
       {selectedCert && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <div className="global-modal-overlay">
+          <div className="global-modal">
             <h3>{selectedCert.title}</h3>
             <p><strong>User:</strong> {selectedCert.user}</p>
             <p><strong>Email:</strong> {selectedCert.email}</p>
+            
+            <hr style={{ margin: "15px 0", border: "none", borderTop: "1px solid #f1f5f9" }} />
+            
+            <h4>Details</h4>
             <p><strong>Issuer:</strong> {selectedCert.issuer}</p>
             <p><strong>Expiry Date:</strong> {selectedCert.expiry}</p>
             <p><strong>Days Left:</strong> {selectedCert.daysLeft} days</p>
 
-            <div className="modal-actions">
+            <div className="modal-actions" style={{ display: "flex", gap: "12px", marginTop: "24px" }}>
               <button
                 className="remind-btn"
+                style={{ flex: 1, padding: "14px", borderRadius: "14px", display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", textTransform: "uppercase", fontWeight: "700", letterSpacing: "0.05em" }}
                 onClick={() => handleReminder(selectedCert)}
               >
                 <Bell size={16} /> Send Reminder
               </button>
 
               <button
-                className="close-btn"
+                className="global-close-btn"
+                style={{ flex: 1, marginTop: "0" }}
                 onClick={() => setSelectedCert(null)}
               >
                 Close

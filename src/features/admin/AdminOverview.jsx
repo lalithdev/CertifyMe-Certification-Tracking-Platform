@@ -371,56 +371,66 @@ function AdminOverview() {
 
       {/* ADD STUDENT MODAL */}
       {showModal && (
-        <div className="admin-modal-overlay">
-          <div className="admin-modal">
+        <div className="global-modal-overlay">
+          <div className="global-modal">
             <h3>Add New Student</h3>
-            <input
-              type="text"
-              placeholder="First Name"
-              value={newUser.firstName}
-              onChange={(e) =>
-                setNewUser({ ...newUser, firstName: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Middle Name (Optional)"
-              value={newUser.middleName}
-              onChange={(e) =>
-                setNewUser({ ...newUser, middleName: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={newUser.lastName}
-              onChange={(e) =>
-                setNewUser({ ...newUser, lastName: e.target.value })
-              }
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={newUser.email}
-              onChange={(e) =>
-                setNewUser({ ...newUser, email: e.target.value })
-              }
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={newUser.password}
-              onChange={(e) =>
-                setNewUser({ ...newUser, password: e.target.value })
-              }
-            />
-            <div className="modal-actions">
-              <button onClick={handleAddStudent} className="primary-btn">
+            
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "16px" }}>
+              <input
+                type="text"
+                placeholder="First Name"
+                style={{ width: "100%", padding: "12px", borderRadius: "10px", border: "1px solid #e2e8f0" }}
+                value={newUser.firstName}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, firstName: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Middle Name (Optional)"
+                style={{ width: "100%", padding: "12px", borderRadius: "10px", border: "1px solid #e2e8f0" }}
+                value={newUser.middleName}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, middleName: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                style={{ width: "100%", padding: "12px", borderRadius: "10px", border: "1px solid #e2e8f0" }}
+                value={newUser.lastName}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, lastName: e.target.value })
+                }
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                style={{ width: "100%", padding: "12px", borderRadius: "10px", border: "1px solid #e2e8f0" }}
+                value={newUser.email}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, email: e.target.value })
+                }
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                style={{ width: "100%", padding: "12px", borderRadius: "10px", border: "1px solid #e2e8f0" }}
+                value={newUser.password}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, password: e.target.value })
+                }
+              />
+            </div>
+            
+            <div className="modal-actions" style={{ display: "flex", gap: "12px", marginTop: "24px" }}>
+              <button onClick={handleAddStudent} style={{ flex: 1, padding: "14px", borderRadius: "14px", background: "#4f46e5", color: "white", border: "none", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.05em", cursor: "pointer" }}>
                 Add Student
               </button>
               <button
                 onClick={() => setShowModal(false)}
-                className="secondary-btn"
+                className="global-close-btn"
+                style={{ flex: 1, marginTop: "0" }}
               >
                 Cancel
               </button>
@@ -431,52 +441,30 @@ function AdminOverview() {
 
       {/* ✅ VIEW CERTIFICATION MODAL */}
       {selectedCert && (
-        <div className="admin-modal-overlay">
-          <div className="admin-modal cert-detail-modal">
-            <div className="modal-header-flex">
-              <h3>Certification Details</h3>
-              <span className={`badge ${selectedCert.status === "Active" ? "success" : "warning"}`}>
-                {selectedCert.status}
-              </span>
-            </div>
+        <div className="global-modal-overlay">
+          <div className="global-modal">
+            
+            <h3>{selectedCert.user}</h3>
+            <p><strong>Certification:</strong> {selectedCert.name}</p>
 
-            <div className="detail-grid">
-              <div className="detail-item">
-                <label>User</label>
-                <strong>{selectedCert.user}</strong>
-              </div>
-              <div className="detail-item">
-                <label>Certification</label>
-                <strong>{selectedCert.name}</strong>
-              </div>
-              <div className="detail-item">
-                <label>Issuer</label>
-                <strong>{selectedCert.issuer}</strong>
-              </div>
-              <div className="detail-item">
-                <label>Credential ID</label>
-                <strong>{selectedCert.id}</strong>
-              </div>
-              <div className="detail-item">
-                <label>Issue Date</label>
-                <strong>{selectedCert.issueDate}</strong>
-              </div>
-              <div className="detail-item">
-                <label>Expiry Date</label>
-                <strong>{selectedCert.expiryDate}</strong>
-              </div>
-            </div>
+            <hr style={{ margin: "15px 0", border: "none", borderTop: "1px solid #f1f5f9" }} />
 
-            <div className="days-left-highlight">
+            <h4>Details</h4>
+            <p><strong>Issuer:</strong> {selectedCert.issuer}</p>
+            <p><strong>Credential ID:</strong> {selectedCert.id}</p>
+            <p><strong>Issue Date:</strong> {selectedCert.issueDate}</p>
+            <p><strong>Expiry Date:</strong> {selectedCert.expiryDate}</p>
+            <p><strong>Status:</strong> <span className={`badge ${selectedCert.status === "Active" ? "success" : "warning"}`}>{selectedCert.status}</span></p>
+
+            <div style={{ marginTop: "20px", padding: "16px", background: "#f8fafc", borderRadius: "12px", border: "1px solid #f1f5f9", display: "flex", alignItems: "center", gap: "8px", color: "#475569" }}>
               <Clock size={20} />
-              <span>{selectedCert.daysLeft} days remaining until expiry</span>
+              <span style={{ fontSize: "14px", fontWeight: "600" }}>{selectedCert.daysLeft} days remaining until expiry</span>
             </div>
 
             <div className="modal-actions">
               <button
                 onClick={() => setSelectedCert(null)}
-                className="secondary-btn"
-                style={{ width: "100%" }}
+                className="global-close-btn"
               >
                 Close
               </button>

@@ -305,56 +305,36 @@ function AdminAllCertifications() {
         )}
       </div>
 
-      {/* ✅ VIEW CERTIFICATION MODAL (FUNCTIONAL BUG FIX) */}
+      {/* ✅ VIEW CERTIFICATION MODAL */}
       {selectedCert && (
-        <div className="admin-modal-overlay">
-          <div className="admin-modal cert-detail-modal">
-            <div className="modal-header-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-              <h3 style={{ margin: 0 }}>Certification Details</h3>
-              <span className={`status ${selectedCert.status.toLowerCase()}`}>
-                {selectedCert.status}
-              </span>
-            </div>
+        <div className="global-modal-overlay">
+          <div className="global-modal">
 
-            <div className="detail-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
-              <div className="detail-item">
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "800", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>Student</label>
-                <strong style={{ display: "block", color: "#0f172a" }}>{selectedCert.student}</strong>
-              </div>
-              <div className="detail-item">
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "800", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>Certification</label>
-                <strong style={{ display: "block", color: "#0f172a" }}>{selectedCert.title}</strong>
-              </div>
-              <div className="detail-item">
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "800", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>Issuer</label>
-                <strong style={{ display: "block", color: "#0f172a" }}>{selectedCert.issuer}</strong>
-              </div>
-              <div className="detail-item">
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "800", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>Credential ID</label>
-                <strong style={{ display: "block", color: "#0f172a" }}>{selectedCert.credential}</strong>
-              </div>
-              <div className="detail-item">
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "800", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>Issue Date</label>
-                <strong style={{ display: "block", color: "#0f172a" }}>{selectedCert.issued}</strong>
-              </div>
-              <div className="detail-item">
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "800", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>Expiry Date</label>
-                <strong style={{ display: "block", color: "#0f172a" }}>{selectedCert.expires}</strong>
-              </div>
-            </div>
-
+            <h3>{selectedCert.student}</h3>
+            <p><strong>Email:</strong> {selectedCert.email || "N/A"}</p>
+            <p><strong>Certification:</strong> {selectedCert.title}</p>
+            
+            <hr style={{ margin: "15px 0", border: "none", borderTop: "1px solid #f1f5f9" }} />
+            
+            <h4>Details</h4>
+            <p><strong>Issuer:</strong> {selectedCert.issuer}</p>
+            <p><strong>Credential ID:</strong> {selectedCert.credential}</p>
+            <p><strong>Issue Date:</strong> {selectedCert.issued}</p>
+            <p><strong>Expiry Date:</strong> {selectedCert.expires}</p>
+            <p><strong>Status:</strong> <span className={`status ${selectedCert.status.toLowerCase()}`}>{selectedCert.status}</span></p>
+            
             {selectedCert.remarks && (
-              <div className="remarks-box-highlight" style={{ marginTop: "20px", padding: "16px", background: "#f8fafc", borderRadius: "12px", border: "1px solid #f1f5f9" }}>
-                <label style={{ display: "block", fontSize: "11px", fontWeight: "800", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>Admin Remarks</label>
-                <p style={{ margin: 0, fontSize: "14px", color: "#475569", lineHeight: "1.6" }}>{selectedCert.remarks}</p>
-              </div>
+              <>
+                <hr style={{ margin: "15px 0", border: "none", borderTop: "1px solid #f1f5f9" }} />
+                <h4>Admin Remarks</h4>
+                <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.6" }}>{selectedCert.remarks}</p>
+              </>
             )}
 
-            <div className="modal-actions" style={{ marginTop: "30px" }}>
+            <div className="modal-actions">
               <button
                 onClick={() => setSelectedCert(null)}
-                className="admin-view-btn"
-                style={{ width: "100%", padding: "12px", borderRadius: "12px", background: "#f1f5f9", color: "#475569", border: "none" }}
+                className="global-close-btn"
               >
                 Close
               </button>
