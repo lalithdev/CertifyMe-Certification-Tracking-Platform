@@ -61,7 +61,7 @@ const MyCertifications = () => {
   const requestRenewal = async (certId) => {
     try {
       await fetch(
-        `https://certifyme-backend.onrender.com/api/certifications/${certId}/renewal?status=PENDING`,
+        `${import.meta.env.VITE_BACKEND_URL}/certifications/${certId}/renewal?status=PENDING`,
         { method: "PUT" }
       );
 

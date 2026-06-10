@@ -2,9 +2,7 @@ import axios from "axios";
 
 // Create an Axios instance with dynamic base URL
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.PROD 
-    ? "https://certifyme-backend.onrender.com/api" 
-    : "http://localhost:8080/api",
+  baseURL: import.meta.env.VITE_BACKEND_URL || "http://localhost:8080/api",
 });
 
 // Request interceptor to attach token

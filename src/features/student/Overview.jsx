@@ -138,7 +138,7 @@ const Overview = () => {
 
     try {
       await fetch(
-        `https://certifyme-backend.onrender.com/api/certifications/${cert.id}/renewal?status=PENDING`,
+        `${import.meta.env.VITE_BACKEND_URL}/certifications/${cert.id}/renewal?status=PENDING`,
         { method: "PUT" }
       );
 

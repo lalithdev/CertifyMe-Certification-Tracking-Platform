@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Environment variables - keep backend URL secret
+.env
+.env.example
+.env.local
+.env.production
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
