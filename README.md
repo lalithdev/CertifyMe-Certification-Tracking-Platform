@@ -15,6 +15,11 @@
   <img src="https://img.shields.io/badge/Recharts-3.7.0-22B5BF?style=for-the-badge&logo=chartdotjs&logoColor=white" alt="Recharts"/>
   <img src="https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel"/>
   <img src="https://img.shields.io/badge/Users-4000%2B-FF6B6B?style=for-the-badge&logoColor=white" alt="4000+ Users"/>
+  <a href="https://github.com/lalithdev/CertifyMe-Certification-Tracking-Platform/stargazers"><img src="https://img.shields.io/github/stars/lalithdev/CertifyMe-Certification-Tracking-Platform?style=for-the-badge&logo=github&color=yellow" alt="GitHub Stars"/></a>
+</p>
+
+<p>
+  ⭐ <strong>If you find this project useful, please consider giving it a star!</strong>
 </p>
 
 <p>
@@ -797,20 +802,103 @@ nvm use 20
 
 ---
 
+## 👨‍💻 Author & Credits
+
+<div align="center">
+
+| | |
+|:---:|:---|
+| <img src="https://avatars.githubusercontent.com/lalithdev" width="80" style="border-radius:50%"/> | **Lalith Aditya S** *(LalithDev)*<br/>Full-Stack Developer · Designer · Builder<br/>📍 India |
+
+</div>
+
+> CertifyMe was designed, developed, and deployed end-to-end as a solo project — from database schema to UI design, JWT security to scheduled jobs, and Vercel deployment to production monitoring.
+
+| Platform | Link |
+|---|---|
+| 🌐 **Portfolio** | [meetlalith.vercel.app](https://meetlalith.vercel.app) |
+| 💼 **LinkedIn** | [linkedin.com/in/lalith-aditya-singuparapu](https://www.linkedin.com/in/lalith-aditya-singuparapu) |
+| 🐙 **GitHub** | [github.com/lalithdev](https://github.com/lalithdev) |
+| 📧 **Email** | [lalithadityasinguparapu@gmail.com](mailto:lalithadityasinguparapu@gmail.com) |
+
+---
+
+## 📬 Contact & Support
+
+Have a question, found a bug, or want to suggest a feature?
+
+| Channel | Where |
+|---|---|
+| 🐛 **Bug Reports / Feature Requests** | [Open a GitHub Issue](https://github.com/lalithdev/CertifyMe-Certification-Tracking-Platform/issues) |
+| 📧 **Direct Email** | [lalithadityasinguparapu@gmail.com](mailto:lalithadityasinguparapu@gmail.com) |
+| 💼 **Professional Enquiries** | [LinkedIn](https://www.linkedin.com/in/lalith-aditya-singuparapu) |
+
+---
+
+## 🐛 Reporting Issues
+
+If you encounter a bug or unexpected behaviour:
+
+1. Check the [Troubleshooting](#-common-issues--troubleshooting) section first
+2. Search [existing issues](https://github.com/lalithdev/CertifyMe-Certification-Tracking-Platform/issues) to avoid duplicates
+3. [Open a new issue](https://github.com/lalithdev/CertifyMe-Certification-Tracking-Platform/issues/new) and include:
+   - **Steps to reproduce** the problem
+   - **Expected vs actual behaviour**
+   - **Browser & OS** you're using
+   - Any **console errors** (F12 → Console)
+
+---
+
+## ⭐ Show Support
+
+If CertifyMe helped you or you find it impressive, consider giving it a star — it means a lot!
+
+<div align="center">
+
+[![GitHub stars](https://img.shields.io/github/stars/lalithdev/CertifyMe-Certification-Tracking-Platform?style=for-the-badge&logo=github&color=yellow)](https://github.com/lalithdev/CertifyMe-Certification-Tracking-Platform/stargazers)
+
+</div>
+
+---
+
 ## 📄 License
 
-This project was developed as part of an academic Full-Stack Application Development (FSAD) course project.
+This project is licensed under the **MIT License**.
+
+```
+MIT License
+
+Copyright (c) 2026 Lalith Aditya S (LalithDev)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ---
 
 <div align="center">
-  <p>
-    Built with ❤️ using <strong>React 19</strong>, <strong>Vite</strong>, and <strong>Recharts</strong>
-  </p>
+  <p>Built with ❤️ by <a href="https://meetlalith.vercel.app" target="_blank"><strong>Lalith Aditya S</strong></a></p>
   <p>
     <a href="https://certifymeonline.vercel.app" target="_blank"><strong>🌐 Live Demo — certifymeonline.vercel.app</strong></a>
   </p>
   <p>
-    <a href="https://github.com/lalithdev/certifyme-backend" target="_blank">⚙️ Backend Repository (Spring Boot)</a>
+    <a href="https://github.com/lalithdev/CertifyMe-Certification-Tracking-Platform-Backend" target="_blank">⚙️ Backend Repository (Spring Boot)</a> ·
+    <a href="https://www.linkedin.com/in/lalith-aditya-singuparapu" target="_blank">💼 LinkedIn</a> ·
+    <a href="https://meetlalith.vercel.app" target="_blank">🌐 Portfolio</a>
   </p>
 </div>
